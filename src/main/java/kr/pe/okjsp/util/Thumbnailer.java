@@ -20,9 +20,9 @@ import java.net.URL;
 
 import javax.swing.ImageIcon;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
+//import com.sun.image.codec.jpeg.JPEGCodec;
+//import com.sun.image.codec.jpeg.JPEGEncodeParam;
+//import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 public class Thumbnailer {
     private Image inImage;
@@ -167,12 +167,12 @@ public class Thumbnailer {
 			// JPEG-encode the image
 			//and write to file.
 			OutputStream os = new FileOutputStream(thumb);
-			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(os);
-			JPEGEncodeParam  param =
-                    encoder.getDefaultJPEGEncodeParam(outImage);
+//			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(os);
+//			JPEGEncodeParam  param =
+//                    encoder.getDefaultJPEGEncodeParam(outImage);
 			float quality = 80/100.0f;
-			param.setQuality(quality, false);
- 			encoder.encode(outImage);
+//			param.setQuality(quality, false);
+// 			encoder.encode(outImage);
 			os.close();
 		} catch (IOException e) {
 			e.printStackTrace();
