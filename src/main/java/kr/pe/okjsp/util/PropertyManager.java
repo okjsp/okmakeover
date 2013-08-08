@@ -12,7 +12,7 @@ public class PropertyManager {
 
 	private static void load() {
 		properties = new Properties();
-		File file = new File("/etc/DB.properties");
+		File file = new File("C:\\project\\okmakeover\\conf\\DB.properties");
 		try {
 			properties.load(new FileInputStream(file));
 		} catch (FileNotFoundException e) {

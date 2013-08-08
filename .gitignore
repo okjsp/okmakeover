@@ -5,3 +5,6 @@
 *.ear
 
 target
+/.settings
+/conf
+/src
