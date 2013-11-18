@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+
+    <mybatis:scan base-package="mapper" />
+
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="java:comp/env/jdbc/okjspDB"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <qualifier value="mainDB" />
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="WEB-INF/config/mybatis/mybatis-config.xml" />
+    </bean>
+
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <qualifier value="mainDB" />
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- transactionManager -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*insert*" rollback-for="java.lang.Exception"/>
+            <tx:method name="*update*" rollback-for="java.lang.Exception"/>
+            <tx:method name="*delete*" rollback-for="java.lang.Exception"/>
+            <tx:method name="*Insert*" rollback-for="java.lang.Exception"/>
+            <tx:method name="*Update*" rollback-for="java.lang.Exception"/>
+            <tx:method name="*Delete*" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="executorServiceMethod"  expression="execution(* *..*Service.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="executorServiceMethod" />
+    </aop:config>
+
+</beans>
