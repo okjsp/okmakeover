@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.okjsp.sample.dao.SampleBoardDao">
+
+    <select id="selectList" resultType="net.okjsp.sample.model.SampleBoard">
+        select
+            id, category_id, title, view_count, create_date, create_id, update_date, update_id
+        from
+            sample_board
+        where
+            category_id = #{categoryId}
+        order by
+            id desc
+        limit
+            #{offset}, #{listSize}
+    </select>
+
+    <select id="selectOne" resultType="net.okjsp.sample.model.SampleBoard">
+        select
+            id, category_id, title, content, view_count, create_date, create_id, update_date, update_id
+        from
+            sample_board
+        where
+            id = #{id}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into sample_board
+            (category_id, title, content, create_date, create_id)
+        values
+            (#{categoryId}, #{title}, #{content}, now(), #{createId})
+    </insert>
+
+    <update id="update">
+        update sample_board
+        set
+            category_id = #{categoryId}, title = #{title}, content = #{content},
+            udpate_date = now(), update_id = #{updateId}
+        where
+            id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from sample_board where id = #{id}
+    </delete>
+
+</mapper>

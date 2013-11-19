@@ -10,6 +10,7 @@
 <html>
 <head>
     <title><decorator:title default="OKJSP" /></title>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <decorator:head />
 </head>
 <body>

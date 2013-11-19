@@ -57,7 +57,8 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             /WEB-INF/config/spring/spirng-context.xml,
-            /WEB-INF/config/spring/spring-security.xml
+            /WEB-INF/config/spring/spring-security.xml,
+            /WEB-INF/config/spring/spring-mybatis.xml
         </param-value>
     </context-param>
 
