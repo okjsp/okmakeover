@@ -10,10 +10,11 @@
     </ul>
 
     <script>
-
-        $('li').click(function() {
-            window.location.href = $(this).text();
-        })
+        require(['jquery'], function($) {
+            $('li').click(function() {
+                window.location.href = $(this).text();
+            });
+        });
     </script>
 </body>
 </html>
