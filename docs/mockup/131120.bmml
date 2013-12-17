@@ -1,0 +1,9 @@
+<mockup version="1.0" skin="wireframe" fontFace="Balsamiq Sans" measuredW="1315" measuredH="812" mockupW="1280" mockupH="802">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::BrowserWindow" x="35" y="10" w="1280" h="802" measuredW="450" measuredH="400" zOrder="0" locked="true" isInGroup="-1">
+      <controlProperties>
+        <text>OKJSP%0Ahttp%3A//www.okjsp.net</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
