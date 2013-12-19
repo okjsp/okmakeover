@@ -18,7 +18,7 @@
         <qualifier value="mainDB" />
         <property name="dataSource" ref="dataSource" />
         <property name="configLocation" value="WEB-INF/config/mybatis/mybatis-config.xml" />
-        <property name="mapperLocations" value="classpath:net/okjsp/**/dao/*.xml" />
+        <property name="mapperLocations" value="classpath:mapper/**/*.xml" />
     </bean>
 
     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
@@ -40,12 +40,10 @@
     <!-- transactionManager -->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="*create*" rollback-for="java.lang.Exception"/>
-            <tx:method name="*edit*" rollback-for="java.lang.Exception"/>
-            <tx:method name="*remove*" rollback-for="java.lang.Exception"/>
-            <tx:method name="*Create*" rollback-for="java.lang.Exception"/>
-            <tx:method name="*Edit*" rollback-for="java.lang.Exception"/>
-            <tx:method name="*Remove*" rollback-for="java.lang.Exception"/>
+            <tx:method name="create*" rollback-for="java.lang.Exception"/>
+            <tx:method name="edit*" rollback-for="java.lang.Exception"/>
+            <tx:method name="update*" rollback-for="java.lang.Exception"/>
+            <tx:method name="remove*" rollback-for="java.lang.Exception"/>
         </tx:attributes>
     </tx:advice>
 

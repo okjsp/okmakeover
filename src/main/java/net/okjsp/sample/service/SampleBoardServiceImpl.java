@@ -2,7 +2,7 @@ package net.okjsp.sample.service;
 
 import net.okjsp.common.model.Paging;
 import net.okjsp.sample.dao.SampleBoardDao;
-import net.okjsp.sample.model.SampleBoard;
+import net.okjsp.sample.model.Sample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,23 +22,23 @@ public class SampleBoardServiceImpl implements SampleBoardService {
     SampleBoardDao sampleBoardDao;
 
     @Override
-    public List<SampleBoard> getList(int categoryId, Paging paging) {
+    public List<Sample> getList(int categoryId, Paging paging) {
 
-        List<SampleBoard> list = sampleBoardDao.selectList(categoryId, paging.getOffset(), paging.getListSize());
+        List<Sample> list = sampleBoardDao.selectList(categoryId, paging.getOffset(), paging.getListSize());
 
         return list;
     }
 
     @Override
-    public SampleBoard getOne(int id) {
+    public Sample getOne(int id) {
 
-        SampleBoard sampleBoard = sampleBoardDao.selectOne(id);
+        Sample sampleBoard = sampleBoardDao.selectOne(id);
 
         return sampleBoard;
     }
 
     @Override
-    public boolean create(SampleBoard sampleBoard) {
+    public boolean create(Sample sampleBoard) {
 
         boolean result = false;
 
@@ -52,7 +52,7 @@ public class SampleBoardServiceImpl implements SampleBoardService {
     }
 
     @Override
-    public boolean edit(SampleBoard sampleBoard) {
+    public boolean edit(Sample sampleBoard) {
 
         boolean result = false;
 

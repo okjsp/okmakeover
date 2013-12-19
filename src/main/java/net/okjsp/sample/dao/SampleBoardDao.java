@@ -1,6 +1,6 @@
 package net.okjsp.sample.dao;
 
-import net.okjsp.sample.model.SampleBoard;
+import net.okjsp.sample.model.Sample;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -16,12 +16,13 @@ import java.util.List;
 public interface SampleBoardDao {
 
     /**
-     * 게시물 목록
-     * @param page 페이지
-     * @param listSize 리스트 사이즈
-     * @return List<SampleBoard>
+     *
+     * @param categoryId
+     * @param offset
+     * @param listSize
+     * @return
      */
-    public List<SampleBoard> selectList(
+    public List<Sample> selectList(
             @Param("categoryId") int categoryId,
             @Param("offset") int offset,
             @Param("listSize") int listSize);
@@ -31,21 +32,21 @@ public interface SampleBoardDao {
      * @param id 게시물 id
      * @return SampleBoard
      */
-    public SampleBoard selectOne(@Param("id") int id);
+    public Sample selectOne(@Param("id") int id);
 
     /**
      * 게시물 등록
      * @param sampleBoard 게시물 내용
      * @return int
      */
-    public int insert(SampleBoard sampleBoard);
+    public int insert(Sample sampleBoard);
 
     /**
      * 게시물 수정
      * @param sampleBoard 게시물 내용
      * @return int
      */
-    public int update(SampleBoard sampleBoard);
+    public int update(Sample sampleBoard);
 
     /**
      * 게시물 삭제

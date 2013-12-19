@@ -1,7 +1,7 @@
 package net.okjsp.sample.service;
 
 import net.okjsp.common.model.Paging;
-import net.okjsp.sample.model.SampleBoard;
+import net.okjsp.sample.model.Sample;
 
 import java.util.List;
 
@@ -13,13 +13,13 @@ import java.util.List;
  */
 public interface SampleBoardService {
 
-    public List<SampleBoard> getList(int categoryId, Paging paging);
+    public List<Sample> getList(int categoryId, Paging paging);
 
-    public SampleBoard getOne(int id);
+    public Sample getOne(int id);
 
-    public boolean create(SampleBoard sampleBoard);
+    public boolean create(Sample sampleBoard);
 
-    public boolean edit(SampleBoard sampleBoard);
+    public boolean edit(Sample sampleBoard);
 
     public boolean remove(int id);
 }

@@ -9,15 +9,15 @@ import java.util.Date;
  * Description :샘플 게시판
  */
 
-public class SampleBoard {
+public class Sample {
 
     int id;
     int categoryId;
     String title;
     String content;
     int viewCount;
-    Date createDate;
-    int createId;
+    Date writeDate;
+    int writeId;
     Date updateDate;
     int updateId;
 
@@ -61,20 +61,20 @@ public class SampleBoard {
         this.viewCount = viewCount;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getWriteDate() {
+        return writeDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setWriteDate(Date writeDate) {
+        this.writeDate = writeDate;
     }
 
-    public int getCreateId() {
-        return createId;
+    public int getWriteId() {
+        return writeId;
     }
 
-    public void setCreateId(int createId) {
-        this.createId = createId;
+    public void setWriteId(int writeId) {
+        this.writeId = writeId;
     }
 
     public Date getUpdateDate() {
