@@ -24,7 +24,7 @@
         <script src="/components/angular-route.min.js"></script>
         <script src="/components/angular-resource.min.js"></script>
         <script src="/components/i18n/angular-locale_ko-kr.js"></script>
-        <script src="/app/sample/sampleBoard.js"></script>
+        <script src="/app/sample/sampleApp.js"></script>
     </content>
 </body>
 </html>
