@@ -12,7 +12,16 @@
         order by
             id desc
         limit
-            #{offset}, #{listSize}
+            #{offset}, #{sizePerList}
+    </select>
+
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+        select
+            count(id)
+        from
+            sample_board
+        where
+            category_id = #{categoryId}
     </select>
 
     <select id="selectOne" resultType="net.okjsp.sample.model.Sample">
@@ -43,5 +52,13 @@
     <delete id="delete">
         delete from sample_board where id = #{id}
     </delete>
+
+    <update id="addViewCount">
+        update sample_board
+        set
+            view_count = view_count+1
+        where
+            id = #{id}
+    </update>
 
 </mapper>

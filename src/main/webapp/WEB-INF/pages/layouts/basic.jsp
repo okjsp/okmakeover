@@ -6,7 +6,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <?xml version="1.0" encoding="UTF-8" ?>
-<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
+<%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="ko"<decorator:getProperty property="ng-app" writeEntireProperty="true" />>
 <head>
@@ -39,9 +40,9 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Cummunity</a></li>
-                    <li><a href="#">Tech Q&A</a></li>
-                    <li><a href="#">Job</a></li>
+                    <c:forEach items="${NAV_LIST}" var="nav" varStatus="status">
+                        <li ${status.index == 0 ? "class=\"active\"" : ""}><a href="${nav.url}">${nav.name}</a></li>
+                    </c:forEach>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -65,8 +66,7 @@
     </div>
 </div>
 
-<script src="/components/require.js"></script>
-<script src="/app/app.js?v=1387207266"></script>
+<script src="/components/require.js" data-main="/app/main"></script>
 
 <decorator:getProperty property="page.script"/>
 

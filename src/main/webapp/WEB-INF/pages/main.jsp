@@ -3,18 +3,15 @@
     <meta name="decorator" content="basic" />
 </head>
 <body>
-	<p>${message}</p>
+	<h1>${message}</h1>
 
     <ul>
-        <li>/sample</li>
+        <li><a href="/sample/1">/sample</a> <small>(<b>JSP</b> Version Sample Board)</small></li>
+        <li><a href="/sample_ng/1">/sample_ng</a> <small>(<b>AngularJS</b> Version Sample Board)</small></li>
     </ul>
 
-    <script>
-        require(['jquery'], function($) {
-            $('li').click(function() {
-                window.location.href = $(this).text();
-            });
-        });
-    </script>
+    <content tag="script">
+        <script src="/components/jquery-1.10.2.min.js"></script>
+    </content>
 </body>
 </html>
