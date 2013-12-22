@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2503946882">
+    <data-source source="LOCAL" name="Data Source" uuid="60eb2320-f192-4f9b-a79f-ab39a28869e3">
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://112.175.88.136:3306/okjsp</jdbc-url>
+      <user-name>dbdev2</user-name>
+      <user-password>dfd8dfc5dfdbdfc1dfccdf9adf98df80</user-password>
+      <default-dialect>GenericSQL</default-dialect>
+      <libraries>
+        <library>
+          <url>file://$USER_HOME$/Downloads/mariadb-java-client-1.1.5.jar</url>
+        </library>
+      </libraries>
+    </data-source>
+  </component>
+</project>
+

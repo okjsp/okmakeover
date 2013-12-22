@@ -5,6 +5,8 @@
         <parser content-type="text/html" class="com.opensymphony.module.sitemesh.parser.HTMLPageParser"/>
     </page-parsers>
 
+    <excludes file="/WEB-INF/config/sitemesh/decorators.xml"/>
+
     <decorator-mappers>
 
         <mapper class="com.opensymphony.module.sitemesh.mapper.PageDecoratorMapper">

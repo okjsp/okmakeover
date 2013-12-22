@@ -1,0 +1,22 @@
+
+<form name="sampleForm" class="form-horizontal" role="form">
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">제목</label>
+        <div class="col-sm-8">
+            <input id="title" name="title" ng-model="sample.title" class="form-control" placeholder="제목을 입력해 주세요." required="true" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="content" class="col-sm-2 control-label">내용</label>
+        <div class="col-sm-8">
+            <textarea id="content" name="content" rows="10" ng-model="sample.content" class="form-control" placeholder="내용을 입력해 주세요." required="true"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="text-center">
+            <button type="button" ng-click="save()" class="btn btn-primary btn-mg" role="button" ng-disabled="sampleForm.$invalid">저장</button>
+            <button type="button" ng-click="cancel()" class="btn btn-default btn-mg" role="button">취소</button>
+        </div>
+    </div>
+</form>

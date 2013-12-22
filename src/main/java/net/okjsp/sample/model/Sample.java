@@ -6,20 +6,20 @@ import java.util.Date;
  * User: langerhans
  * Date: 2013. 11. 20.
  * Time: 오전 12:27
- * Description :샘플 게시판
+ * Description : 샘플 게시판 Model
  */
 
-public class SampleBoard {
+public class Sample {
 
     int id;
     int categoryId;
     String title;
     String content;
     int viewCount;
-    Date createDate;
-    int createId;
+    Date writeDate;
+    String writeId;
     Date updateDate;
-    int updateId;
+    String updateId;
 
     public int getId() {
         return id;
@@ -61,20 +61,20 @@ public class SampleBoard {
         this.viewCount = viewCount;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Date getWriteDate() {
+        return writeDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setWriteDate(Date writeDate) {
+        this.writeDate = writeDate;
     }
 
-    public int getCreateId() {
-        return createId;
+    public String getWriteId() {
+        return writeId;
     }
 
-    public void setCreateId(int createId) {
-        this.createId = createId;
+    public void setWriteId(String writeId) {
+        this.writeId = writeId;
     }
 
     public Date getUpdateDate() {
@@ -85,11 +85,11 @@ public class SampleBoard {
         this.updateDate = updateDate;
     }
 
-    public int getUpdateId() {
+    public String getUpdateId() {
         return updateId;
     }
 
-    public void setUpdateId(int updateId) {
+    public void setUpdateId(String updateId) {
         this.updateId = updateId;
     }
 }

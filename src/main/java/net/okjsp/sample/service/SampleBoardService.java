@@ -1,7 +1,7 @@
 package net.okjsp.sample.service;
 
 import net.okjsp.common.model.Paging;
-import net.okjsp.sample.model.SampleBoard;
+import net.okjsp.sample.model.Sample;
 
 import java.util.List;
 
@@ -9,17 +9,21 @@ import java.util.List;
  * User: langerhans
  * Date: 2013. 11. 20.
  * Time: 오전 1:17
- * Description :
+ * Description : 샘플 게시판 Service
  */
 public interface SampleBoardService {
 
-    public List<SampleBoard> getList(int categoryId, Paging paging);
+    public List<Sample> getList(int categoryId, Paging paging);
 
-    public SampleBoard getOne(int id);
+    public int getTotalCount(int categoryId);
 
-    public boolean create(SampleBoard sampleBoard);
+    public Sample getOne(int id);
 
-    public boolean edit(SampleBoard sampleBoard);
+    public boolean create(Sample sampleBoard);
+
+    public boolean modify(Sample sampleBoard);
+
+    public boolean addViewCount(int id);
 
     public boolean remove(int id);
 }

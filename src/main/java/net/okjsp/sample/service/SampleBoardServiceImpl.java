@@ -2,7 +2,7 @@ package net.okjsp.sample.service;
 
 import net.okjsp.common.model.Paging;
 import net.okjsp.sample.dao.SampleBoardDao;
-import net.okjsp.sample.model.SampleBoard;
+import net.okjsp.sample.model.Sample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * User: langerhans
  * Date: 2013. 11. 20.
  * Time: 오전 1:23
- * Description :
+ * Description : 샘플 게시판 Service
  */
 @Service
 public class SampleBoardServiceImpl implements SampleBoardService {
@@ -22,23 +22,31 @@ public class SampleBoardServiceImpl implements SampleBoardService {
     SampleBoardDao sampleBoardDao;
 
     @Override
-    public List<SampleBoard> getList(int categoryId, Paging paging) {
+    public List<Sample> getList(int categoryId, Paging paging) {
 
-        List<SampleBoard> list = sampleBoardDao.selectList(categoryId, paging.getOffset(), paging.getListSize());
+        List<Sample> list = sampleBoardDao.selectList(categoryId, paging.getOffset(), paging.getSizePerList());
 
         return list;
     }
 
     @Override
-    public SampleBoard getOne(int id) {
+    public int getTotalCount(int categoryId) {
 
-        SampleBoard sampleBoard = sampleBoardDao.selectOne(id);
+        int count = sampleBoardDao.selectTotalCount(categoryId);
+
+        return count;
+    }
+
+    @Override
+    public Sample getOne(int id) {
+
+        Sample sampleBoard = sampleBoardDao.selectOne(id);
 
         return sampleBoard;
     }
 
     @Override
-    public boolean create(SampleBoard sampleBoard) {
+    public boolean create(Sample sampleBoard) {
 
         boolean result = false;
 
@@ -52,7 +60,7 @@ public class SampleBoardServiceImpl implements SampleBoardService {
     }
 
     @Override
-    public boolean edit(SampleBoard sampleBoard) {
+    public boolean modify(Sample sampleBoard) {
 
         boolean result = false;
 
@@ -63,6 +71,14 @@ public class SampleBoardServiceImpl implements SampleBoardService {
         }
 
         return result;
+    }
+
+    @Override
+    public boolean addViewCount(int id) {
+
+        int count = sampleBoardDao.addViewCount(id);
+
+        return false;
     }
 
     @Override

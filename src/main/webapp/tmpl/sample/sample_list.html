@@ -1,0 +1,43 @@
+
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <colgroup>
+            <col style="width:10%;" />
+            <col  />
+            <col style="width:20%;" />
+            <col style="width:20%;" />
+            <col style="width:10%;" />
+        </colgroup>
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>제목</th>
+            <th>작성일</th>
+            <th>이름</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="sample in samples">
+            <td>{{sample.id}}</td>
+            <td class="subject"><a ng-href="/sample_ng/{{categoryId}}/view/{{sample.id}}">{{sample.title}}</a></td>
+            <td>{{sample.writeDate | date:'short'}}</td>
+            <td>{{sample.writeId}}</td>
+            <td>{{sample.viewCount}}</td>
+        </tr>
+        <tr ng-if="samples.length == 0">
+            <td colspan="5" class="text-center">게시물이 없습니다.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-sm-6">
+    <a ng-href="/sample_ng/{{categoryId}}?page={{paging.page-1}}" ng-if="paging.page > 1" class="btn btn-default btn-mg">< 이전</a>&nbsp;
+    <a ng-href="/sample_ng/{{categoryId}}?page={{paging.page+1}}" ng-if="paging.lastIndex < paging.totalCount" class="btn btn-default btn-mg">다음 ></a>
+</div>
+
+<div class="col-sm-6">
+    <a ng-href="/sample_ng/{{categoryId}}/create" class="btn btn-primary pull-right" role="button">글쓰기</a>
+</div>

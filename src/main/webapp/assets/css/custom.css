@@ -1,0 +1,38 @@
+html,
+body {
+    height: 100%;
+}
+
+#wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 80px;
+}
+
+#footer {
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
+#wrap > .container {
+    padding: 60px 15px 0;
+}
+.container .text-muted {
+    margin: 20px 0;
+}
+
+#footer > .container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 970px;
+    }
+}
