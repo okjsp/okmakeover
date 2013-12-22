@@ -3,12 +3,12 @@
     /**
      * Initialize Module
      */
-    var sampleBoard = angular.module('SampleBoard', ['ngRoute', 'ngResource']);
+    var sampleApp = angular.module('SampleApp', ['ngRoute', 'ngResource']);
 
     /**
      * Module Config
      */
-    sampleBoard.config(function($routeProvider, $locationProvider) {
+    sampleApp.config(function($routeProvider, $locationProvider) {
 
         /**
          * HTML5에서 지원하는 History API 를 이용한다.
@@ -57,7 +57,7 @@
      * sample.$remove()  > DELETE /sample/1/1
      *
      */
-    sampleBoard.factory('Sample', function($resource, $routeParams){
+    sampleApp.factory('Sample', function($resource, $routeParams){
 
         // java의 net.okjsp.sample.SampleNgController 확인
         return $resource('/sample_ng/:categoryId/:id',
@@ -67,8 +67,7 @@
             },
             {
                 /**
-                 * 목록 JSON 에 Paging 정보를 추가해서 넘기기 위해 transformResponse를 통해
-                 * Data를 분할하는 작업을 한다.
+                 * 목록 JSON 에 Paging 정보를 추가해서 넘기기 위해 list Method를 구현한다.
                  */
                 list: {
                     method: 'GET'
@@ -82,7 +81,7 @@
      * Controllers
      */
     // List Controller
-    sampleBoard.controller('ListCtrl', function($scope, $routeParams, $location, Sample) {
+    sampleApp.controller('ListCtrl', function($scope, $routeParams, $location, Sample) {
         $scope.categoryId = $routeParams.categoryId;
 
         Sample.list({page: $routeParams.page}, function(data) {
@@ -93,7 +92,7 @@
     });
 
     // View Controller
-    sampleBoard.controller('ViewCtrl', function($scope, $location, $routeParams, Sample) {
+    sampleApp.controller('ViewCtrl', function($scope, $location, $routeParams, Sample) {
         $scope.categoryId = $routeParams.categoryId;
         $scope.sample = Sample.get({id: $routeParams.id});
 
@@ -107,7 +106,7 @@
     });
 
     // Modify Controller
-    sampleBoard.controller('ModifyCtrl', function($scope, $location, $routeParams, Sample) {
+    sampleApp.controller('ModifyCtrl', function($scope, $location, $routeParams, Sample) {
         $scope.categoryId = $routeParams.categoryId;
         $scope.sample = Sample.get({id: $routeParams.id});
 
@@ -123,7 +122,7 @@
     });
 
     // Create Controller
-    sampleBoard.controller('CreateCtrl', function($scope, $location, $route, $routeParams, Sample) {
+    sampleApp.controller('CreateCtrl', function($scope, $location, $route, $routeParams, Sample) {
         $scope.categoryId = $routeParams.categoryId;
         $scope.sample = new Sample({categoryId: $routeParams.categoryId});
 
