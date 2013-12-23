@@ -6,14 +6,15 @@
 
 
     <settings>
-        <setting value="true" name="cacheEnabled"></setting> 				<!-- default : true -->
-        <setting value="true" name="lazyLoadingEnabled"></setting>   		<!-- default : true -->
-        <setting value="true" name="multipleResultSetsEnabled"></setting> 	<!-- default : true -->
-        <setting value="true" name="useColumnLabel"></setting>   			<!-- default : true -->
-        <setting value="false" name="useGeneratedKeys"></setting> 			<!-- default : false -->
-        <setting value="FULL" name="autoMappingBehavior"></setting>    	<!-- default : PARTIAL -->
-        <setting value="25000" name="defaultStatementTimeout"></setting>	<!-- default : none -->
-        <setting value="SIMPLE" name="defaultExecutorType"></setting>      	<!-- default : SIMPLE  -->
+        <setting value="true" name="cacheEnabled" /> 				<!-- default : true -->
+        <setting value="true" name="lazyLoadingEnabled" />   		<!-- default : true -->
+        <setting value="true" name="multipleResultSetsEnabled" /> 	<!-- default : true -->
+        <setting value="true" name="useColumnLabel" />   			<!-- default : true -->
+        <setting value="false" name="useGeneratedKeys" /> 			<!-- default : false -->
+        <setting value="PARTIAL" name="autoMappingBehavior" />    	<!-- default : PARTIAL -->
+        <setting value="25000" name="defaultStatementTimeout" />	<!-- default : none -->
+        <setting value="SIMPLE" name="defaultExecutorType" />      	<!-- default : SIMPLE  -->
+        <setting value="true" name="mapUnderscoreToCamelCase"  />   <!-- default : true -->
     </settings>
 
     <typeAliases>

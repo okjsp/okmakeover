@@ -10,22 +10,29 @@ import java.util.List;
  * User: langerhans
  * Date: 2013. 11. 20.
  * Time: 오전 12:44
- * Description :
+ * Description : 샘플 게시판 DAO
  */
 @Repository
 public interface SampleBoardDao {
 
     /**
-     *
+     * 게시물 목록
      * @param categoryId
      * @param offset
-     * @param listSize
+     * @param sizePerList
      * @return
      */
     public List<Sample> selectList(
             @Param("categoryId") int categoryId,
             @Param("offset") int offset,
-            @Param("listSize") int listSize);
+            @Param("sizePerList") int sizePerList);
+
+    /**
+     * 게시물 전체 Count
+     * @param categoryId
+     * @return
+     */
+    public int selectTotalCount(@Param("categoryId") int categoryId);
 
     /**
      * 게시물 상세
@@ -55,4 +62,10 @@ public interface SampleBoardDao {
      */
     public int delete(@Param("id") int id);
 
+    /**
+     * 게시물 조회수 증가
+     * @param id
+     * @return
+     */
+    public int addViewCount(@Param("id") int id);
 }

@@ -7,7 +7,7 @@ body {
     min-height: 100%;
     height: auto;
     margin: 0 auto -60px;
-    padding: 0 0 60px;
+    padding: 0 0 80px;
 }
 
 #footer {
@@ -29,4 +29,10 @@ body {
 
 code {
     font-size: 80%;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 970px;
+    }
 }
