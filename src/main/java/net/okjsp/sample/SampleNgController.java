@@ -125,7 +125,7 @@ public class SampleNgController extends BasicLayoutController {
     public @ResponseBody Result remove(
             @PathVariable int id) {
 
-        boolean isCreated = sampleBoardService.remove(id);
+        boolean isCreated = sampleBoardService.destroy(id);
 
         Result result = new Result(isCreated, "삭제가 완료되었습니다.");
 

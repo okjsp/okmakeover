@@ -172,7 +172,7 @@ public class SampleController extends BasicLayoutController {
             @PathVariable int categoryId,
             @PathVariable int id) {
 
-        sampleBoardService.remove(id);
+        sampleBoardService.destroy(id);
 
         return "redirect:/sample/"+categoryId;
     }
