@@ -6,8 +6,8 @@
 	<h1>${message}</h1>
 
     <ul>
-        <li><a href="/sample/1">/sample</a> <small>(<b>JSP</b> Version Sample Board)</small></li>
-        <li><a href="/sample_ng/1">/sample_ng</a> <small>(<b>AngularJS</b> Version Sample Board)</small></li>
+        <li><a href="/sample/1">/sample/1</a> <small>(<b>JSP</b> Version Sample Board)</small></li>
+        <li><a href="/sample_ng/1">/sample_ng/1</a> <small>(<b>AngularJS</b> Version Sample Board)</small></li>
     </ul>
 
     <content tag="script">
