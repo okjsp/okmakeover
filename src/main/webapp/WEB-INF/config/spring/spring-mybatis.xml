@@ -41,11 +41,12 @@
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="create*" rollback-for="java.lang.Exception"/>
-            <tx:method name="insert*" rollback-for="java.lang.Exception"/>
-            <tx:method name="create*" rollback-for="java.lang.Exception"/>
-            <tx:method name="update*" rollback-for="java.lang.Exception"/>
+            <tx:method name="check*" rollback-for="java.lang.Exception"/>
+            <tx:method name="add*" rollback-for="java.lang.Exception"/>
+            <tx:method name="modify*" rollback-for="java.lang.Exception"/>
+            <tx:method name="change*" rollback-for="java.lang.Exception"/>
+            <tx:method name="destroy*" rollback-for="java.lang.Exception"/>
             <tx:method name="remove*" rollback-for="java.lang.Exception"/>
-            <tx:method name="delete*" rollback-for="java.lang.Exception"/>
         </tx:attributes>
     </tx:advice>
 
