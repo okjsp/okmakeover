@@ -46,8 +46,8 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Signup</a></li>
-                    <li><a href="#">Log in</a></li>
+                    <li><a href="/member/signup">Signup</a></li>
+                    <li><a href="/member/login">Log in</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

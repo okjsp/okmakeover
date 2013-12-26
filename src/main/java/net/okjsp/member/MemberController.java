@@ -3,6 +3,7 @@ package net.okjsp.member;/**
 
  */
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Time: 오후 2:07
  * Description : MemberController
  */
+@Controller
 @RequestMapping(value = "/member")
 public class MemberController {
 
@@ -23,5 +25,11 @@ public class MemberController {
     public String loginForm() {
 
         return "member/login";
+    }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.GET, produces = "text/html")
+    public String signup() {
+
+        return "member/signup";
     }
 }
