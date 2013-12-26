@@ -27,20 +27,20 @@
          */
         $routeProvider
             .when('/:categoryId', {
-                controller: 'ListCtrl',
+                controller: 'SampleListCtrl',
                 templateUrl: '/tmpl/sample/sample_list.html'
             })
             .when('/:categoryId/view/:id', {
-                controller: 'ViewCtrl',
+                controller: 'SampleViewCtrl',
                 templateUrl: '/tmpl/sample/sample_view.html'
             })
             .when('/:categoryId/modify/:id', {
-                controller: 'ModifyCtrl',
-                templateUrl: '/tmpl/sample/sample_create.html'
+                controller: 'SampleModifyCtrl',
+                templateUrl: '/tmpl/sample/sample_form.html'
             })
             .when('/:categoryId/create', {
-                controller: 'CreateCtrl',
-                templateUrl: '/tmpl/sample/sample_create.html'
+                controller: 'SampleCreateCtrl',
+                templateUrl: '/tmpl/sample/sample_form.html'
             });
     });
 
@@ -81,7 +81,7 @@
      * Controllers
      */
     // List Controller
-    sampleApp.controller('ListCtrl', function($scope, $routeParams, $location, Sample) {
+    sampleApp.controller('SampleListCtrl', function($scope, $routeParams, $location, Sample) {
         $scope.categoryId = $routeParams.categoryId;
 
         Sample.list({page: $routeParams.page}, function(data) {
@@ -92,7 +92,7 @@
     });
 
     // View Controller
-    sampleApp.controller('ViewCtrl', function($scope, $location, $routeParams, Sample) {
+    sampleApp.controller('SampleViewCtrl', function($scope, $location, $routeParams, Sample) {
         $scope.categoryId = $routeParams.categoryId;
         $scope.sample = Sample.get({id: $routeParams.id});
 
@@ -106,7 +106,7 @@
     });
 
     // Modify Controller
-    sampleApp.controller('ModifyCtrl', function($scope, $location, $routeParams, Sample) {
+    sampleApp.controller('SampleModifyCtrl', function($scope, $location, $routeParams, Sample) {
         $scope.categoryId = $routeParams.categoryId;
         $scope.sample = Sample.get({id: $routeParams.id});
 
@@ -122,7 +122,7 @@
     });
 
     // Create Controller
-    sampleApp.controller('CreateCtrl', function($scope, $location, $route, $routeParams, Sample) {
+    sampleApp.controller('SampleCreateCtrl', function($scope, $location, $route, $routeParams, Sample) {
         $scope.categoryId = $routeParams.categoryId;
         $scope.sample = new Sample({categoryId: $routeParams.categoryId});
 

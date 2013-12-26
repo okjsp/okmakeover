@@ -25,5 +25,5 @@ public interface SampleBoardService {
 
     public boolean addViewCount(int id);
 
-    public boolean remove(int id);
+    public boolean destroy(int id);
 }

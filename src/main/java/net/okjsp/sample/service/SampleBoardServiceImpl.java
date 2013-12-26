@@ -82,7 +82,7 @@ public class SampleBoardServiceImpl implements SampleBoardService {
     }
 
     @Override
-    public boolean remove(int id) {
+    public boolean destroy(int id) {
 
         boolean result = false;
 
