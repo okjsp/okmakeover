@@ -1,5 +1,6 @@
 package net.okjsp.main;
 
+import net.okjsp.layout.BasicLayoutController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Description : Main
  */
 @Controller
-public class MainController {
+public class MainController extends BasicLayoutController {
 
     @RequestMapping(value = "/")
     public String main(Model model) {
