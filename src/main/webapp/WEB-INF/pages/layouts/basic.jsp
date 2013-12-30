@@ -5,10 +5,9 @@
   Description : 
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<?xml version="1.0" encoding="UTF-8" ?>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<!doctype html>
 <html lang="ko"<decorator:getProperty property="ng-app" writeEntireProperty="true" />>
 <head>
     <meta charset="utf-8">
@@ -46,8 +45,8 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/member/signup">Signup</a></li>
-                    <li><a href="/member/login">Log in</a></li>
+                    <li><a href="/member/signup">회원가입</a></li>
+                    <li><a href="/member/login">로그인</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

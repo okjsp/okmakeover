@@ -11,7 +11,7 @@
 
     <sec:http auto-config="true" use-expressions="true"  >
         <sec:intercept-url pattern="/**" access="permitAll" />
-        <sec:form-login login-page="/member/login" login-processing-url="/member/login_process"
+        <sec:form-login login-page="/member/login" login-processing-url="/member/login/process"
                         username-parameter="login_id" password-parameter="password" />
         <sec:logout logout-url="/member/logout" delete-cookies="J_SESSIONID" />
         <sec:logout />
