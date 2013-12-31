@@ -60,7 +60,7 @@
     sampleApp.factory('Sample', function($resource, $routeParams){
 
         // java의 net.okjsp.sample.SampleNgController 확인
-        return $resource('/sample_ng/:categoryId/:id',
+        return $resource('/sample_ng/:categoryId/:id.json',
             {
                 categoryId: $routeParams.categoryId,
                 id:'@id'
