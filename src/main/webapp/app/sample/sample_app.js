@@ -50,17 +50,17 @@
      *$resource를 이용하여 서버와 RESTful 통신을 하는 ORM Style의 기능을 구현 한다.
      *
      * 예)
-     * Sample.query() > GET /sample_ng/1
-     * Sample.get({id: 1}) > GET /sample_ng/1/view/1
-     * sample.$save() > POST /sample/1  (sample instance 에 id가 없을 경우)
-     * sample.$save() > POST /sample/1/1  (sample instance 에 id가 있을 경우)
-     * sample.$remove()  > DELETE /sample/1/1
+     * Sample.query() > GET /sample_ng/1.json
+     * Sample.get({id: 1}) > GET /sample_ng/1/view/1.json
+     * sample.$save() > POST /sample/1.json  (sample instance 에 id가 없을 경우)
+     * sample.$save() > POST /sample/1/1.json  (sample instance 에 id가 있을 경우)
+     * sample.$remove()  > DELETE /sample/1/1.json
      *
      */
     sampleApp.factory('Sample', function($resource, $routeParams){
 
         // java의 net.okjsp.sample.SampleNgController 확인
-        return $resource('/sample_ng/:categoryId/:id',
+        return $resource('/sample_ng/:categoryId/:id.json',
             {
                 categoryId: $routeParams.categoryId,
                 id:'@id'
