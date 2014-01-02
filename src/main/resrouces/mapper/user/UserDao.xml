@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.okjsp.user.dao.UserDao">
+
+    <select id="selectOneByLoginId" resultType="net.okjsp.user.model.User">
+        select
+            user_id, login_id, password, name, nick_name, tel, email, profile_img,
+            letter_agr, grade, join_date, update_date, del_date
+        from
+            13_t_user
+        where
+            login_id = #{loginId}
+            and del_date NOT NULL
+    </select>
+
+    <select id="selectCountByLoginId" resultType="java.lang.Integer">
+        select
+            count(login_id)
+        from
+            13_t_user
+        where
+            login_id = #{loginId}
+    </select>
+
+    <select id="selectCountByEmail" resultType="java.lang.Integer">
+        select
+            count(email)
+        from
+            13_t_user
+        where
+            email = #{email}
+    </select>
+
+    <select id="selectOne" resultType="net.okjsp.user.model.User">
+        select
+            user_id, login_id, password, name, nick_name, tel, email, profile_img,
+            letter_agr, grade, join_date, update_date, del_date
+        from
+            13_t_user
+        where
+            user_id = #{userId}
+            and del_date NOT NULL
+    </select>
+
+    <insert id="insert" keyColumn="user_id" useGeneratedKeys="true">
+        insert into 13_t_user
+            (login_id, password, name, nick_name, tel, email, profile_img, letter_agr, grade, join_date)
+       values
+            (#{loginId}, #{password}, #{name}, #{nickName}, #{tel}, #{email}, #{profileImg}, #{letterAgr}, #{grade}, now())
+    </insert>
+
+    <update id="update">
+        update 13_t_user set
+            name = #{name}, nick_name = #{nickName}, tel = #{tel}, email = #{email}, profile_img = #{profileImg},
+            letter_agr = #{letterAgr}, grade = #{grade}, update_date = now()
+        where
+            user_id = #{userId}
+    </update>
+
+    <update id="updateDelDate">
+        update 13_t_user set
+            del_date = now()
+        where
+            user_id = #{userId}
+    </update>
+
+</mapper>

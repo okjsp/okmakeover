@@ -1,4 +1,4 @@
-package net.okjsp.member;
+package net.okjsp.user;
 
 import net.okjsp.layout.BasicLayoutController;
 import org.springframework.stereotype.Controller;
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * User: langerhans
  * Date: 2013. 12. 26.
  * Time: 오후 2:07
- * Description : MemberController
+ * Description : UserController
  */
 @Controller
-@RequestMapping(value = "/member")
-public class MemberController extends BasicLayoutController {
+@RequestMapping(value = "/user")
+public class UserController extends BasicLayoutController {
 
     /**
      * 회원 로그인 Form
