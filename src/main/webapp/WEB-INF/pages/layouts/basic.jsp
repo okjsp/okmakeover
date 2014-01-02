@@ -45,8 +45,8 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/member/signup">회원가입</a></li>
-                    <li><a href="/member/login">로그인</a></li>
+                    <li><a href="/user/signup">회원가입</a></li>
+                    <li><a href="/user/login">로그인</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
