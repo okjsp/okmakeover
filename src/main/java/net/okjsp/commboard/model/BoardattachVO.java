@@ -31,5 +31,87 @@ public class BoardattachVO {
 	
 	// 변경일시
 	private String updateDate;
+
+	public String getAttchId() {
+		return attchId;
+	}
+
+	public void setAttchId(String attchId) {
+		this.attchId = attchId;
+	}
+
+	public String getAttchOrder() {
+		return attchOrder;
+	}
+
+	public void setAttchOrder(String attchOrder) {
+		this.attchOrder = attchOrder;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	public String getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(String fileSize) {
+		this.fileSize = fileSize;
+	}
+
+	public String getImgHeight() {
+		return imgHeight;
+	}
+
+	public void setImgHeight(String imgHeight) {
+		this.imgHeight = imgHeight;
+	}
+
+	public String getImgWidth() {
+		return imgWidth;
+	}
+
+	public void setImgWidth(String imgWidth) {
+		this.imgWidth = imgWidth;
+	}
+
+	public String getWriteDate() {
+		return writeDate;
+	}
+
+	public void setWriteDate(String writeDate) {
+		this.writeDate = writeDate;
+	}
+
+	public String getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
+	}
+	
+	
 	
 }
