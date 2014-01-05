@@ -30,7 +30,7 @@ public class LayoutServiceImpl implements LayoutService {
 
         if(navList == null) {
 
-            navList = new ArrayList<>();
+            navList = new ArrayList<Navigation>();
 
             navList.add(new Navigation("Cummunity", "/cummunity"));
             navList.add(new Navigation("Tech Q&A", "/qna"));
