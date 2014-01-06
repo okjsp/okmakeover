@@ -8,10 +8,8 @@
               ,write_no
               ,tag_name
           from 13_t_tagmapping
-         where 1 = 1
-        <!--
+         where board_id = #{boardId}
            and tag_name = #{tagName}
-        -->
          order by ${sort} desc
          limit #{offset}, #{sizePerList}
     </select>

@@ -24,7 +24,10 @@ public interface TagMappingDao {
      * @return 태그 매핑 목록
      */
     public List<TagMapping> selectList(@Param("boardId") String boardId,
-                                       @Param("writeId") String writeId);
+                                       @Param("writeId") String writeId,
+                                       @Param("sort") String sort,
+                                       @Param("offset") String offset,
+                                       @Param("sizePerList") int sizePerList);
 
     /**
      * 태그 매핑 총 개수.
