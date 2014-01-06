@@ -4,7 +4,6 @@ import net.okjsp.common.model.Paging;
 import net.okjsp.layout.BasicLayoutController;
 import net.okjsp.sample.model.Sample;
 import net.okjsp.sample.service.SampleBoardService;
-import net.okjsp.user.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -91,6 +90,7 @@ public class SampleController extends BasicLayoutController {
      * @param model
      * @return
      */
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/{categoryId}/create", method = RequestMethod.GET)
     public String createForm(
             @PathVariable int categoryId,
@@ -111,6 +111,7 @@ public class SampleController extends BasicLayoutController {
      * @param model
      * @return
      */
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/{categoryId}/create", method = RequestMethod.POST)
     public String create(
             @PathVariable int categoryId,
@@ -132,6 +133,7 @@ public class SampleController extends BasicLayoutController {
      * @param model
      * @return
      */
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/{categoryId}/modify/{id}", method = RequestMethod.GET)
     public String modifyForm(
             @PathVariable int categoryId,
@@ -153,6 +155,7 @@ public class SampleController extends BasicLayoutController {
      * @param sample
      * @return
      */
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/{categoryId}/modify/{id}", method = RequestMethod.POST)
     public String modify(
             @PathVariable int categoryId,
@@ -169,6 +172,7 @@ public class SampleController extends BasicLayoutController {
      * @param id
      * @return
      */
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/{categoryId}/remove/{id}", method = RequestMethod.DELETE)
     public String remove(
             @PathVariable int categoryId,

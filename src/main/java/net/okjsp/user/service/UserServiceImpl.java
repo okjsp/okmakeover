@@ -2,7 +2,6 @@ package net.okjsp.user.service;
 
 import net.okjsp.user.dao.UserDao;
 import net.okjsp.user.model.User;
-import net.okjsp.user.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
@@ -45,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-        authorities.add(new SimpleGrantedAuthority(UserRole.ROLE_USER.name()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         user.setAuthorities(authorities);
 
