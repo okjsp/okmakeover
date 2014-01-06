@@ -13,19 +13,29 @@
     <sec:http pattern="/components/**" security="none" />
     <sec:http pattern="/app/**" security="none" />
 
-    <sec:http use-expressions="true">
+    <sec:http use-expressions="true" auto-config="true"  authentication-manager-ref="authenticationManager">
         <sec:intercept-url pattern="/**" access="permitAll" />
         <sec:form-login login-page="/user/login" login-processing-url="/user/login/process"
-                        username-parameter="login_id" password-parameter="password" />
+                        username-parameter="email" password-parameter="password" />
         <sec:logout logout-url="/user/logout" delete-cookies="J_SESSIONID" />
+        <sec:remember-me key="OkJsp01051354" user-service-ref="userServiceImpl" />
         <sec:logout />
     </sec:http>
 
-    <sec:authentication-manager>
-        <sec:authentication-provider>
-            <sec:user-service>
-                <sec:user name="test" authorities="ROLE_USER" password="test" />
-            </sec:user-service>
+    <bean id="saltSource"
+          class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+        <property name="userPropertyToUse" value="username" />
+    </bean>
+
+    <bean id="shaPasswordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+        <constructor-arg value="512" />
+    </bean>
+
+    <sec:authentication-manager id="authenticationManager">
+        <sec:authentication-provider user-service-ref="userServiceImpl">
+            <sec:password-encoder ref="shaPasswordEncoder">
+                <sec:salt-source ref="saltSource"/>
+            </sec:password-encoder>
         </sec:authentication-provider>
     </sec:authentication-manager>
 

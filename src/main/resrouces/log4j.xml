@@ -23,7 +23,7 @@
 
     <!-- Root Logger -->
     <root>
-        <priority value="WARN" />
+        <priority value="DEBUG" />
         <appender-ref ref="console" />
     </root>
 

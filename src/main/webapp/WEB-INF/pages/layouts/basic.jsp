@@ -7,6 +7,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!doctype html>
 <html lang="ko"<decorator:getProperty property="ng-app" writeEntireProperty="true" />>
 <head>
@@ -45,8 +46,13 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/user/signup">회원가입</a></li>
-                    <li><a href="/user/login">로그인</a></li>
+                    <sec:authorize ifNotGranted="ROLE_USER">
+                        <li><a href="/user/sign_up">회원가입</a></li>
+                        <li><a href="/user/login">로그인</a></li>
+                    </sec:authorize>
+                    <sec:authorize ifAnyGranted="ROLE_USER">
+                        <li><a href="/user/logout">로그아웃</a></li>
+                    </sec:authorize>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>

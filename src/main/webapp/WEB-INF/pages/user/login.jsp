@@ -12,8 +12,11 @@
 <body>
     <form class="form-signin" method="post" action="/user/login/process" role="form">
         <h2 class="form-signin-heading">로그인</h2>
-        <input type="text" class="form-control" placeholder="아이디" required autofocus>
-        <input type="password" class="form-control" placeholder="비밀번호" required>
+        <div class="alert alert-danger">
+            ${sessionScope.SPRING_SECURITY_LAST_EXCEPTION.message}
+        </div>
+        <input type="text" name="email" class="form-control" placeholder="아이디" required autofocus>
+        <input type="password" name="password" class="form-control" placeholder="비밀번호" required>
         <label class="checkbox">
             <input type="checkbox" value="remember-me"> 자동 로그인
         </label>

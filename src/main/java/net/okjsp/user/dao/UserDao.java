@@ -14,18 +14,11 @@ import org.springframework.stereotype.Repository;
 public interface UserDao {
 
     /**
-     * 로그인 아이디로 회원 정보 가져오기
+     * 이메일로 회원 정보 가져오기
      * @param loginId
      * @return
      */
-    public User selectOneByLoginId(@Param("loginId") String loginId);
-
-    /**
-     * 로그인 아이디 카운트
-     * @param loginId
-     * @return
-     */
-    public int selectCountByLoginId(@Param("loginId") String loginId);
+    public User selectOneByEmail(@Param("email") String loginId);
 
     /**
      * 이메일 카운트
@@ -33,6 +26,13 @@ public interface UserDao {
      * @return
      */
     public int selectCountByEmail(@Param("email") String email);
+
+    /**
+     * 닉네임 카운트
+     * @param nickName
+     * @return
+     */
+    public int selectCountByNickName(@Param("nickName") String nickName);
 
     /**
      * 회원 정보 가져오기
@@ -46,19 +46,19 @@ public interface UserDao {
      * @param user
      * @return
      */
-    public boolean insert(User user);
+    public int insert(User user);
 
     /**
      * 회원 정보 수정
      * @param user
      * @return
      */
-    public boolean update(User user);
+    public int update(User user);
 
     /**
      * 회원 정보 삭제
      * @param userId
      * @return
      */
-    public boolean updateDelDate(@Param("userId") int userId);
+    public int updateDelDate(@Param("userId") int userId);
 }
