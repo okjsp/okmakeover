@@ -1,6 +1,6 @@
 package net.okjsp.commboard.model;
 
-public class AttachmappingVO {
+public class Attachmapping {
 	//게시판 번호
 	private int board_id;
 	//글 번호

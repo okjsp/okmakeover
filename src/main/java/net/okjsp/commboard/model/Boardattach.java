@@ -1,6 +1,6 @@
 package net.okjsp.commboard.model;
 
-public class BoardattachVO {
+public class Boardattach {
 
 	// 첨부ID
 	private String attchId;

@@ -1,6 +1,6 @@
 package net.okjsp.commboard.model;
 
-public class ClippingVO {
+public class Clipping {
 
 	// 스크랩ID
 	private String clippingId;

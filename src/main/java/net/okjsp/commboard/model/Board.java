@@ -1,6 +1,6 @@
 package net.okjsp.commboard.model;
 
-public class BoardVO {
+public class Board {
 
 	// 게시판ID
 	private int boardId;

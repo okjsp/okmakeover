@@ -1,6 +1,6 @@
 package net.okjsp.commboard.model;
 
-public class ClippingmappingVO {
+public class Clippingmapping {
 	
 	// 게시판ID
 	private String boardId;

@@ -1,6 +1,6 @@
 package net.okjsp.commboard.model;
 
-public class CommentVO {
+public class Comment {
 	//게시판 번호
 	private int board_no;
 	//글 번호

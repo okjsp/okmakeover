@@ -1,6 +1,6 @@
 package net.okjsp.commboard.model;
 
-public class RecommendationVO {
+public class Recommendation {
 	//게시판 번호
 	private int borad_id;
 	//글 번호
