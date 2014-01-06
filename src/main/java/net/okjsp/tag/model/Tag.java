@@ -17,14 +17,17 @@ public class Tag implements Serializable {
      * 태그명
      */
     private String tagName;
+
     /**
      * 태그 설명
      */
     private String tagSummary;
+
     /**
      * 태그 URL
      */
     private String tagUrl;
+
 
 
     /**
