@@ -13,7 +13,7 @@ import java.util.List;
  * Date: 2013. 11. 20.
  * Time: 오전 1:23
  * Description : 샘플 게시판 Service
- */
+ */  
 @Service
 public class SampleBoardServiceImpl implements SampleBoardService {
 
