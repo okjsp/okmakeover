@@ -13,21 +13,19 @@ import java.io.Serializable;
 public class TagMapping implements Serializable {
     private static final long serialVersionUID = 1L;
 
+
     /**
      * 게시판 ID
      */
     private Integer boardId;
-
     /**
      * 글 번호
      */
     private Integer writeId;
-
     /**
      * 태그명
      */
-    private String tagName;
-
+    private String  tagName;
 
 
     /**
