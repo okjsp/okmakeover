@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
+
     <settings>
         <setting value="true" name="cacheEnabled" /> 				<!-- default : true -->
         <setting value="true" name="lazyLoadingEnabled" />   		<!-- default : true -->
