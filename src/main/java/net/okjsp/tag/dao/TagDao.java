@@ -27,7 +27,7 @@ public interface TagDao {
     public List<Tag> selectList(@Param("tagName") String tagName,
                                 @Param("sort") String sort,
                                 @Param("offset") String offset,
-                                @Param("sizePerList") int sizePerList);
+                                @Param("sizePerList") Integer sizePerList);
 
     /**
      * 태그 총 개수.

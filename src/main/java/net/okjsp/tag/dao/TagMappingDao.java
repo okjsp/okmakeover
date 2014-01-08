@@ -27,7 +27,7 @@ public interface TagMappingDao {
                                        @Param("writeId") String writeId,
                                        @Param("sort") String sort,
                                        @Param("offset") String offset,
-                                       @Param("sizePerList") int sizePerList);
+                                       @Param("sizePerList") Integer sizePerList);
 
     /**
      * 태그 매핑 총 개수.
