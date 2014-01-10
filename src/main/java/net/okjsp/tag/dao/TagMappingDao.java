@@ -20,11 +20,11 @@ public interface TagMappingDao {
      * 태그 매핑 목록 조회.
      *
      * @param boardId 게시판 아이디
-     * @param writeId 글쓴이 아이디
+     * @param writeNo 글쓴이 아이디
      * @return 태그 매핑 목록
      */
     public List<TagMapping> selectList(@Param("boardId") String boardId,
-                                       @Param("writeId") String writeId,
+                                       @Param("writeNo") String writeNo,
                                        @Param("sort") String sort,
                                        @Param("offset") String offset,
                                        @Param("sizePerList") Integer sizePerList);
@@ -33,22 +33,22 @@ public interface TagMappingDao {
      * 태그 매핑 총 개수.
      *
      * @param boardId 게시판 아이디
-     * @param writeId 글쓴이 아이디
+     * @param writeNo 글쓴이 아이디
      * @return 태그 매핑 총 개수
      */
     public Integer selectTotalCount(@Param("boardId") String boardId,
-                                    @Param("writeId") String writeId);
+                                    @Param("writeNo") String writeNo);
 
     /**
      * 태그 조회.
      *
      * @param boardId 게시판 아이디
-     * @param writeId 글쓴이 아이디
+     * @param writeNo 글쓴이 아이디
      * @param tagName 태그명
      * @return 태그
      */
     public Tag selectOne(@Param("boardId") String boardId,
-                         @Param("writeId") String writeId,
+                         @Param("writeNo") String writeNo,
                          @Param("tagName") String tagName);
 
     /**
@@ -71,12 +71,12 @@ public interface TagMappingDao {
      * 태그 매핑 삭제.
      *
      * @param boardId 게시판 아이디
-     * @param writeId 글쓴이 아이디
+     * @param writeNo 글쓴이 아이디
      * @param tagName 태그명
      * @return 태그 매핑 삭제 개수
      */
     public Integer delete(@Param("boardId") String boardId,
-                          @Param("writeId") String writeId,
+                          @Param("writeNo") String writeNo,
                           @Param("tagName") String tagName);
 
 }

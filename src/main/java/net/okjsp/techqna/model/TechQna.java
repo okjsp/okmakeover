@@ -20,7 +20,7 @@ public class TechQna implements Serializable {
      */
     private Integer writeNo;
     /**
-     * Q/A 구분
+     * 삭제 구분(Y/N)
      */
     private String guboonId;
     /**

@@ -13,8 +13,20 @@ import java.util.Date;
  */
 public class Recommendation implements Serializable {
     private static final long serialVersionUID = 1L;
-
-
+    
+    /**
+     * 추천
+     */
+    public static final String RECOMMEND = "1";
+    /**
+     * 반대
+     */
+    public static final String OPPOSE = "2";
+    /**
+     * 신고
+     */
+    public static final String ACCUSE = "3";
+    
     /**
      * 게시판 ID
      */
@@ -34,7 +46,7 @@ public class Recommendation implements Serializable {
     /**
      * 추천인 ID
      */
-    private String proposeId;
+    private String userId;
     /**
      * 추천 점수
      */
@@ -122,8 +134,8 @@ public class Recommendation implements Serializable {
      *
      * @return 추천인 ID
      */
-    public String getProposeId() {
-        return proposeId;
+    public String getUserId() {
+        return userId;
     }
 
     /**
@@ -131,8 +143,8 @@ public class Recommendation implements Serializable {
      *
      * @param proposeId 추천인 ID
      */
-    public void setProposeId(String proposeId) {
-        this.proposeId = proposeId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     /**
@@ -140,6 +152,7 @@ public class Recommendation implements Serializable {
      *
      * @return 추천 점수
      */
+    @Deprecated
     public String getScore() {
         return score;
     }
@@ -149,6 +162,7 @@ public class Recommendation implements Serializable {
      *
      * @param score 추천 점수
      */
+    @Deprecated
     public void setScore(String score) {
         this.score = score;
     }
