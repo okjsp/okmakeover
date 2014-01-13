@@ -1,6 +1,5 @@
 package net.okjsp.tag.service;
 
-
 import net.okjsp.tag.dao.TagDao;
 import net.okjsp.tag.dao.TagMappingDao;
 import net.okjsp.tag.model.Tag;
@@ -10,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import java.util.List;
+
 
 /**
  * 태그 매핑 Service 구현체.
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TagServiceImpl implements TagService {
-
     private final Logger logger = LoggerFactory.getLogger(TagServiceImpl.class);
 
     @Autowired
@@ -84,5 +84,35 @@ public class TagServiceImpl implements TagService {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean createTag(Integer boardId, Integer writeId, List<String> tag) {
+        return false;
+    }
+
+    @Override
+    public boolean modifyTag(Integer boardId, Integer writeId, List<String> tag) {
+        return false;
+    }
+
+    @Override
+    public boolean removeTag(Integer boardId, Integer writeId) {
+        return false;
+    }
+
+    @Override
+    public List<Tag> selectTagMappingList(Integer boardId, Integer writeId) {
+        return null;
+    }
+
+    @Override
+    public List<Tag> selectTagAutoComplete(Tag tag) {
+        return null;
+    }
+
+    @Override
+    public List<Tag> selectTagStatistics(Integer boardId, Integer writeId) {
+        return null;
     }
 }
