@@ -25,7 +25,7 @@ public class TagMapping implements Serializable {
     /**
      * 태그명
      */
-    private String  tagName;
+    private String tagName;
 
 
     /**
