@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.okjsp.user.dao.commboardDao">
+   
+    <select id="selectList" resultType="net.okjsp.commboard.model.Comment">
+        select
+            board_no, write_no, comment_id, nick_name, content, write_date, update_date 
+        from
+            comment
+        where
+            board_no = #{boardNo}
+        and write_no = #{writeNo#}    
+        order by
+            write_date desc
+        limit
+            #{offset}, #{sizePerList}
+    </select>
+
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+        select
+            count(comment_id)
+        from    
+            comment
+        where
+            board_no = #{boardNo}
+        and write_no = #{writeNo#}    
+    </select>
+
+    <select id="selectOne" resultType="net.okjsp.commboard.model.Comment">
+        select
+            board_no, write_no, comment_id, nick_name, content, write_date, update_date 
+        from
+            comment
+        where
+            board_no = #{boardNo}
+        and write_no = #{writeNo#}    
+        and comment_id = #{commentId#}    
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="comment_id">
+        insert into comment
+            (board_no, write_no, comment_id, nick_name, content, write_date, update_date )
+        values
+            (#{boardNo}, #{writeNo}, , #{content}, #{nickName}, #{content}, now(), update_date)
+    </insert>
+
+    <update id="update">
+        update comment
+        set
+            board_no = #{boardNo}, 
+            write_no = #{write_no}, 
+            comment_id = #{comment_id},
+            nick_name = #{nick_name},
+            content = #{content},
+            write_date = #{write_date},
+            update_date =  now() 
+        where
+            board_no = #{boardNo} 
+         and
+            write_no = #{write_no}
+         and
+            comment_id = #{comment_id}
+    </update>
+
+    <delete id="delete">
+        delete from comment 
+        where
+            board_no = #{boardNo} 
+         and
+            write_no = #{write_no}
+         and
+            comment_id = #{comment_id}
+    </delete>
+ 
+
+</mapper>
