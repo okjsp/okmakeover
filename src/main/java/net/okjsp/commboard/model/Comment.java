@@ -2,43 +2,43 @@ package net.okjsp.commboard.model;
 
 public class Comment {
 	//게시판 번호
-	private int board_no;
+	private String boardNo;
 	//글 번호
-	private int write_no;
+	private String writeNo;
 	//코멘트 번호
-	private int comment_id;
+	private String commentId;
 	//닉네임
-	private String nick_name;
+	private String nickName;
 	//본문
 	private String content;
 	//올린 시간
-	private String write_date;
+	private String writeDate;
 	//수정 시간
-	private String update_date;
+	private String updateDate;
 	
-	public int getBoard_no() {
-		return board_no;
+	public String getBoardNo() {
+		return boardNo;
 	}
-	public void setBoard_no(int board_no) {
-		this.board_no = board_no;
+	public void setBoardNo(String boardNo) {
+		this.boardNo = boardNo;
 	}
-	public int getWrite_no() {
-		return write_no;
+	public String getWriteNo() {
+		return writeNo;
 	}
-	public void setWrite_no(int write_no) {
-		this.write_no = write_no;
+	public void setWriteNo(String writeNo) {
+		this.writeNo = writeNo;
 	}
-	public int getComment_id() {
-		return comment_id;
+	public String getCommentId() {
+		return commentId;
 	}
-	public void setComment_id(int comment_id) {
-		this.comment_id = comment_id;
+	public void setCommentId(String commentId) {
+		this.commentId = commentId;
 	}
-	public String getNick_name() {
-		return nick_name;
+	public String getNickName() {
+		return nickName;
 	}
-	public void setNick_name(String nick_name) {
-		this.nick_name = nick_name;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 	public String getContent() {
 		return content;
@@ -46,18 +46,21 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getWrite_date() {
-		return write_date;
+	public String getWriteDate() {
+		return writeDate;
 	}
-	public void setWrite_date(String write_date) {
-		this.write_date = write_date;
+	public void setWriteDate(String writeDate) {
+		this.writeDate = writeDate;
 	}
-	public String getUpdate_date() {
-		return update_date;
+	public String getUpdateDate() {
+		return updateDate;
 	}
-	public void setUpdate_date(String update_date) {
-		this.update_date = update_date;
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
 	}
+
+
 	
+	 
 	
 }

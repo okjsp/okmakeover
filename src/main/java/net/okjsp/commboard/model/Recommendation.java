@@ -2,48 +2,49 @@ package net.okjsp.commboard.model;
 
 public class Recommendation {
 	//게시판 번호
-	private int borad_id;
+	private int boradId;
 	//글 번호
-	private int write_no;
+	private int writeNo;
 	//덧글 번호
-	private int comment_id;
+	private int commentId;
 	//구분 아이디???
-	private String guboon_id;
+	private String guboonId;
 	//뭐지...
-	private String intpropose_id;
+	private String intproposeId;
 	//추천 점수
 	private String score;
 	//추천 날짜
-	private String recommendation_date;
-	public int getBorad_id() {
-		return borad_id;
+	private String recommendationDate;
+	
+	public int getBoradId() {
+		return boradId;
 	}
-	public void setBorad_id(int borad_id) {
-		this.borad_id = borad_id;
+	public void setBoradId(int boradId) {
+		this.boradId = boradId;
 	}
-	public int getWrite_no() {
-		return write_no;
+	public int getWriteNo() {
+		return writeNo;
 	}
-	public void setWrite_no(int write_no) {
-		this.write_no = write_no;
+	public void setWriteNo(int writeNo) {
+		this.writeNo = writeNo;
 	}
-	public int getComment_id() {
-		return comment_id;
+	public int getCommentId() {
+		return commentId;
 	}
-	public void setComment_id(int comment_id) {
-		this.comment_id = comment_id;
+	public void setCommentId(int commentId) {
+		this.commentId = commentId;
 	}
-	public String getGuboon_id() {
-		return guboon_id;
+	public String getGuboonId() {
+		return guboonId;
 	}
-	public void setGuboon_id(String guboon_id) {
-		this.guboon_id = guboon_id;
+	public void setGuboonId(String guboonId) {
+		this.guboonId = guboonId;
 	}
-	public String getIntpropose_id() {
-		return intpropose_id;
+	public String getIntproposeId() {
+		return intproposeId;
 	}
-	public void setIntpropose_id(String intpropose_id) {
-		this.intpropose_id = intpropose_id;
+	public void setIntproposeId(String intproposeId) {
+		this.intproposeId = intproposeId;
 	}
 	public String getScore() {
 		return score;
@@ -51,12 +52,16 @@ public class Recommendation {
 	public void setScore(String score) {
 		this.score = score;
 	}
-	public String getRecommendation_date() {
-		return recommendation_date;
+	public String getRecommendationDate() {
+		return recommendationDate;
 	}
-	public void setRecommendation_date(String recommendation_date) {
-		this.recommendation_date = recommendation_date;
+	public void setRecommendationDate(String recommendationDate) {
+		this.recommendationDate = recommendationDate;
 	}
+	
+	
+	
+	
 	
 	
 
