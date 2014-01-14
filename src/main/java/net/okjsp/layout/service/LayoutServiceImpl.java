@@ -31,7 +31,7 @@ public class LayoutServiceImpl implements LayoutService {
 
             navList = new ArrayList<Navigation>();
 
-            navList.add(new Navigation("Cummunity", "/cummunity"));
+            navList.add(new Navigation("Community", "/community"));
             navList.add(new Navigation("Tech Q&A", "/qna"));
             navList.add(new Navigation("Job", "/job"));
 
