@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.okjsp.commboard.dao.BoardDao">
+	<select id="selectCommunityBoardList" resultType="net.okjsp.commboard.model.Board">
+        select
+            board_id, board_name, category_id, category_name, replay_check, recommend_check, brawl_check, comment_check, write_date, update_date 
+        from
+            13_t_board
+        where
+            board_id = 3        
+    </select>
+</mapper>
