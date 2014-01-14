@@ -13,7 +13,13 @@
     <sec:http pattern="/components/**" security="none" />
     <sec:http pattern="/app/**" security="none" />
 
-    <sec:http use-expressions="true" auto-config="true"  authentication-manager-ref="authenticationManager">
+    <bean id="authenticationSuccessHandler"
+          class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+        <property name="targetUrlParameter" value="redirect" />
+    </bean>
+
+    <sec:http use-expressions="true" auto-config="true"  authentication-manager-ref="authenticationManager"
+              entry-point-ref="customAwareLoginUrlAuthenticationEntryPoint">
         <sec:intercept-url pattern="/**" access="permitAll" />
         <sec:form-login login-page="/user/login" login-processing-url="/user/login/process"
                         username-parameter="email" password-parameter="password" />
@@ -28,7 +34,12 @@
     </bean>
 
     <bean id="shaPasswordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
-        <constructor-arg value="512" />
+        <constructor-arg value="256" />
+    </bean>
+
+    <bean id="customAwareLoginUrlAuthenticationEntryPoint"
+          class="net.okjsp.user.service.CustomAwareLoginUrlAuthenticationEntryPoint">
+        <constructor-arg value="/user/login" />
     </bean>
 
     <sec:authentication-manager id="authenticationManager">

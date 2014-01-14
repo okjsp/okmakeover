@@ -63,6 +63,8 @@ public class User implements UserDetails, CredentialsContainer {
     private boolean credentialsNonExpired = true;
     private boolean enabled = true;
 
+    private static final String salt = "!okjspPwSalt*";
+
     public int getUserId() {
         return userId;
     }
