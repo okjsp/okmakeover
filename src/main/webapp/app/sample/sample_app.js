@@ -8,7 +8,7 @@
     /**
      * Module Config
      */
-    sampleApp.config(function($routeProvider, $locationProvider) {
+    sampleApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
         /**
          * HTML5에서 지원하는 History API 를 이용한다.
@@ -42,6 +42,30 @@
                 controller: 'SampleCreateCtrl',
                 templateUrl: '/tmpl/sample/sample_form.html'
             });
+
+        $httpProvider.responseInterceptors.push(function ($rootScope, $q) {
+
+            function success(response) {
+                return response;
+            }
+
+            function error(response) {
+                var status = response.status;
+
+                if (status == 401) {
+                    window.location = "/user/login?redirect="+encodeURIComponent(window.location.href);
+                    return;
+                }
+
+                return $q.reject(response);
+
+            }
+
+            return function (promise) {
+                return promise.then(success, error);
+            }
+
+        });
     });
 
 

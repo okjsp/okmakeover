@@ -2,15 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.okjsp.sample.dao.SampleBoardDao">
 
-    <select id="selectList" resultType="net.okjsp.sample.model.Sample">
+    <resultMap id="sampleBoardMap" type="net.okjsp.sample.model.Sample">
+
+        <id jdbcType="INTEGER" property="id" column="id"/>
+        <result jdbcType="INTEGER" property="categoryId" column="category_id"/>
+        <result jdbcType="VARCHAR" property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result jdbcType="INTEGER" property="viewCount" column="view_count"/>
+        <result jdbcType="TIMESTAMP" property="writeDate" column="write_date"/>
+        <result jdbcType="VARCHAR" property="writeId" column="write_id"/>
+        <result jdbcType="TIMESTAMP" property="updateDate" column="update_date"/>
+        <result jdbcType="VARCHAR" property="updateId" column="update_id"/>
+
+        <association property="user"  javaType="net.okjsp.user.model.User">
+            <id jdbcType="INTEGER" property="userId" column="USER_ID"/>
+            <result jdbcType="VARCHAR" property="nickName" column="NICK_NAME"/>
+            <result jdbcType="VARCHAR" property="profileImg" column="PROFILE_IMG"/>
+            <result jdbcType="VARCHAR" property="grade" column="GRADE"/>
+        </association>
+
+    </resultMap>
+
+    <select id="selectList" resultMap="sampleBoardMap">
         select
-            id, category_id, title, view_count, write_date, write_id, update_date, update_id
+            sb.id, sb.category_id, sb.title, sb.view_count, sb.write_date, sb.write_id, sb.update_date, sb.update_id,
+            u.user_id, u.nick_name, u.profile_img, u.grade
         from
-            sample_board
+            sample_board sb
+            left outer join 13_t_user u
+            on sb.write_id = u.user_id
         where
-            category_id = #{categoryId}
+
+            sb.category_id = #{categoryId}
         order by
-            id desc
+            sb.id desc
         limit
             #{offset}, #{sizePerList}
     </select>
@@ -24,13 +49,16 @@
             category_id = #{categoryId}
     </select>
 
-    <select id="selectOne" resultType="net.okjsp.sample.model.Sample">
+    <select id="selectOne" resultMap="sampleBoardMap">
         select
-            id, category_id, title, content, view_count, write_date, write_id, update_date, update_id
+            sb.id, sb.category_id, sb.title, sb.content, sb.view_count, sb.write_date, sb.write_id, sb.update_date, sb.update_id,
+            u.user_id, u.nick_name, u.profile_img, u.grade
         from
-            sample_board
+            sample_board sb
+            left outer join 13_t_user u
+            on sb.write_id = u.user_id
         where
-            id = #{id}
+            sb.id = #{id}
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">

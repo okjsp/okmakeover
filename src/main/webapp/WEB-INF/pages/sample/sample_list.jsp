@@ -40,7 +40,7 @@
                 <td>${sample.id}</td>
                 <td><a href="/sample/${categoryId}/${sample.id}">${sample.title}</a></td>
                 <td><fmt:formatDate type="both" value="${sample.writeDate}" dateStyle="short" timeStyle="short" /> </td>
-                <td>${sample.writeId}</td>
+                <td>${sample.user.nickName}</td>
                 <td>${sample.viewCount}</td>
             </tr>
             </c:forEach>

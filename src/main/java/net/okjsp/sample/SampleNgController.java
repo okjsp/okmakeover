@@ -6,7 +6,10 @@ import net.okjsp.common.model.Result;
 import net.okjsp.layout.BasicLayoutController;
 import net.okjsp.sample.model.Sample;
 import net.okjsp.sample.service.SampleBoardService;
+import net.okjsp.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,13 +88,17 @@ public class SampleNgController extends BasicLayoutController {
      * @param sample
      * @return
      */
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/{categoryId}", method = RequestMethod.POST)
     public @ResponseBody Result createByJson(
             @PathVariable int categoryId,
-            @RequestBody Sample sample) {
+            @RequestBody Sample sample,
+            Authentication authentication) {
+
+        User user = (User) authentication.getPrincipal();
 
         sample.setCategoryId(categoryId);
-        sample.setWriteId("테스터");
+        sample.setWriteId(user.getUserId());
 
         boolean isCreated = sampleBoardService.create(sample);
 

@@ -1,5 +1,7 @@
 package net.okjsp.sample.model;
 
+import net.okjsp.user.model.User;
+
 import java.util.Date;
 
 /**
@@ -17,9 +19,11 @@ public class Sample {
     String content;
     int viewCount;
     Date writeDate;
-    String writeId;
+    int writeId;
     Date updateDate;
-    String updateId;
+    int updateId;
+
+    User user;
 
     public int getId() {
         return id;
@@ -69,14 +73,6 @@ public class Sample {
         this.writeDate = writeDate;
     }
 
-    public String getWriteId() {
-        return writeId;
-    }
-
-    public void setWriteId(String writeId) {
-        this.writeId = writeId;
-    }
-
     public Date getUpdateDate() {
         return updateDate;
     }
@@ -85,11 +81,27 @@ public class Sample {
         this.updateDate = updateDate;
     }
 
-    public String getUpdateId() {
+    public int getWriteId() {
+        return writeId;
+    }
+
+    public void setWriteId(int writeId) {
+        this.writeId = writeId;
+    }
+
+    public int getUpdateId() {
         return updateId;
     }
 
-    public void setUpdateId(String updateId) {
+    public void setUpdateId(int updateId) {
         this.updateId = updateId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
