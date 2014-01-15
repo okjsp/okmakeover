@@ -6,23 +6,11 @@
 
     <select id="selectList" resultType="net.okjsp.tag.model.Tag">
         /* 태그 목록 조회 */
-        select tag_name
+        SELECT tag_name
               ,tag_summary
               ,tag_url
-          from 13_t_tag
-         where 1 = 1
-        <!--
-           and tag_name = #{tagName}
-        -->
-         order by ${sort} desc
-         limit #{offset}, #{sizePerList}
-    </select>
-
-    <select id="selectTotalCount" resultType="java.lang.Integer">
-        /* 태그 개수 조회 */
-        select count(tag_name) count
-          from 13_t_tag
-         where tag_name = #{tagName}
+          FROM 13_t_tag
+         WHERE tag_name LIKE CONCAT(#{tagName}, '%')
     </select>
 
     <select id="selectOne" resultType="net.okjsp.tag.model.Tag">

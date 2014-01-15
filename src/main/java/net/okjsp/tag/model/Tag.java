@@ -25,6 +25,10 @@ public class Tag implements Serializable {
      * 태그 URL
      */
     private String tagUrl;
+    /**
+     * 태그 개수
+     */
+    private Integer tagCount;
 
 
     /**
@@ -81,6 +85,24 @@ public class Tag implements Serializable {
         this.tagUrl = tagUrl;
     }
 
+    /**
+     * 태그 개수 Getter.
+     *
+     * @return 태그 개수
+     */
+    public Integer getTagCount() {
+        return tagCount;
+    }
+
+    /**
+     * 태그 개수 Setter.
+     *
+     * @param tagCount 태그 개수
+     */
+    public void setTagCount(Integer tagCount) {
+        this.tagCount = tagCount;
+    }
+
 
     @Override
     public String toString() {
@@ -88,3 +110,4 @@ public class Tag implements Serializable {
     }
 
 }
+

@@ -21,7 +21,7 @@ public class TagMapping implements Serializable {
     /**
      * 글 번호
      */
-    private Integer writeId;
+    private Integer writeNo;
     /**
      * 태그명
      */
@@ -51,17 +51,17 @@ public class TagMapping implements Serializable {
      *
      * @return 글 번호
      */
-    public Integer getWriteId() {
-        return writeId;
+    public Integer getWriteNo() {
+        return writeNo;
     }
 
     /**
      * 글 번호 Setter.
      *
-     * @param writeId 글 번호
+     * @param writeNo 글 번호
      */
-    public void setWriteId(Integer writeId) {
-        this.writeId = writeId;
+    public void setWriteNo(Integer writeNo) {
+        this.writeNo = writeNo;
     }
 
     /**
@@ -89,3 +89,4 @@ public class TagMapping implements Serializable {
     }
 
 }
+

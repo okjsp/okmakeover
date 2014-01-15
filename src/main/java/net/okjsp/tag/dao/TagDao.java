@@ -19,15 +19,9 @@ public interface TagDao {
      * 태그 목록 조회.
      *
      * @param tagName 태그명
-     * @param sort 정렬
-     * @param offset 시작점
-     * @param sizePerList 사이즈 개수
      * @return 태그 목록
      */
-    public List<Tag> selectList(@Param("tagName") String tagName,
-                                @Param("sort") String sort,
-                                @Param("offset") String offset,
-                                @Param("sizePerList") Integer sizePerList);
+    public List<Tag> selectList(@Param("tagName") String tagName);
 
     /**
      * 태그 총 개수.
@@ -70,3 +64,4 @@ public interface TagDao {
     public Integer delete(@Param("tagName") String tagName);
 
 }
+

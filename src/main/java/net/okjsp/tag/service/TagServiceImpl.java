@@ -29,90 +29,68 @@ public class TagServiceImpl implements TagService {
 
 
     @Override
-    public boolean createTag(Integer boardId, Integer writeId, Tag tag) {
+    public boolean createTag(Integer boardId, Integer writeNo, String[] tagList) {
         // 태그 등록 수
         int tagCount = 0;
         // 태그 매핑 등록 수
         int tagMappingCount = 0;
 
-        // 태그 매핑 정보
-        TagMapping tagMapping = new TagMapping();
-        tagMapping.setBoardId(boardId);
-        tagMapping.setTagName(tag.getTagName());
-        tagMapping.setWriteId(writeId);
+        // 태그 매핑 테이블에 태그 전부 삭제
+        tagMappingDao.delete(boardId, writeNo);
 
-        // TODO : DB 등록시 경쟁 조건이라 고민?
-        // 1. DB Table Lock
-        // 2. Java Synchronized
-/*
-        int checkCount = 0;
+        for (String tagString : tagList) {
+            // 태그 정보 세팅
+            Tag tag = new Tag();
+            tag.setTagName(tagString);
+            // TODO : PK 라서 대/소문자 구분을 해야 하지 않을까?
+            // tag.setTagName(tagString.toUpperCase());
 
-        // 태그가 존재하는지 체크
-        checkCount = tagDao.selectTotalCount(tag.getTagName());
+            try {
+                // 태그 테이블에 태그 등록
+                tagCount = tagDao.insert(tag);
+            } catch (DuplicateKeyException dke) {
+                tagCount = 1;
 
-        // 태그가 존재하면
-        if (checkCount > 0) {
-            // 태그 매핑 테이블에 매핑 정보 등록
-            tagMappingDao.insert(tagMapping);
-        }
-        // 태그가 존재하지 않으면
-        else {
-            // 태그 테이블에 태그 등록
-            tagDao.insert(tag);
+                // PK 중복 예외 무시
+                logger.error("### Tag Table, DuplicateKeyException!!");
+            }
 
-            // 태그 매핑 테이블에 매핑 정보 등록
-            tagMappingDao.insert(tagMapping);
-        }
-*/
+            if (tagCount == 1) {
+                // 태그 매핑 정보
+                TagMapping tagMapping = new TagMapping();
+                tagMapping.setBoardId(boardId);
+                tagMapping.setTagName(tag.getTagName());
+                tagMapping.setWriteNo(writeNo);
 
-        try {
-            // 태그 테이블에 태그 등록
-            tagCount = tagDao.insert(tag);
-        } catch (DuplicateKeyException dke) {
-            tagCount = 1;
-
-            // PK 중복 예외 무시
-            logger.error("### Tag Table, DuplicateKeyException!!");
+                // 태그 매핑 테이블에 매핑 정보 등록
+                tagMappingCount += tagMappingDao.insert(tagMapping);
+            }
+            // 실패일때??
+            else {
+                throw new RuntimeException("Tag Failed.");
+            }
         }
 
-        if (tagCount == 1) {
-            // 태그 매핑 테이블에 매핑 정보 등록
-            tagMappingCount = tagMappingDao.insert(tagMapping);
-
-            // 태그 매핑 정보 1건이 등록되었으면 성공!!
-            return (tagMappingCount == 1);
+        if (tagMappingCount == tagList.length) {
+            return true;
+        } else {
+            throw new RuntimeException("Tag Mapping Failed.");
         }
-
-        return false;
     }
 
     @Override
-    public boolean createTag(Integer boardId, Integer writeId, List<String> tag) {
-        return false;
+    public List<TagMapping> selectTagMappingList(Integer boardId, Integer writeNo) {
+        return tagMappingDao.selectList(boardId, writeNo);
     }
 
     @Override
-    public boolean modifyTag(Integer boardId, Integer writeId, List<String> tag) {
-        return false;
+    public List<Tag> selectTagAutoComplete(String tag) {
+        return tagDao.selectList(tag);
     }
 
     @Override
-    public boolean removeTag(Integer boardId, Integer writeId) {
-        return false;
+    public List<Tag> selectTagStatistics(Integer boardId) {
+        return tagMappingDao.selectStatisticsList(boardId);
     }
 
-    @Override
-    public List<Tag> selectTagMappingList(Integer boardId, Integer writeId) {
-        return null;
-    }
-
-    @Override
-    public List<Tag> selectTagAutoComplete(Tag tag) {
-        return null;
-    }
-
-    @Override
-    public List<Tag> selectTagStatistics(Integer boardId, Integer writeId) {
-        return null;
-    }
 }

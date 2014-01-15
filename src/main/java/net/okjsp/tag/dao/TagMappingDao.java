@@ -23,21 +23,28 @@ public interface TagMappingDao {
      * @param writeNo 글쓴이 아이디
      * @return 태그 매핑 목록
      */
-    public List<TagMapping> selectList(@Param("boardId") String boardId,
-                                       @Param("writeNo") String writeNo,
-                                       @Param("sort") String sort,
-                                       @Param("offset") String offset,
-                                       @Param("sizePerList") Integer sizePerList);
+    public List<TagMapping> selectList(@Param("boardId") Integer boardId,
+                                       @Param("writeNo") Integer writeNo);
+
+    /**
+     * 게시판에 해당하는 태그 통계.
+     *
+     * @param boardId 게시판 아이디
+     * @return 태그 목록
+     */
+    public List<Tag> selectStatisticsList(@Param("boardId") Integer boardId);
 
     /**
      * 태그 매핑 총 개수.
      *
      * @param boardId 게시판 아이디
      * @param writeNo 글쓴이 아이디
+     * @param tagName 태그 네임
      * @return 태그 매핑 총 개수
      */
     public Integer selectTotalCount(@Param("boardId") String boardId,
-                                    @Param("writeNo") String writeNo);
+                                    @Param("writeNo") String writeNo,
+                                    @Param("tagName") String tagName);
 
     /**
      * 태그 조회.
@@ -72,11 +79,10 @@ public interface TagMappingDao {
      *
      * @param boardId 게시판 아이디
      * @param writeNo 글쓴이 아이디
-     * @param tagName 태그명
      * @return 태그 매핑 삭제 개수
      */
-    public Integer delete(@Param("boardId") String boardId,
-                          @Param("writeNo") String writeNo,
-                          @Param("tagName") String tagName);
+    public Integer delete(@Param("boardId") Integer boardId,
+                          @Param("writeNo") Integer writeNo);
 
 }
+
