@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Recommendation implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * 추천
      */
@@ -26,7 +26,7 @@ public class Recommendation implements Serializable {
      * 신고
      */
     public static final String ACCUSE = "3";
-    
+
     /**
      * 게시판 ID
      */
@@ -46,7 +46,7 @@ public class Recommendation implements Serializable {
     /**
      * 추천인 ID
      */
-    private String userId;
+    private Integer userId;
     /**
      * 추천 점수
      */
@@ -134,16 +134,16 @@ public class Recommendation implements Serializable {
      *
      * @return 추천인 ID
      */
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
     /**
      * 추천인 ID Setter.
      *
-     * @param proposeId 추천인 ID
+     * @param userId 추천인 ID
      */
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
