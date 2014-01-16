@@ -1,10 +1,15 @@
 package net.okjsp.techqna.model;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import net.okjsp.recommendation.model.Recommendation;
+import net.okjsp.tag.model.Tag;
+import net.okjsp.user.model.User;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * TechQna Model.
@@ -36,6 +41,10 @@ public class TechQna implements Serializable {
      */
     private String content;
     /**
+     * 사용자 ID
+     */
+    private Integer userId;
+	/**
      * 조회수
      */
     private Integer postingHit;
@@ -47,6 +56,18 @@ public class TechQna implements Serializable {
      * 수정날짜
      */
     private Date updateDate;
+    /**
+     * 추천/신고/반대 리스트
+     */
+    private List<Recommendation> recommendationList;
+    /**
+     * 태그 리스트
+     */
+    private List<Tag> tagList;
+	/**
+	 * 사용자
+	 */
+	private User user;
 
 
 
@@ -139,6 +160,24 @@ public class TechQna implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
+    
+    /**
+     * 사용자ID getter
+     * 
+     * @return
+     */
+    public Integer getUserId() {
+		return userId;
+	}
+
+    /**
+     * 사용자 ID setter
+     * 
+     * @param userId
+     */
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
     /**
      * 조회수 Getter.
@@ -193,6 +232,60 @@ public class TechQna implements Serializable {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
+    
+    /**
+     * 추천 리스트 getter
+     * 
+     * @return 추천 리스트
+     */
+    public List<Recommendation> getRecommendationList() {
+		return recommendationList;
+	}
+    
+    /**
+     * 추천 리스트 setter
+     * 
+     * @param recommendationList 추천 리스트
+     */
+	public void setRecommendationList(List<Recommendation> recommendationList) {
+		this.recommendationList = recommendationList;
+	}
+	
+	/**
+	 * 태그 리스트 getter
+	 * 
+	 * @return 태그 리스트
+	 */
+	public List<Tag> getTagList() {
+		return tagList;
+	}
+
+	/**
+	 * 태그 리스트 setter
+	 * 
+	 * @param tagList 태그 리스트
+	 */
+	public void setTagList(List<Tag> tagList) {
+		this.tagList = tagList;
+	}
+	
+	/**
+	 * 사용자 getter
+	 * 
+	 * @return 사용자
+	 */
+	public User getUser() {
+		return user;
+	}
+	
+	/**
+	 * 사용자 setter
+	 * 
+	 * @param user 사용자
+	 */
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 
 
