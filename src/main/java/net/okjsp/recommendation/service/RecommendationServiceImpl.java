@@ -8,6 +8,12 @@ import net.okjsp.recommendation.model.Recommendation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * RecommendationService 구현체
+ * 
+ * @author yjc0703
+ *
+ */
 @Service
 public class RecommendationServiceImpl implements RecommendationService {
 
@@ -57,22 +63,10 @@ public class RecommendationServiceImpl implements RecommendationService {
      */
     @Override
     public void setRecommendation(Recommendation recommendation) {
-        String type = recommendation.getGuboonId();
-        String typeName = "";
-
-        if (Recommendation.RECOMMEND.equals(type)) {
-            typeName = "추천";
-        } else if (Recommendation.OPPOSE.equals(type)) {
-            typeName = "반대";
-        } else if (Recommendation.ACCUSE.equals(type)) {
-            typeName = "신고";
-        } else {
-            throw new RuntimeException("정의되지 않은 구분 값입니다.");
-        }
 
         // 중복 체크
         if (recommendationDao.selectOne(recommendation).size() > 0) {
-            throw new RuntimeException("이미 " + typeName + "되었습니다.");
+            throw new RuntimeException("이미 " + recommendation.getGuboonName() + "되었습니다.");
         }
 
         recommendationDao.insert(recommendation);

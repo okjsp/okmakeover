@@ -184,6 +184,26 @@ public class Recommendation implements Serializable {
     public void setRecommendationDate(Date recommendationDate) {
         this.recommendationDate = recommendationDate;
     }
+    
+    public String getGuboonName() {
+    	String guboonName = "";
+    	
+    	switch(this.guboonId) {
+    	case "1":
+    		guboonName = "추천";
+    		break;
+    	case "2":
+    		guboonName = "반대";
+    		break;
+    	case "3":
+    		guboonName = "신고";
+    		break;
+    	default:
+    		throw new RuntimeException("정의되지 않은 구분 값입니다.");
+    	}
+    	
+    	return guboonName;
+    }
 
 
     @Override
