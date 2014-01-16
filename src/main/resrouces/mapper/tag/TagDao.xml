@@ -12,6 +12,17 @@
           FROM 13_t_tag
          WHERE tag_name LIKE CONCAT(#{tagName}, '%')
     </select>
+    
+    <select id="selectMappingList" resultType="net.okjsp.tag.model.Tag">
+        /* 태그 목록(매핑과 조인) 조회 */
+        SELECT a.tag_name
+              ,a.tag_summary
+              ,a.tag_url
+          FROM 13_t_tag a 
+          JOIN 13_t_tagmapping b ON a.tag_name = b.tag_name 
+         WHERE b.board_id = #{boardId}
+           AND b.write_no = #{writeNo}
+    </select>
 
     <select id="selectOne" resultType="net.okjsp.tag.model.Tag">
         /* 태그 조회 */

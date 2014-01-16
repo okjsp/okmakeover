@@ -185,6 +185,10 @@ public class Recommendation implements Serializable {
         this.recommendationDate = recommendationDate;
     }
     
+    /**
+     * guboonId 에 따른 guboon 명(추천/반대/신고)    
+     * @return
+     */
     public String getGuboonName() {
     	String guboonName = "";
     	

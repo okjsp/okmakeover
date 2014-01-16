@@ -1,6 +1,7 @@
 package net.okjsp.tag.dao;
 
 import net.okjsp.tag.model.Tag;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -62,6 +63,14 @@ public interface TagDao {
      * @return 태그 삭제 개수
      */
     public Integer delete(@Param("tagName") String tagName);
+    
+    /**
+     * 태그 리스트(매핑과 조인하여 게시글에 해당하는 Tag만 조회)
+     * @param boardId
+     * @param writeNo
+     * @return
+     */
+	public List<Tag> selectMappingList(Integer boardId, Integer writeNo);
 
 }
 

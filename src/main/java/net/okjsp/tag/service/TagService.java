@@ -24,13 +24,22 @@ public interface TagService {
     public boolean createTag(Integer boardId, Integer writeId, String[] tagList);
 
     /**
+     * 게시물에 해당하는 태그 목록(매핑) 조회.
+     *
+     * @param boardId 게시물 아이디
+     * @param writeId 글쓴이 아이디
+     * @return 태그 리스트 목록
+     */
+    public List<TagMapping> selectTagMappingList(Integer boardId, Integer writeId);
+    
+    /**
      * 게시물에 해당하는 태그 목록 조회.
      *
      * @param boardId 게시물 아이디
      * @param writeId 글쓴이 아이디
-     * @return 태그 목록
+     * @return 태그 리스트 목록
      */
-    public List<TagMapping> selectTagMappingList(Integer boardId, Integer writeId);
+    public List<Tag> selectTagList(Integer boardId, Integer writeId);
 
     /**
      * 태그 입력시 태그 자동완성 목록 조회.
