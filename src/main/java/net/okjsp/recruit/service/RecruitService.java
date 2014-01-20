@@ -5,7 +5,8 @@ import net.okjsp.recruit.model.Recruit;
 
 public interface RecruitService {
 
-	public List<Recruit> selectList(String workRegion, String employmentType,
+	public List<Recruit> selectList(String workRegion,
+			String employmentType,
 			String sort, String offset, int sizePerList);
 
 	public int selectTotalCount(String workRegion, String employmentType);

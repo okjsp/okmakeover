@@ -15,7 +15,8 @@ public class RecruitServiceImpl implements RecruitService {
 	private RecruitDao recruitDao;
 
 	@Override
-	public List<Recruit> selectList(String workRegion, String employmentType,
+	public List<Recruit> selectList(String workRegion,
+			String employmentType,
 			String sort, String offset, int sizePerList) {
 		return recruitDao.selectList(workRegion, employmentType, sort, offset, sizePerList);
 	}
