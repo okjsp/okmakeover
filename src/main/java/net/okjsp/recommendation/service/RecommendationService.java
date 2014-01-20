@@ -18,7 +18,7 @@ public interface RecommendationService {
      * @param writeNo 게시물 아이디
      * @param type 구분값 (추천/반대/신고)
      */
-    void setRecommendation(int userId, int boardId, int writeNo, String type);
+    void addRecommendation(int userId, int boardId, int writeNo, String type);
     
     /**
      * 게시물 구분(추천/반대/신고) : 댓글 등록.
@@ -29,14 +29,14 @@ public interface RecommendationService {
      * @param commentId 댓글 아이디
      * @param type 구분값 (추천/반대/신고)
      */
-    void setRecommendation(int userId, int boardId, int writeNo, int commentId, String type);
+    void addRecommendation(int userId, int boardId, int writeNo, int commentId, String type);
     
     /**
      * 추천/반대/신고 프로세스.
      *
      * @param recommendation 추천/반대/신고
      */
-    void setRecommendation(Recommendation recommendation);
+    void addRecommendation(Recommendation recommendation);
     
     /**
      * 게시물 추천/반대/신고 리스트.

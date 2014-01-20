@@ -1,10 +1,12 @@
 package net.okjsp.recommendation.model;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
 import java.io.Serializable;
 import java.util.Date;
+
+import net.okjsp.user.model.User;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 /**
  * 추천 Model.
@@ -55,6 +57,11 @@ public class Recommendation implements Serializable {
      * 추천 날짜
      */
     private Date recommendationDate;
+    
+    /**
+     * 추천인
+     */
+    private User user;
 
 
     /**
@@ -186,6 +193,24 @@ public class Recommendation implements Serializable {
     }
     
     /**
+     * 추천인(User) getter
+     *    
+     * @return
+     */
+    public User getUser() {
+		return user;
+	}
+
+    /**
+     * 추천인(User) setter
+     * 
+     * @param user
+     */
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
+    /**
      * guboonId 에 따른 guboon 명(추천/반대/신고)    
      * @return
      */
@@ -209,8 +234,7 @@ public class Recommendation implements Serializable {
     	return guboonName;
     }
 
-
-    @Override
+	@Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
