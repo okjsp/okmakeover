@@ -5,46 +5,77 @@
 
 <mapper namespace="net.okjsp.recommendation.dao.RecommendationDao">
 
-    <select id="selectOne" resultType="net.okjsp.recommendation.model.Recommendation">
+	<resultMap id="recommendationMap" type="net.okjsp.recommendation.model.Recommendation">
+
+        <result jdbcType="INTEGER" property="boardId" column="board_id"/>
+        <result jdbcType="INTEGER" property="writeNo" column="write_no"/>
+        <result jdbcType="INTEGER" property="commentId" column="comment_id"/>
+        <result jdbcType="VARCHAR" property="guboonId" column="guboon_id"/>
+        <result jdbcType="INTEGER" property="userId" column="user_id"/>
+        <result jdbcType="INTEGER" property="score" column="score"/>
+        <result jdbcType="TIMESTAMP" property="recommendationDate" column="recommendation_date"/>
+
+        <association property="user"  javaType="net.okjsp.user.model.User">
+            <id jdbcType="INTEGER" property="userId" column="USER_ID"/>
+            <result jdbcType="VARCHAR" property="nickName" column="NICK_NAME"/>
+            <result jdbcType="VARCHAR" property="profileImg" column="PROFILE_IMG"/>
+            <result jdbcType="VARCHAR" property="grade" column="GRADE"/>
+        </association>
+
+    </resultMap>
+
+    <select id="selectOne" resultMap="recommendationMap">
         select board_id
               ,write_no
               ,comment_id
               ,guboon_id
-              ,user_id
+              ,a.user_id
               ,score
               ,recommendation_date
-          from 13_t_recommendation
+              ,b.nick_name
+              ,b.profile_img
+              ,b.grade
+          from 13_t_recommendation a
+          join 13_t_user b on a.user_id = b.user_id
          where board_id = #{boardId}
            and write_no = #{writeNo}
            and comment_id = #{commentId}
-           and user_id = #{userId}
+           and a.user_id = #{userId}
            and guboon_id = #{guboonId}
     </select>
 
-    <select id="selectRecommendations" resultType="net.okjsp.recommendation.model.Recommendation">
+    <select id="selectRecommendations" resultMap="recommendationMap">
         select board_id
               ,write_no
               ,comment_id
               ,guboon_id
-              ,user_id
+              ,a.user_id
               ,score
               ,recommendation_date
-          from 13_t_recommendation
+              ,b.nick_name
+              ,b.profile_img
+              ,b.grade
+          from 13_t_recommendation a
+          join 13_t_user b on a.user_id = b.user_id
          where board_id = #{boardId}
            and write_no = #{writeNo}
            and comment_id = #{commentId}
          order by recommendation_date asc
     </select>
 
-    <select id="selectRecommendationsByGuboon" resultType="net.okjsp.recommendation.model.Recommendation">
+    <select id="selectRecommendationsByGuboon" resultMap="recommendationMap">
         select board_id
               ,write_no
               ,comment_id
               ,guboon_id
-              ,user_id
+              ,a.user_id
               ,score
               ,recommendation_date
-          from 13_t_recommendation
+              ,b.nick_name
+              ,b.profile_img
+              ,b.grade
+          from 13_t_recommendation a
+          join 13_t_user b on a.user_id = b.user_id
          where board_id = #{boardId}
            and write_no = #{writeNo}
            and comment_id = #{commentId}
@@ -52,16 +83,20 @@
          order by recommendation_date asc
     </select>
 
-    <select id="selectRecommendationsByUser" resultType="net.okjsp.recommendation.model.Recommendation">
+    <select id="selectRecommendationsByUser" resultMap="recommendationMap">
         select board_id
               ,write_no
               ,comment_id
               ,guboon_id
-              ,user_id
+              ,a.user_id
               ,score
               ,recommendation_date
-          from 13_t_recommendation
-         where user_id = #{userId}
+              ,b.nick_name
+              ,b.profile_img
+              ,b.grade
+          from 13_t_recommendation a
+          join 13_t_user b on a.user_id = b.user_id
+         where a.user_id = #{userId}
          order by recommendation_date asc
     </select>
     

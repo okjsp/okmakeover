@@ -30,9 +30,9 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @param type 구분값 (추천/반대/신고)
      */
     @Override
-    public void setRecommendation(int userId, int boardId, int writeNo, String type) {
+    public void addRecommendation(int userId, int boardId, int writeNo, String type) {
         // 게시물인 경우에는 댓글 아이디가 "0"으로 들어간다.
-        this.setRecommendation(userId, boardId, writeNo, 0, type);
+        this.addRecommendation(userId, boardId, writeNo, 0, type);
     }
 
     /**
@@ -45,7 +45,7 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @param type 구분값 (추천/반대/신고)
      */
     @Override
-    public void setRecommendation(int userId, int boardId, int writeNo, int commentId, String type) {
+    public void addRecommendation(int userId, int boardId, int writeNo, int commentId, String type) {
         Recommendation recommendation = new Recommendation();
         recommendation.setBoardId(boardId);
         recommendation.setWriteNo(writeNo);
@@ -53,7 +53,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         recommendation.setUserId(userId);
         recommendation.setGuboonId(type);
         
-        this.setRecommendation(recommendation);
+        this.addRecommendation(recommendation);
     }
 
     /**
@@ -62,7 +62,7 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @param recommendation 추천/반대/신고
      */
     @Override
-    public void setRecommendation(Recommendation recommendation) {
+    public void addRecommendation(Recommendation recommendation) {
 
         // 중복 체크
         if (recommendationDao.selectOne(recommendation).size() > 0) {
