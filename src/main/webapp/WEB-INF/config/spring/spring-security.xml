@@ -30,7 +30,7 @@
 
     <bean id="saltSource"
           class="org.springframework.security.authentication.dao.ReflectionSaltSource">
-        <property name="userPropertyToUse" value="username" />
+        <property name="userPropertyToUse" value="salt" />
     </bean>
 
     <bean id="shaPasswordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">

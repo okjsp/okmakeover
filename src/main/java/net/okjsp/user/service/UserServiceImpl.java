@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     public boolean create(User user) throws Exception {
 
         if(checkDuplicateEmail(user.getEmail())) {
-            throw new Exception("이이 사용중인 이메일 입니다.");
+            throw new Exception("이미 사용중인 이메일 입니다.");
         }
 
         if(checkDuplicateNickName(user.getNickName())) {
