@@ -1,95 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC
-        "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
 <mapper namespace="net.okjsp.techqna.dao.TechQnaDao">
-	<select id="selectTechQnaList" resultType="net.okjsp.techqna.model.TechQna">
-		/* 목록 조회 */
-		SELECT write_no
-		      ,guboon_id
-		      ,parent_id
-		      ,qna_title
-		      ,content
-		      ,posting_hit
-		      ,write_date
-		      ,update_date
-		 FROM 13_t_techqna
-		WHERE parent_id = 0
-		ORDER BY ${sort} desc /* sort 를 기준으로 분기문을 만들어서 정렬기준을 변경해야 하나 요건이 정의되지 않아 이렇게 마무리 함. */
-		LIMIT #{offset}, #{sizePerList}
-	</select>
-	<select id="selectTechQnaListByTag" resultType="net.okjsp.techqna.model.TechQna">
-		/* 목록 조회 */
-		SELECT write_no
-		      ,guboon_id
-		      ,parent_id
-		      ,qna_title
-		      ,content
-		      ,posting_hit
-		      ,write_date
-		      ,update_date
-		 FROM 13_t_techqna a
-		 JOIN 13_t_tagmapping b ON a.write_no = b.write_no AND b.board_id = '2' AND b.tag_name = #{tagName}
-		WHERE parent_id = 0
-		ORDER BY ${sort} desc /* sort 를 기준으로 분기문을 만들어서 정렬기준을 변경해야 하나 요건이 정의되지 않아 이렇게 마무리 함. */
-		LIMIT #{offset}, #{sizePerList}
-	</select>
-	<select id="selectTechQnaDetail" resultType="net.okjsp.techqna.model.TechQna">
-		/* 상세 조회 */
-		SELECT write_no
-		      ,guboon_id
-		      ,parent_id
-		      ,qna_title
-		      ,content
-		      ,posting_hit
-		      ,write_date
-		      ,update_date
-		 FROM 13_t_techqna
-		WHERE write_no = #{writeNo}
-		UNION ALL
-		SELECT write_no
-		      ,guboon_id
-		      ,parent_id
-		      ,qna_title
-		      ,content
-		      ,posting_hit
-		      ,write_date
-		      ,update_date
-		 FROM 13_t_techqna
-		WHERE parent_id = #{writeNo} 
-		ORDER BY write_no ASC
-	</select>
-	<insert id="insert">
-		/* techQna 등록 */
-		INSERT INTO 13_t_techqna (
-			 write_no
-			,guboon_id
-			,parent_id
-			,qna_title
-			,content
-			,posting_hit
-			,write_date
-			,update_date
-		) VALUES (
-			 #{writeNo}
-			,#{guboonId}
-			,#{parentId}
-			,#{qnaTitle}
-			,#{content}
-			,0
-			,now()
-			,now()
-		)
-	</insert>
-	
-	<update id="update">
-		/* techQna 등록 */
-		UPDATE INTO 13_t_techqna SET
-			 guboon_id = #{guboonId}
-			,qna_title = #{qnaTitle}
-			,content = #{content}
-			,posting_hit = #{postingHit}
-			,update_date = now()
-		WHERE write_no = #{writeNo}
-	</update>
+
+    <select id="selectTechQnaList" resultType="net.okjsp.techqna.model.TechQna">
+        /* 목록 조회 */
+        SELECT write_no
+              ,guboon_id
+              ,parent_id
+              ,qna_title
+              ,content
+              ,posting_hit
+              ,write_date
+              ,update_date
+         FROM 13_t_techqna
+        WHERE parent_id = 0
+        /* sort 를 기준으로 분기문을 만들어서 정렬기준을 변경해야 하나 요건이 정의되지 않아 이렇게 마무리 함. */
+        ORDER BY ${sort} desc
+        LIMIT #{offset}, #{sizePerList}
+    </select>
+
+    <select id="selectTechQnaListByTag" resultType="net.okjsp.techqna.model.TechQna">
+        /* 목록 조회 */
+        SELECT write_no
+              ,guboon_id
+              ,parent_id
+              ,qna_title
+              ,content
+              ,posting_hit
+              ,write_date
+              ,update_date
+         FROM 13_t_techqna a
+           JOIN 13_t_tagmapping b
+              ON a.write_no = b.write_no
+             AND b.board_id = '4'
+             AND b.tag_name = #{tagName}
+        WHERE parent_id = 0
+        /* sort 를 기준으로 분기문을 만들어서 정렬기준을 변경해야 하나 요건이 정의되지 않아 이렇게 마무리 함. */
+        ORDER BY ${sort} desc
+        LIMIT #{offset}, #{sizePerList}
+    </select>
+
+    <select id="selectTechQnaDetail" resultType="net.okjsp.techqna.model.TechQna">
+        /* 상세 조회 */
+        SELECT write_no
+              ,guboon_id
+              ,parent_id
+              ,qna_title
+              ,content
+              ,posting_hit
+              ,write_date
+              ,update_date
+         FROM 13_t_techqna
+        WHERE write_no = #{writeNo}
+        UNION ALL
+        SELECT write_no
+              ,guboon_id
+              ,parent_id
+              ,qna_title
+              ,content
+              ,posting_hit
+              ,write_date
+              ,update_date
+         FROM 13_t_techqna
+        WHERE parent_id = #{writeNo} 
+        ORDER BY write_no ASC
+    </select>
+
+    <insert id="insert">
+        /* techQna 등록 */
+        INSERT INTO 13_t_techqna (
+             write_no
+            ,guboon_id
+            ,parent_id
+            ,qna_title
+            ,content
+            ,posting_hit
+            ,write_date
+            ,update_date
+        ) VALUES (
+             #{writeNo}
+            ,#{guboonId}
+            ,#{parentId}
+            ,#{qnaTitle}
+            ,#{content}
+            ,0
+            ,now()
+            ,now()
+        )
+    </insert>
+    
+    <update id="update">
+        /* techQna 등록 */
+        UPDATE 13_t_techqna
+           SET guboon_id = #{guboonId}
+              ,qna_title = #{qnaTitle}
+              ,content   = #{content}
+              ,posting_hit = #{postingHit}
+              ,update_date = now()
+         WHERE write_no = #{writeNo}
+    </update>
+
 </mapper>

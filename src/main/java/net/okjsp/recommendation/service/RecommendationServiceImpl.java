@@ -63,7 +63,6 @@ public class RecommendationServiceImpl implements RecommendationService {
      */
     @Override
     public void addRecommendation(Recommendation recommendation) {
-
         // 중복 체크
         if (recommendationDao.selectOne(recommendation).size() > 0) {
             throw new RuntimeException("이미 " + recommendation.getGuboonName() + "되었습니다.");

@@ -5,23 +5,21 @@
 
 <mapper namespace="net.okjsp.recommendation.dao.RecommendationDao">
 
-	<resultMap id="recommendationMap" type="net.okjsp.recommendation.model.Recommendation">
+    <resultMap id="recommendationMap" type="net.okjsp.recommendation.model.Recommendation">
+        <result jdbcType="INTEGER" property="boardId" column="board_id" />
+        <result jdbcType="INTEGER" property="writeNo" column="write_no" />
+        <result jdbcType="INTEGER" property="commentId" column="comment_id" />
+        <result jdbcType="VARCHAR" property="guboonId" column="guboon_id" />
+        <result jdbcType="INTEGER" property="userId" column="user_id" />
+        <result jdbcType="INTEGER" property="score" column="score" />
+        <result jdbcType="TIMESTAMP" property="recommendationDate" column="recommendation_date" />
 
-        <result jdbcType="INTEGER" property="boardId" column="board_id"/>
-        <result jdbcType="INTEGER" property="writeNo" column="write_no"/>
-        <result jdbcType="INTEGER" property="commentId" column="comment_id"/>
-        <result jdbcType="VARCHAR" property="guboonId" column="guboon_id"/>
-        <result jdbcType="INTEGER" property="userId" column="user_id"/>
-        <result jdbcType="INTEGER" property="score" column="score"/>
-        <result jdbcType="TIMESTAMP" property="recommendationDate" column="recommendation_date"/>
-
-        <association property="user"  javaType="net.okjsp.user.model.User">
-            <id jdbcType="INTEGER" property="userId" column="USER_ID"/>
-            <result jdbcType="VARCHAR" property="nickName" column="NICK_NAME"/>
-            <result jdbcType="VARCHAR" property="profileImg" column="PROFILE_IMG"/>
-            <result jdbcType="VARCHAR" property="grade" column="GRADE"/>
+        <association property="user" javaType="net.okjsp.user.model.User">
+            <id jdbcType="INTEGER" property="userId" column="USER_ID" />
+            <result jdbcType="VARCHAR" property="nickName" column="NICK_NAME" />
+            <result jdbcType="VARCHAR" property="profileImg" column="PROFILE_IMG" />
+            <result jdbcType="VARCHAR" property="grade" column="GRADE" />
         </association>
-
     </resultMap>
 
     <select id="selectOne" resultMap="recommendationMap">

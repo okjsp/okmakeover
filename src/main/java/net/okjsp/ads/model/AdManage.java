@@ -6,7 +6,6 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import java.io.Serializable;
 import java.util.Date;
 
-
 /**
  * 광고 관리 Model.
  *
@@ -15,44 +14,50 @@ import java.util.Date;
 public class AdManage implements Serializable {
     private static final long serialVersionUID = 1L;
 
-
     /**
      * 회원 아이디
      */
     private String userId;
+
     /**
      * 광고 아이디
      */
     private String adId;
+
     /**
      * 광고 타입
      */
     private String adType;
+
     /**
      * 배너 이미지
      */
     private String bannerImg;
+
     /**
      * 배너 내용
      */
     private String bannerText;
+
     /**
      * 광고 링크
      */
     private String linkUrl;
+
     /**
      * 광고 조회수
      */
     private Integer hitCount;
+
     /**
      * 광고 시작일
      */
     private Date startDate;
+
     /**
      * 광고 종료일
      */
     private Date endDate;
-
 
 
     /**
@@ -216,6 +221,7 @@ public class AdManage implements Serializable {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
 
     @Override
     public String toString() {
