@@ -21,7 +21,17 @@ public interface TagService {
      * @param tagList 태그 리스트
      * @return 태그 등록 성공 여부
      */
-    public boolean createTag(Integer boardId, Integer writeId, String[] tagList);
+    public boolean createTag(Integer boardId, Integer writeNo, String[] tagList);
+    
+    /**
+     * 태그 등록.
+     *
+     * @param boardId 게시물 아이디
+     * @param writeId 글쓴이 아이디
+     * @param tagList 태그 리스트
+     * @return 태그 등록 성공 여부
+     */
+    public boolean createTag(Integer boardId, Integer writeNo, List<Tag> tagList);
 
     /**
      * 게시물에 해당하는 태그 목록(매핑) 조회.
@@ -30,7 +40,7 @@ public interface TagService {
      * @param writeId 글쓴이 아이디
      * @return 태그 리스트 목록
      */
-    public List<TagMapping> selectTagMappingList(Integer boardId, Integer writeId);
+    public List<TagMapping> selectTagMappingList(Integer boardId, Integer writeNo);
     
     /**
      * 게시물에 해당하는 태그 목록 조회.
@@ -39,7 +49,7 @@ public interface TagService {
      * @param writeId 글쓴이 아이디
      * @return 태그 리스트 목록
      */
-    public List<Tag> selectTagList(Integer boardId, Integer writeId);
+    public List<Tag> selectTagList(Integer boardId, Integer writeNo);
 
     /**
      * 태그 입력시 태그 자동완성 목록 조회.

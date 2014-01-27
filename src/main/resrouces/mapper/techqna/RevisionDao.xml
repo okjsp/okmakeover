@@ -18,6 +18,12 @@
         WHERE write_no = #{writeNo}
         ORDER BY revision_seq
     </select>
+    
+    <select id="selectMaxRevisionSeq" resultType="java.lang.Integer">
+    	SELECT IFNULL(MAX(revision_seq), 0) + 1 
+    	  FROM 13_t_revision 
+    	 WHERE write_no = #{writeNo}
+    </select>
 
     <insert id="insert">
         /* revision 등록 */
@@ -34,7 +40,7 @@
             ,#{revisionSeq}
             ,#{revisionTitle}
             ,#{content}
-            ,#{tag_name}
+            ,#{tagName}
             ,#{summary}
             ,now()
         )

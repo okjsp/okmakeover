@@ -39,7 +39,7 @@ public interface TechQnaService {
 	 * @param WriteNo 게시글번호(Question 기준)
 	 * @return Tech QNA 리스트(1 Question + N Answers.. LinkedList로 순서 섞이지 않게)
 	 */
-	List<TechQna> selectTechQnaDetail(Integer WriteNo);
+	List<TechQna> selectTechQnaDetail(Integer writeNo);
 	
 	/**
 	 * Tech QNA 생성

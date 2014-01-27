@@ -37,7 +37,7 @@
 
     <insert id="insert">
         /* 태그 매핑 저장 */
-        INERT INTO 13_t_tagmapping (
+        INSERT INTO 13_t_tagmapping (
              board_id
             ,write_no
             ,tag_name

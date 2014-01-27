@@ -1,6 +1,7 @@
 package net.okjsp.techqna.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class TechQna implements Serializable {
     /**
      * 부모 게시물 ID
      */
-    private String parentId;
+    private Integer parentId;
     /**
      * 제목
      */
@@ -92,7 +93,7 @@ public class TechQna implements Serializable {
     /**
      * Q/A 구분 Getter.
      *
-     * @return Q/A 구분
+     * @return 삭제 구분(Y/N)
      */
     public String getGuboonId() {
         return guboonId;
@@ -101,7 +102,7 @@ public class TechQna implements Serializable {
     /**
      * Q/A 구분
      *
-     * @param guboonId Q/A 구분
+     * @param 삭제 구분(Y/N)
      */
     public void setGuboonId(String guboonId) {
         this.guboonId = guboonId;
@@ -112,7 +113,7 @@ public class TechQna implements Serializable {
      *
      * @return 부모 게시물 ID
      */
-    public String getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
@@ -121,7 +122,7 @@ public class TechQna implements Serializable {
      *
      * @param parentId 부모 게시물 ID
      */
-    public void setParentId(String parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 
@@ -267,6 +268,21 @@ public class TechQna implements Serializable {
 	 */
 	public void setTagList(List<Tag> tagList) {
 		this.tagList = tagList;
+	}
+	
+	/**
+	 * 태그 리스트 setter
+	 * 
+	 * @param tags 태그들
+	 */
+	public void setTagList(String... tags) {
+		List<Tag> l = new ArrayList<Tag>();
+		
+		for(String tag : tags) {
+			Tag t = new Tag(tag);
+			l.add(t);
+		}
+		this.tagList = l;
 	}
 	
 	/**

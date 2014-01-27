@@ -1,5 +1,7 @@
 package net.okjsp.tag.service;
 
+import java.util.List;
+
 import net.okjsp.tag.dao.TagDao;
 import net.okjsp.tag.dao.TagMappingDao;
 import net.okjsp.tag.model.Tag;
@@ -10,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 /**
@@ -86,6 +86,24 @@ public class TagServiceImpl implements TagService {
         } else {
             throw new RuntimeException("Tag Mapping Failed.");
         }
+    }
+    
+    /**
+     * 태그 등록.
+     *
+     * @param boardId 게시물 아이디
+     * @param writeId 글쓴이 아이디
+     * @param tagList 태그 리스트
+     * @return 태그 등록 성공 여부
+     */
+    @Override
+    public boolean createTag(Integer boardId, Integer writeNo, List<Tag> tagList) {
+    	String[] array = new String[tagList.size()];
+    	
+    	for(int i = 0; i < tagList.size(); i++) {
+    		array[i] = tagList.get(i).getTagName();
+    	}
+    	return this.createTag(boardId, writeNo, array);
     }
 
     /**

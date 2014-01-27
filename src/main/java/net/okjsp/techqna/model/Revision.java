@@ -134,7 +134,7 @@ public class Revision implements Serializable {
      * @param tagName 리비전 태그명
      */
     public void setTagName(String tagName) {
-        this.tagName = tagName;
+        this.tagName = tagName.substring(1, tagName.length() - 1).replaceAll(" ", "");
     }
 
     /**

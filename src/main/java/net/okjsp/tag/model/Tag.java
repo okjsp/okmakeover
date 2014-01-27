@@ -1,8 +1,5 @@
 package net.okjsp.tag.model;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
-
 import java.io.Serializable;
 
 /**
@@ -12,6 +9,25 @@ import java.io.Serializable;
  */
 public class Tag implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    /**
+     * Tag 생성자 
+     */
+    public Tag() {
+    	this.tagSummary = "";
+    	this.tagUrl = "";
+    }
+    
+    /**
+     * Tag 생성자
+     * 
+     * @param tagName 태그명
+     */
+    public Tag(String tagName) {
+    	this.tagName = tagName;
+    	this.tagSummary = "";
+    	this.tagUrl = "";
+    }
 
     /**
      * 태그명
@@ -106,7 +122,7 @@ public class Tag implements Serializable {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+        return this.tagName;
     }
 
 }

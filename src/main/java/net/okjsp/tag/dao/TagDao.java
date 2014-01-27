@@ -70,7 +70,7 @@ public interface TagDao {
      * @param writeNo
      * @return
      */
-	public List<Tag> selectMappingList(Integer boardId, Integer writeNo);
+	public List<Tag> selectMappingList(@Param("boardId") Integer boardId, @Param("writeNo") Integer writeNo);
 
 }
 

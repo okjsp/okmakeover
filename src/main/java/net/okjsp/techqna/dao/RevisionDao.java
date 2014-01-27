@@ -20,6 +20,13 @@ public interface RevisionDao {
      * @return Revision 목록
      */
     public List<Revision> selectRevisionList(Integer writeNo);
+    
+    /**
+     * revision_seq 채번
+     * 
+     * @return seq
+     */
+    public Integer selectMaxRevisionSeq(Integer writeNo);
 
     /**
      * Revision 등록.

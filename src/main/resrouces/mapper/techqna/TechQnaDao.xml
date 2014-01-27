@@ -69,7 +69,7 @@
         ORDER BY write_no ASC
     </select>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="writeNo">
         /* techQna 등록 */
         INSERT INTO 13_t_techqna (
              write_no
