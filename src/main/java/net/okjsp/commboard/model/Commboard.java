@@ -1,5 +1,7 @@
 package net.okjsp.commboard.model;
 
+import net.okjsp.user.model.User;
+
 public class Commboard {
 
 	// 게시판ID
@@ -20,6 +22,12 @@ public class Commboard {
 	// 제목
 	private String commonTitle;
 	
+	//익명글 체크
+	private String anonymousCheck;
+	
+	//익명글 닉네임
+	private String anonymousNickName;
+	
 	// 내용
 	private String content;
 	
@@ -31,6 +39,17 @@ public class Commboard {
 	
 	// 업데이트 일시
 	private String updateDate;
+	
+	//작성자
+	private User user;
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 	public int getBoardId() {
 		return boardId;
@@ -110,6 +129,22 @@ public class Commboard {
 
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public String getAnonymousCheck() {
+		return anonymousCheck;
+	}
+
+	public void setAnonymousCheck(String anonymousCheck) {
+		this.anonymousCheck = anonymousCheck;
+	}
+
+	public String getAnonymousNickName() {
+		return anonymousNickName;
+	}
+
+	public void setAnonymousNickName(String anonymousNickName) {
+		this.anonymousNickName = anonymousNickName;
 	}
 	
 	
