@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.okjsp.user.dao.UserDao">
+
+    <select id="selectOneByEmail" resultType="net.okjsp.user.model.User">
+        select
+            user_id, password, name, nick_name, tel, email, profile_img,
+            letter_agr, grade, join_date, update_date, del_date
+        from
+            13_t_user
+        where
+            email = #{email}
+            and del_date is null
+    </select>
+
+    <select id="selectCountByEmail" resultType="java.lang.Integer">
+        select
+            count(email)
+        from
+            13_t_user
+        where
+            email = #{email}
+    </select>
+
+    <select id="selectCountByNickName" resultType="java.lang.Integer">
+        select
+            count(nick_name)
+        from
+            13_t_user
+        where
+            nick_name = #{nickName}
+    </select>
+
+    <select id="selectOne" resultType="net.okjsp.user.model.User">
+        select
+            user_id, password, name, nick_name, tel, email, profile_img,
+            letter_agr, grade, join_date, update_date, del_date
+        from
+            13_t_user
+        where
+            user_id = #{userId}
+            and del_date is null
+    </select>
+
+    <insert id="insert" keyColumn="user_id" useGeneratedKeys="true">
+        insert into 13_t_user
+            (password, name, nick_name, tel, email, profile_img, letter_agr, grade, join_date)
+       values
+            (#{password}, #{name}, #{nickName}, #{tel}, #{email}, #{profileImg}, #{letterAgr}, #{grade}, now())
+    </insert>
+
+    <update id="update">
+        update 13_t_user set
+
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="nick_name != null and nick_name != ''">
+                nick_name = #{nickName},
+            </if>
+            <if test="tel != null and tel != ''">
+                tel = #{tel},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="profile_img != null and profile_img != ''">
+                profile_img = #{profileImg},
+            </if>
+            <if test="letter_agr != null and letter_agr != ''">
+                letter_agr = #{letterAgr},
+            </if>
+            <if test="grade != null and grade != ''">
+                grade = #{grade},
+            </if>
+
+          update_date = now()
+
+        where
+            user_id = #{userId}
+    </update>
+
+    <update id="updateDelDate">
+        update 13_t_user set
+            del_date = now()
+        where
+            user_id = #{userId}
+    </update>
+
+</mapper>

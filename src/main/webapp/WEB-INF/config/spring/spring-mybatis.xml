@@ -9,9 +9,19 @@
 
 
 
-    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+    <bean id="dataSourceOkJsp" class="org.springframework.jndi.JndiObjectFactoryBean">
         <qualifier value="mainDB" />
         <property name="jndiName" value="java:comp/env/jdbc/okjspWebDB"/>
+    </bean>
+
+    <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+        <constructor-arg ref="dataSourceOkJsp" />
+        <property name="logFormatter">
+            <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+                <property name="loggingType" value="MULTI_LINE" />
+                <property name="sqlPrefix" value="SQL:::" />
+            </bean>
+        </property>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

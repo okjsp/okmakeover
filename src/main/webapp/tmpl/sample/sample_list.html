@@ -23,7 +23,7 @@
             <td>{{sample.id}}</td>
             <td class="subject"><a ng-href="/sample_ng/{{categoryId}}/view/{{sample.id}}">{{sample.title}}</a></td>
             <td>{{sample.writeDate | date:'short'}}</td>
-            <td>{{sample.writeId}}</td>
+            <td>{{sample.user.nickName}}</td>
             <td>{{sample.viewCount}}</td>
         </tr>
         <tr ng-if="samples.length == 0">

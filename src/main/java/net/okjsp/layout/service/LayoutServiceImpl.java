@@ -1,8 +1,7 @@
 package net.okjsp.layout.service;
 
 import net.okjsp.layout.model.Navigation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import java.util.List;
 @Service
 public class LayoutServiceImpl implements LayoutService {
 
-    private Logger logger = LogManager.getLogger(this.getClass());
+    Logger logger = Logger.getLogger(this.getClass());
 
     private static List<Navigation> navList;
 
@@ -30,9 +29,9 @@ public class LayoutServiceImpl implements LayoutService {
 
         if(navList == null) {
 
-            navList = new ArrayList<>();
+            navList = new ArrayList<Navigation>();
 
-            navList.add(new Navigation("Cummunity", "/cummunity"));
+            navList.add(new Navigation("Community", "/community"));
             navList.add(new Navigation("Tech Q&A", "/qna"));
             navList.add(new Navigation("Job", "/job"));
 

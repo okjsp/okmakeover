@@ -18,7 +18,7 @@
     </div>
 
     <h2>${sample.title}</h2>
-    <p>${sample.writeId} | <small><fmt:formatDate type="both" value="${sample.writeDate}" dateStyle="short" timeStyle="short" /></small></p>
+    <p>${sample.user.nickName} | <small><fmt:formatDate type="both" value="${sample.writeDate}" dateStyle="short" timeStyle="short" /></small></p>
     <p class="lead">${sample.content}</p>
 
 

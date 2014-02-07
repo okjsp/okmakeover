@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.okjsp.hunting.dao.HuntingDao">
+
+	<select id="selectList" resultType="net.okjsp.hunting.model.Hunting">
+		select
+			write_no, guboon_id, job_title, name, tel, email, work_region, employment_type,
+			work_period, tag_name, work_intro, self_intro, matching_percent, posting_hit,
+			write_date, update_date
+		from
+			13_t_hunting
+		where
+			work_region = #{workRegion}
+			and employment_type = #{employmentType}
+		order by
+			${sort} desc
+		limit
+			#{offset}, #{sizePerList}
+	</select>
+
+	<select id="selectTotalCount" resultType="java.lang.Integer">
+		select
+			count(writeNo)
+		from
+			13_t_hunting
+		where
+			work_region = #{workRegion}
+			and employment_type = #{employmentType}
+	</select>
+
+	<select id="selectOne" resultType="net.okjsp.hunting.model.Hunting">
+		select
+			write_no, guboon_id, job_title, name, tel, email, work_region, employment_type,
+			work_period, tag_name, work_intro, self_intro, matching_percent, posting_hit,
+			write_date, update_date
+		from
+			13_t_hunting
+		where
+			write_no = #{writeNo}
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		insert into 13_t_hunting
+			(write_no, guboon_id, job_title, name, tel, email, work_region,
+			employment_type, work_period, tag_name, work_intro, self_intro, matching_percent,
+			posting_hit, write_date, update_date)
+		values
+			(#{writeNo}, #{guboonId}, #{jobTitle}, #{name}, #{tel}, #{email}, #{workRegion},
+			#{employmentType}, #{workPeriod}, #{tagName}, #{workIntro}, #{selfIntro}, #{matchingPercent},
+			0, now(), now())
+	</insert>
+
+	<update id="update">
+        update 13_t_hunting
+        set
+            guboon_id = #{guboonId},
+        	job_title = #{jobTitle},
+        	name = #{name},
+        	tel = #{tel},
+        	email = #{email},
+        	work_region = #{workRegion},
+			employment_type = #{employmentType},
+			work_period = #{workPeriod},
+			tag_name = #{tagName},
+			work_intro = #{workIntro},
+			self_intro = #{selfIntro},
+			matching_percent = #{matchingPercent},
+			posting_hit = #{postingHit},
+			update_date = now()
+        where
+            write_no = #{writeNo}
+	</update>
+
+	<delete id="delete">
+		delete from 13_t_hunting where write_no = #{writeNo}
+	</delete>
+
+	<update id="addViewCount">
+        update 13_t_hunting
+        set
+            posting_hit = posting_hit+1
+        where
+            write_no = #{writeNo}
+	</update>
+
+</mapper>

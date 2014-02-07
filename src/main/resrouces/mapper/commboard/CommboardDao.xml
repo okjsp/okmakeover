@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.okjsp.commboard.dao.CommboardDao">
+	<resultMap id="commonBoardListMap" type="net.okjsp.commboard.model.Commboard">
+
+        <id jdbcType="INTEGER" property="writeNo" column="write_no"/>
+        <result jdbcType="INTEGER" property="boardyId" column="board_id"/>
+        <result jdbcType="INTEGER" property="categoryId" column="category_id"/>
+        <result jdbcType="VARCHAR" property="guboonId" column="guboon_id"/>
+        <result jdbcType="VARCHAR" property="commonTitle" column="common_title"/>
+        <result jdbcType="VARCHAR" property="anonymousCheck" column="anonymous_check"/>
+        <result jdbcType="VARCHAR" property="anonymousNickname" column="anonymous_nickname"/>
+        <result property="content" column="content"/>
+        <result jdbcType="INTEGER" property="postingHit" column="posting_hit"/>
+        <result jdbcType="TIMESTAMP" property="writeDate" column="write_date"/>
+        <result jdbcType="TIMESTAMP" property="updateDate" column="update_date"/>
+        
+        <association property="user"  javaType="net.okjsp.user.model.User">
+            <id jdbcType="INTEGER" property="userId" column="USER_ID"/>
+            <result jdbcType="VARCHAR" property="nickName" column="NICK_NAME"/>
+            <result jdbcType="VARCHAR" property="profileImg" column="PROFILE_IMG"/>
+            <result jdbcType="VARCHAR" property="grade" column="GRADE"/>
+        </association>
+
+    </resultMap>
+
+	<!-- 일반 게시판들의 리스트를 가져온다. -->
+	<select id="selectCommunityBoardList" resultType="net.okjsp.commboard.model.Board">
+        select
+            board_id, board_name, category_id, category_name, replay_check, recommend_check, brawl_check, comment_check, write_date, update_date 
+        from
+            13_t_board
+        where
+            board_id = 3        
+    </select>
+    
+    <!-- 각 게시판의 게시글 목록을 가져온다. -->
+    <select id="selectCommonBoardList" resultMap="commonBoardListMap">
+        select
+        	cb.write_no, cb.board_id, cb.category_id, cb.guboon_id, cb.user_id, cb.common_title, cb.anonymous_check, cb.anonymous_nickname, 
+        	cb.content, cb.posting_hit, cb.write_date, cb.update_date,            
+            u.user_id, u.nick_name, u.profile_img, u.grade
+        from
+            13_t_commonboard cb
+            left outer join 13_t_user u
+            on sb.write_id = u.user_id
+        where
+			cb.board_id = #{boardId}
+            sb.category_id = #{categoryId}
+        order by
+            cb.write_no desc
+        limit
+            #{offset}, #{sizePerList}
+    </select>
+    
+    <!-- 한개의 게시글을 가져온다 -->
+    <select id="selectCommonBoard" resultMap="commonBoardListMap">
+        select
+        	cb.write_no, cb.board_id, cb.category_id, cb.guboon_id, cb.user_id, cb.common_title, cb.anonymous_check, cb.anonymous_nickname, 
+        	cb.content, cb.posting_hit, cb.write_date, cb.update_date,            
+            u.user_id, u.nick_name, u.profile_img, u.grade
+        from
+            13_t_commonboard cb
+            left outer join 13_t_user u
+            on sb.write_id = u.user_id
+        where
+			write_no = #{writeNo}
+    </select>
+    
+    
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+        select
+            count(write_no)
+        from
+            13_t_commonboard
+        where
+        	board_id = #{boardId}
+            category_id = #{categoryId}
+    </select>
+    
+    <insert id="insertCommBoard" useGeneratedKeys="true" keyProperty="write_no">
+        insert into 13_t_commonboard
+            (board_id, category_id, guboon_id, user_id, common_title, anonymous_check, anonymous_nickname, content, posting_hit, write_date, update_date)
+        values
+            (#{board_id}, #{category_id}, #{guboon_id}, #{user_id}, #{common_title}, #{anonymous_check}, #{anonymous_nickname}, #{content}, #{posting_hit}, now(), now())
+    </insert>
+    
+    <update id="updateCommBoard">
+        update 13_t_commonboard
+        set
+            board_id = #{baordID}, category_id = #{categoryId}, title = #{title}, content = #{content},
+            update_date = now()
+        where
+            write_no = #{writeNo}
+    </update>
+
+    <delete id="deleteCommBoard">
+        delete from 13_t_commonboard where write_no = #{writeNo}
+    </delete>
+
+    <update id="addPostingHit">
+        update 13_t_commonboard
+        set
+            posting_hit = posting_hit+1
+        where
+            write_no = #{write_no}
+    </update>
+</mapper>

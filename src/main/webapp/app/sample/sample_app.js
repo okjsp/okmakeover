@@ -8,7 +8,7 @@
     /**
      * Module Config
      */
-    sampleApp.config(function($routeProvider, $locationProvider) {
+    sampleApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
         /**
          * HTML5에서 지원하는 History API 를 이용한다.
@@ -28,20 +28,44 @@
         $routeProvider
             .when('/:categoryId', {
                 controller: 'SampleListCtrl',
-                templateUrl: '/tmpl/sample/sample_list.html'
+                templateUrl: '/tmpl/sample/sample_list.jsp'
             })
             .when('/:categoryId/view/:id', {
                 controller: 'SampleViewCtrl',
-                templateUrl: '/tmpl/sample/sample_view.html'
+                templateUrl: '/tmpl/sample/recruit_view.html'
             })
             .when('/:categoryId/modify/:id', {
                 controller: 'SampleModifyCtrl',
-                templateUrl: '/tmpl/sample/sample_form.html'
+                templateUrl: '/tmpl/sample/recruit_view.html'
             })
             .when('/:categoryId/create', {
                 controller: 'SampleCreateCtrl',
-                templateUrl: '/tmpl/sample/sample_form.html'
+                templateUrl: '/tmpl/sample/recruit_view.html'
             });
+
+        $httpProvider.responseInterceptors.push(function ($rootScope, $q) {
+
+            function success(response) {
+                return response;
+            }
+
+            function error(response) {
+                var status = response.status;
+
+                if (status == 401) {
+                    window.location = "/user/login?redirect="+encodeURIComponent(window.location.href);
+                    return;
+                }
+
+                return $q.reject(response);
+
+            }
+
+            return function (promise) {
+                return promise.then(success, error);
+            }
+
+        });
     });
 
 
@@ -50,17 +74,17 @@
      *$resource를 이용하여 서버와 RESTful 통신을 하는 ORM Style의 기능을 구현 한다.
      *
      * 예)
-     * Sample.query() > GET /sample_ng/1
-     * Sample.get({id: 1}) > GET /sample_ng/1/view/1
-     * sample.$save() > POST /sample/1  (sample instance 에 id가 없을 경우)
-     * sample.$save() > POST /sample/1/1  (sample instance 에 id가 있을 경우)
-     * sample.$remove()  > DELETE /sample/1/1
+     * Sample.query() > GET /sample_ng/1.json
+     * Sample.get({id: 1}) > GET /sample_ng/1/view/1.json
+     * sample.$save() > POST /sample/1.json  (sample instance 에 id가 없을 경우)
+     * sample.$save() > POST /sample/1/1.json  (sample instance 에 id가 있을 경우)
+     * sample.$remove()  > DELETE /sample/1/1.json
      *
      */
     sampleApp.factory('Sample', function($resource, $routeParams){
 
         // java의 net.okjsp.sample.SampleNgController 확인
-        return $resource('/sample_ng/:categoryId/:id',
+        return $resource('/sample_ng/:categoryId/:id.json',
             {
                 categoryId: $routeParams.categoryId,
                 id:'@id'

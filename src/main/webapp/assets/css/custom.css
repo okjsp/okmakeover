@@ -1,6 +1,15 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
 html,
 body {
     height: 100%;
+    font-family: "Nanum Gothic", sans-serif;
+}
+
+h4 a,
+h4 a:focus,
+h4 a:visited,
+h4 a:active {
 }
 
 #wrap {
@@ -29,6 +38,79 @@ body {
 
 code {
     font-size: 80%;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.form-signup {
+    max-width: 550px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+
+.profile-img {
+    width:25px;
+    height:25px;
+    vertical-align: middle;
+}
+
+.lead {
+    padding: 20px 0;
+    min-height: 300px;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+
+.comments {
+    margin-top: 80px;
+}
+
+.vote-btn {
+    margin-left: 20px;
+}
+
+.sidenav {
+    padding-top: 50px;
+}
+
+.qna-point {
+    vertical-align: middle;
+    font-size: 20px;
+    margin: auto;
 }
 
 @media (min-width: 1200px) {

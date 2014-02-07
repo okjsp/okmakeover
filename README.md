@@ -1,6 +1,7 @@
 okmakeover
 ==========
-
+* **Resource**
+ * Project Contributor : 허광남,정재우,정병태
 * **개발 취지**
  * 디자인변경 : 사용자 편의성 확대
  * 컨텐츠수정 : 게시판 통/폐합

@@ -5,10 +5,10 @@
   Description : 
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<?xml version="1.0" encoding="UTF-8" ?>
 <%@ taglib prefix="decorator" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<!doctype html>
 <html lang="ko"<decorator:getProperty property="ng-app" writeEntireProperty="true" />>
 <head>
     <meta charset="utf-8">
@@ -46,8 +46,13 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/member/signup">Signup</a></li>
-                    <li><a href="/member/login">Log in</a></li>
+                    <sec:authorize ifNotGranted="ROLE_USER">
+                        <li><a href="/user/sign_up">회원가입</a></li>
+                        <li><a href="/user/login">로그인</a></li>
+                    </sec:authorize>
+                    <sec:authorize ifAnyGranted="ROLE_USER">
+                        <li><a href="/user/logout">로그아웃</a></li>
+                    </sec:authorize>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
@@ -55,7 +60,24 @@
 
     <div class="container">
 
-        <decorator:body  />
+        <div class="col-md-3">
+            <ul class="nav sidenav">
+
+                <li class="active"><a href="/community/">Community</a></li>
+
+                <li ><a href="/qna">Tech Q&A</a></li>
+
+                <li ><a href="/job">Job</a></li>
+
+            </ul>
+        </div>
+
+
+        <div class="col-md-9">
+
+            <decorator:body  />
+
+        </div>
 
     </div><!-- /.container -->
 </div>

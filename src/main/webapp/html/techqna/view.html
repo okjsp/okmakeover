@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>OKJSP</title>
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="/assets/css/bootstrap-theme.css" />
+    <link rel="stylesheet" href="/assets/css/custom.css" />
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+<div id="wrap">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">OK JSP</a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/user/sign_up">회원가입</a></li>
+                    <li><a href="/user/login">로그인</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="col-md-3">
+            <ul class="nav sidenav">
+                <li class="active"><a href="/html/commboard/list.html">Community</a></li>
+                <li ><a href="/html/techqna/list.html">Tech Q&A</a></li>
+                <li ><a href="/html/job/recruit_list.html">Job</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-9">
+            <div class="page-header">
+                <h3>Community - 공통게시판</h3>
+            </div>
+
+            <h2>게시물 제목</h2>
+            <p><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | <small>14. 1. 23 오후 8:17</small></p>
+            <div class="lead">
+                <p>
+                    게시물 내용내용내용<br/>
+                    게시물 내용내용내용<br/>
+                    게시물 내용내용내용
+                </p>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading"><h4 class="panel-title">Attachments</h4></div>
+                <div class="list-group">
+                    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-file"></span> filename.doc</a>
+                    <a href="#" class="list-group-item"><span class="glyphicon glyphicon-picture"></span> filename.jpg</a>
+                </div>
+            </div>
+
+            <form id="removeForm" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <div class="btn-group pull-left">
+                    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                    <button type="button" class="btn btn-default disabled">1000</button>
+                    <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                </div>
+                <div class="pull-right">
+                    <button type="submit" id="deleteBtn" class="btn btn-default btn-mg" role="button">삭제</button>
+                    <a href="form.html" id="modifyBtn" class="btn btn-default btn-mg" role="button">수정</a>
+                    <button type="button" class="btn btn-default btn-mg" role="button">책갈피</button>
+                    <a href="list.html" class="btn btn-default btn-mg" role="button">목록</a>
+                </div>
+            </form>
+
+            <div class="comments">
+                <h4>Comments <small>20</small></h4>
+                <div class="panel panel-success">
+                    <div class="panel-heading clearfix">
+                        <div class="pull-left">
+                            <span class="glyphicon glyphicon glyphicon glyphicon-ok"></span>
+                            <img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | <small>14. 1. 23 오후 8:17</small>
+                        </div>
+                        <div class="vote-btn btn-group">
+                            <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                            <button type="button" class="btn btn-default btn-xs disabled">1000</button>
+                            <button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        코맨트 코맨트 코맨트 <br/>
+                        코맨트 코맨트 코맨트
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <div class="pull-left">
+                            <img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | <small>14. 1. 23 오후 8:17</small>
+                        </div>
+                        <div class="vote-btn btn-group">
+                            <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                            <button type="button" class="btn btn-default btn-xs disabled">99</button>
+                            <button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                        </div>
+                        <!-- 자신의 글은 삭제버튼 -->
+                        <button type="button" class="close" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="panel-body">
+                        코맨트 코맨트 코맨트 <br/>
+                        코맨트 코맨트 코맨트
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <div class="pull-left">
+                            <img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | <small>14. 1. 23 오후 8:17</small>
+                        </div>
+                        <div class="vote-btn btn-group">
+                            <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                            <button type="button" class="btn btn-default btn-xs disabled">33</button>
+                            <button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        코맨트 코맨트 코맨트 <br/>
+                        코맨트 코맨트 코맨트
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <div class="pull-left">
+                            <img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | <small>14. 1. 23 오후 8:17</small>
+                        </div>
+                        <div class="vote-btn btn-group">
+                            <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                            <button type="button" class="btn btn-default btn-xs disabled">44</button>
+                            <button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        코맨트 코맨트 코맨트 <br/>
+                        코맨트 코맨트 코맨트
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading clearfix">
+                        <div class="pull-left">
+                            <img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | <small>14. 1. 23 오후 8:17</small>
+                        </div>
+                        <div class="vote-btn btn-group">
+                            <button type="button" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                            <button type="button" class="btn btn-default btn-xs disabled">11</button>
+                            <button type="button" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        코맨트 코맨트 코맨트 <br/>
+                        코맨트 코맨트 코맨트
+                    </div>
+                </div>
+
+                <form method="post">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Input Comment</h4>
+                        </div>
+                        <div class="panel-body">
+                            <textarea class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="text-center">
+                                <input type="submit" class="btn btn-success btn-lg" value="저장" role="button" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div><!-- /.container -->
+</div>
+
+<div id="footer">
+    <div class="container">
+        <p class="text-muted">okjsp.net 2013</p>
+    </div>
+</div>
+
+
+</body>
+</html>

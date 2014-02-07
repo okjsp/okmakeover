@@ -4,7 +4,10 @@ import net.okjsp.common.model.Paging;
 import net.okjsp.layout.BasicLayoutController;
 import net.okjsp.sample.model.Sample;
 import net.okjsp.sample.service.SampleBoardService;
+import net.okjsp.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,7 +46,7 @@ public class SampleController extends BasicLayoutController {
      * @param model
      * @return
      */
-    @RequestMapping(value="/{categoryId}", method = RequestMethod.GET, produces = "text/html")
+    @RequestMapping(value="/{categoryId}", method = RequestMethod.GET)
     public String list(@PathVariable int categoryId, Paging paging, Model model) {
 
         List<Sample> list = sampleBoardService.getList(categoryId, paging);
@@ -68,12 +71,15 @@ public class SampleController extends BasicLayoutController {
      * @param model
      * @return
      */
-    @RequestMapping(value="/{categoryId}/{id}", method = RequestMethod.GET, produces = "text/html")
+    @RequestMapping(value="/{categoryId}/{id}", method = RequestMethod.GET)
     public String view(
             @PathVariable int categoryId,
             @PathVariable int id,
             Paging paging,
             Model model) {
+
+        //조회수 증가
+        sampleBoardService.addViewCount(id);
 
         Sample sampleBoard = sampleBoardService.getOne(id);
 
@@ -89,7 +95,8 @@ public class SampleController extends BasicLayoutController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/{categoryId}/create", method = RequestMethod.GET, produces = "text/html")
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}/create", method = RequestMethod.GET)
     public String createForm(
             @PathVariable int categoryId,
             Model model) {
@@ -106,17 +113,20 @@ public class SampleController extends BasicLayoutController {
      * Sample 등록
      * @param categoryId
      * @param sample
-     * @param model
+     * @param authentication
      * @return
      */
-    @RequestMapping(value = "/{categoryId}/create", method = RequestMethod.POST, produces = "text/html")
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}/create", method = RequestMethod.POST)
     public String create(
             @PathVariable int categoryId,
             Sample sample,
-            Model model) {
+            Authentication authentication) {
+
+        User user = (User) authentication.getPrincipal();
 
         sample.setCategoryId(categoryId);
-        sample.setWriteId("테스터");
+        sample.setWriteId(user.getUserId());
 
         sampleBoardService.create(sample);
 
@@ -130,7 +140,8 @@ public class SampleController extends BasicLayoutController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/{categoryId}/modify/{id}", method = RequestMethod.GET, produces = "text/html")
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}/modify/{id}", method = RequestMethod.GET)
     public String modifyForm(
             @PathVariable int categoryId,
             @PathVariable int id,
@@ -151,10 +162,16 @@ public class SampleController extends BasicLayoutController {
      * @param sample
      * @return
      */
-    @RequestMapping(value = "/{categoryId}/modify/{id}", method = RequestMethod.POST, produces = "text/html")
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}/modify/{id}", method = RequestMethod.POST)
     public String modify(
             @PathVariable int categoryId,
-            Sample sample) {
+            Sample sample,
+            Authentication authentication) {
+
+        User user = (User) authentication.getPrincipal();
+
+        sample.setUpdateId(user.getUserId());
 
         sampleBoardService.modify(sample);
 
@@ -167,10 +184,12 @@ public class SampleController extends BasicLayoutController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/{categoryId}/remove/{id}", method = RequestMethod.DELETE, produces = "text/html")
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}/remove/{id}", method = RequestMethod.DELETE)
     public String remove(
             @PathVariable int categoryId,
-            @PathVariable int id) {
+            @PathVariable int id,
+            Authentication authentication) {
 
         sampleBoardService.destroy(id);
 

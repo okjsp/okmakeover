@@ -2,6 +2,7 @@ package net.okjsp.layout;
 
 import net.okjsp.layout.model.Navigation;
 import net.okjsp.layout.service.LayoutService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,11 +18,14 @@ import java.util.List;
 @Controller
 public class BasicLayoutController {
 
+    Logger logger = Logger.getLogger(this.getClass());
+
     @Autowired
     LayoutService layoutService;
 
     @ModelAttribute("NAV_LIST")
     public List<Navigation> nav() {
+
         return layoutService.getNav();
     }
 }

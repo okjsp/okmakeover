@@ -6,7 +6,10 @@ import net.okjsp.common.model.Result;
 import net.okjsp.layout.BasicLayoutController;
 import net.okjsp.sample.model.Sample;
 import net.okjsp.sample.service.SampleBoardService;
+import net.okjsp.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +23,7 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping(value="/sample_ng/{categoryId}")
+@RequestMapping(value="/sample_ng")
 public class SampleNgController extends BasicLayoutController {
 
     @Autowired
@@ -34,7 +37,7 @@ public class SampleNgController extends BasicLayoutController {
      *
      * @return
      */
-    @RequestMapping(value = {"", "/view/{id}", "/modify/{id}", "/create"}, method = RequestMethod.GET, produces = "text/html")
+    @RequestMapping(value = {"/{categoryId}", "/{categoryId}/view/{id}", "/{categoryId}/modify/{id}", "/{categoryId}/create"}, method = RequestMethod.GET)
     public String main() {
         return "sample_ng/sample_ng";
     }
@@ -45,7 +48,7 @@ public class SampleNgController extends BasicLayoutController {
      * @param paging
      * @return
      */
-    @RequestMapping(value = "", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{categoryId}.json", method = RequestMethod.GET)
     public @ResponseBody PagingList listAsJson(
             @PathVariable int categoryId,
             Paging paging) {
@@ -67,7 +70,7 @@ public class SampleNgController extends BasicLayoutController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{categoryId}/{id}.json", method = RequestMethod.GET)
     public @ResponseBody Sample viewAsJson(
             @PathVariable int id) {
 
@@ -85,13 +88,17 @@ public class SampleNgController extends BasicLayoutController {
      * @param sample
      * @return
      */
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json")
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}", method = RequestMethod.POST)
     public @ResponseBody Result createByJson(
             @PathVariable int categoryId,
-            @RequestBody Sample sample) {
+            @RequestBody Sample sample,
+            Authentication authentication) {
+
+        User user = (User) authentication.getPrincipal();
 
         sample.setCategoryId(categoryId);
-        sample.setWriteId("테스터");
+        sample.setWriteId(user.getUserId());
 
         boolean isCreated = sampleBoardService.create(sample);
 
@@ -105,7 +112,8 @@ public class SampleNgController extends BasicLayoutController {
      * @param sample
      * @return
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST, produces = "application/json")
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}/{id}.json", method = RequestMethod.POST)
     public @ResponseBody Result updateByJson(
             @RequestBody Sample sample) {
 
@@ -121,8 +129,9 @@ public class SampleNgController extends BasicLayoutController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-    public @ResponseBody Result remove(
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}/{id}.json", method = RequestMethod.DELETE)
+    public @ResponseBody Result removeByJson(
             @PathVariable int id) {
 
         boolean isCreated = sampleBoardService.destroy(id);

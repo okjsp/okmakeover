@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="net.okjsp.recommendation.dao.RecommendationDao">
+
+    <resultMap id="recommendationMap" type="net.okjsp.recommendation.model.Recommendation">
+        <result jdbcType="INTEGER" property="boardId" column="board_id" />
+        <result jdbcType="INTEGER" property="writeNo" column="write_no" />
+        <result jdbcType="INTEGER" property="commentId" column="comment_id" />
+        <result jdbcType="VARCHAR" property="guboonId" column="guboon_id" />
+        <result jdbcType="INTEGER" property="userId" column="user_id" />
+        <result jdbcType="INTEGER" property="score" column="score" />
+        <result jdbcType="TIMESTAMP" property="recommendationDate" column="recommendation_date" />
+
+        <association property="user" javaType="net.okjsp.user.model.User">
+            <id jdbcType="INTEGER" property="userId" column="USER_ID" />
+            <result jdbcType="VARCHAR" property="nickName" column="NICK_NAME" />
+            <result jdbcType="VARCHAR" property="profileImg" column="PROFILE_IMG" />
+            <result jdbcType="VARCHAR" property="grade" column="GRADE" />
+        </association>
+    </resultMap>
+
+    <select id="selectOne" resultMap="recommendationMap">
+        select board_id
+              ,write_no
+              ,comment_id
+              ,guboon_id
+              ,a.user_id
+              ,score
+              ,recommendation_date
+              ,b.nick_name
+              ,b.profile_img
+              ,b.grade
+          from 13_t_recommendation a
+          join 13_t_user b on a.user_id = b.user_id
+         where board_id = #{boardId}
+           and write_no = #{writeNo}
+           and comment_id = #{commentId}
+           and a.user_id = #{userId}
+           and guboon_id = #{guboonId}
+    </select>
+
+    <select id="selectRecommendations" resultMap="recommendationMap">
+        select board_id
+              ,write_no
+              ,comment_id
+              ,guboon_id
+              ,a.user_id
+              ,score
+              ,recommendation_date
+              ,b.nick_name
+              ,b.profile_img
+              ,b.grade
+          from 13_t_recommendation a
+          join 13_t_user b on a.user_id = b.user_id
+         where board_id = #{boardId}
+           and write_no = #{writeNo}
+           and comment_id = #{commentId}
+         order by recommendation_date asc
+    </select>
+
+    <select id="selectRecommendationsByGuboon" resultMap="recommendationMap">
+        select board_id
+              ,write_no
+              ,comment_id
+              ,guboon_id
+              ,a.user_id
+              ,score
+              ,recommendation_date
+              ,b.nick_name
+              ,b.profile_img
+              ,b.grade
+          from 13_t_recommendation a
+          join 13_t_user b on a.user_id = b.user_id
+         where board_id = #{boardId}
+           and write_no = #{writeNo}
+           and comment_id = #{commentId}
+           and guboon_id = #{guboonId}
+         order by recommendation_date asc
+    </select>
+
+    <select id="selectRecommendationsByUser" resultMap="recommendationMap">
+        select board_id
+              ,write_no
+              ,comment_id
+              ,guboon_id
+              ,a.user_id
+              ,score
+              ,recommendation_date
+              ,b.nick_name
+              ,b.profile_img
+              ,b.grade
+          from 13_t_recommendation a
+          join 13_t_user b on a.user_id = b.user_id
+         where a.user_id = #{userId}
+         order by recommendation_date asc
+    </select>
+    
+    <select id="selectCountByGuboon" resultType="java.lang.Integer">
+        select count(guboon_id) as count
+          from 13_t_recommendation
+         where board_id = #{boardId}
+           and write_no = #{writeNo}
+           and comment_id = #{commentId}
+           and guboon_id = #{guboonId}
+         order by recommendation_date asc
+    </select>
+
+    <insert id="insert">
+        insert into 13_t_recommendation (
+            board_id, 
+            write_no, 
+            comment_id, 
+            guboon_id, 
+            user_id, 
+            score, 
+            recommendation_date
+        ) values (
+            #{boardId}, 
+            #{writeNo}, 
+            #{commentId}, 
+            #{guboonId}, 
+            #{userId}, 
+            '0', 
+            now()
+        )
+    </insert>
+
+    <delete id="delete">
+        delete from 
+          from 13_t_recommendation
+         where board_id = #{boardId}
+           and write_no = #{writeNo}
+           and comment_id = #{commentId}
+           and guboon_id = #{guboonId}
+           and user_id = #{userId}
+    </delete>
+
+</mapper>
