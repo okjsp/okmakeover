@@ -65,7 +65,7 @@ public class User implements UserDetails, CredentialsContainer {
 
     private static final String salt = "!okjspPwSalt*";
 
-    public static String getSalt() {
+    public String getSalt() {
         return salt;
     }
 

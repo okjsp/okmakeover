@@ -60,7 +60,24 @@
 
     <div class="container">
 
-        <decorator:body  />
+        <div class="col-md-3">
+            <ul class="nav sidenav">
+
+                <li class="active"><a href="/community/">Community</a></li>
+
+                <li ><a href="/qna">Tech Q&A</a></li>
+
+                <li ><a href="/job">Job</a></li>
+
+            </ul>
+        </div>
+
+
+        <div class="col-md-9">
+
+            <decorator:body  />
+
+        </div>
 
     </div><!-- /.container -->
 </div>

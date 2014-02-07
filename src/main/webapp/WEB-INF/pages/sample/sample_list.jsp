@@ -7,6 +7,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
     <meta name="decorator" content="basic" />
@@ -44,6 +45,9 @@
                 <td>${sample.viewCount}</td>
             </tr>
             </c:forEach>
+            <c:if test="${fn:length(samples) == 0}">
+                <td colspan="5" class="text-center">게시물이 없습니다.</td>
+            </c:if>
             </tbody>
         </table>
     </div>
@@ -51,10 +55,10 @@
 
     <div class="col-sm-6">
         <c:if test="${paging.page > 1}">
-            <a href="/sample_ng/${categoryId}?page=${paging.page-1}" class="btn btn-default btn-mg">< 이전</a>&nbsp;
+            <a href="/sample/${categoryId}?page=${paging.page-1}" class="btn btn-default btn-mg">< 이전</a>&nbsp;
         </c:if>
         <c:if test="${paging.lastIndex < paging.totalCount}">
-            <a href="/sample_ng/${categoryId}?page=${paging.page+1}" class="btn btn-default btn-mg">다음 ></a>
+            <a href="/sample/${categoryId}?page=${paging.page+1}" class="btn btn-default btn-mg">다음 ></a>
         </c:if>
     </div>
     <div class="col-sm-6">

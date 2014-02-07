@@ -51,6 +51,11 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    /**
+     * 회원 생성
+     * @param user
+     * @return
+     */
     @Override
     public boolean create(User user) throws Exception {
 

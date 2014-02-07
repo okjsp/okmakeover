@@ -112,6 +112,7 @@ public class SampleNgController extends BasicLayoutController {
      * @param sample
      * @return
      */
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/{categoryId}/{id}.json", method = RequestMethod.POST)
     public @ResponseBody Result updateByJson(
             @RequestBody Sample sample) {
@@ -128,6 +129,7 @@ public class SampleNgController extends BasicLayoutController {
      * @param id
      * @return
      */
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/{categoryId}/{id}.json", method = RequestMethod.DELETE)
     public @ResponseBody Result removeByJson(
             @PathVariable int id) {

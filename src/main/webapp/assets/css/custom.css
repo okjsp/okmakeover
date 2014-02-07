@@ -1,6 +1,15 @@
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
 html,
 body {
     height: 100%;
+    font-family: "Nanum Gothic", sans-serif;
+}
+
+h4 a,
+h4 a:focus,
+h4 a:visited,
+h4 a:active {
 }
 
 #wrap {
@@ -70,6 +79,38 @@ code {
     max-width: 550px;
     padding: 15px;
     margin: 0 auto;
+}
+
+
+.profile-img {
+    width:25px;
+    height:25px;
+    vertical-align: middle;
+}
+
+.lead {
+    padding: 20px 0;
+    min-height: 300px;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+
+.comments {
+    margin-top: 80px;
+}
+
+.vote-btn {
+    margin-left: 20px;
+}
+
+.sidenav {
+    padding-top: 50px;
+}
+
+.qna-point {
+    vertical-align: middle;
+    font-size: 20px;
+    margin: auto;
 }
 
 @media (min-width: 1200px) {

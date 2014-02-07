@@ -28,19 +28,19 @@
         $routeProvider
             .when('/:categoryId', {
                 controller: 'SampleListCtrl',
-                templateUrl: '/tmpl/sample/sample_list.html'
+                templateUrl: '/tmpl/sample/sample_list.jsp'
             })
             .when('/:categoryId/view/:id', {
                 controller: 'SampleViewCtrl',
-                templateUrl: '/tmpl/sample/sample_view.html'
+                templateUrl: '/tmpl/sample/recruit_view.html'
             })
             .when('/:categoryId/modify/:id', {
                 controller: 'SampleModifyCtrl',
-                templateUrl: '/tmpl/sample/sample_form.html'
+                templateUrl: '/tmpl/sample/recruit_view.html'
             })
             .when('/:categoryId/create', {
                 controller: 'SampleCreateCtrl',
-                templateUrl: '/tmpl/sample/sample_form.html'
+                templateUrl: '/tmpl/sample/recruit_view.html'
             });
 
         $httpProvider.responseInterceptors.push(function ($rootScope, $q) {
