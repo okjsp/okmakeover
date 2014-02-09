@@ -113,6 +113,13 @@ code {
     margin: auto;
 }
 
+.job-view {
+    padding: 20px 0;
+    margin-bottom: 20px;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+
 @media (min-width: 1200px) {
     .container {
         width: 970px;

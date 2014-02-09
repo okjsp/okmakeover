@@ -32,15 +32,15 @@
             })
             .when('/:categoryId/view/:id', {
                 controller: 'SampleViewCtrl',
-                templateUrl: '/tmpl/sample/recruit_view.html'
+                templateUrl: '/tmpl/sample/hunting_view.html'
             })
             .when('/:categoryId/modify/:id', {
                 controller: 'SampleModifyCtrl',
-                templateUrl: '/tmpl/sample/recruit_view.html'
+                templateUrl: '/tmpl/sample/hunting_view.html'
             })
             .when('/:categoryId/create', {
                 controller: 'SampleCreateCtrl',
-                templateUrl: '/tmpl/sample/recruit_view.html'
+                templateUrl: '/tmpl/sample/hunting_view.html'
             });
 
         $httpProvider.responseInterceptors.push(function ($rootScope, $q) {
