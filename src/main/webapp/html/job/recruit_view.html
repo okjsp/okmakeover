@@ -56,105 +56,89 @@
             <div class="page-header">
                 <h3>구인</h3>
             </div>
-            <form id="boardForm" class="form-horizontal" role="form" method="post">
+
+            <h2>여의도 증권사 3개월 Java프로젝트 <small>프리랜서(계약직)</small></h2>
+
+            <div class="form-horizontal job-view">
 
                 <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label">제목</label>
-                    <div class="col-sm-10">
-                        <input id="title" name="title" class="form-control" type="text" />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="name" class="col-sm-2 control-label">회사이름</label>
+                    <label class="col-sm-2 control-label">회사이름</label>
                     <div class="col-sm-5">
-                        <input id="name" name="name" class="form-control" type="text" />
+                        <p class="form-control-static">좋은회사</p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="tel" class="col-sm-2 control-label">담당자 연락처</label>
+                    <label class="col-sm-2 control-label">담당자 연락처</label>
                     <div class="col-sm-7">
-                        <input id="tel" name="tel" class="form-control" type="text" />
+                        <p class="form-control-static">000-0000-0000</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">근무지역</label>
                     <div class="col-sm-3">
-                        <select class="form-control" id="location" name="location">
-                            <option>모든 지역</option>
-                        </select>
+                        <p class="form-control-static">서울, 여의도</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">고용형태</label>
                     <div class="col-sm-6">
-                        <select class="form-control">
-                            <option>정규직(신입)</option>
-                            <option>정규직(경력)</option>
-                            <option>프리랜서(계약직)</option>
-                        </select>
+                        <p class="form-control-static">프리랜서(계약직)</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">근무기간</label>
                     <div class="col-sm-6">
-                        <div class="input-group">
-                            <input id="start" name="start" class="form-control" placeholder="YYYYMMDD" type="text" />
-                            <span class="input-group-addon">~</span>
-                            <input id="end" name="start" class="form-control" placeholder="YYYYMMDD" type="text" />
-                        </div>
+                        <p class="form-control-static">20130112 ~ 20140112</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">복리후생</label>
                     <div class="col-sm-10">
-                        <label><input type="checkbox" /> 국민연금</label>
-                        <label><input type="checkbox" /> 건강보험</label>
-                        <label><input type="checkbox" /> 고용보험</label>
-                        <label><input type="checkbox" /> 산재보험</label>
-                        <label><input type="checkbox" /> 야근수당</label>
-                        <label><input type="checkbox" /> 식대(점심)</label>
-                        <label><input type="checkbox" /> 식대(저녁)</label>
-                        <label><input type="checkbox" /> 교통비</label>
-                        <label><input type="checkbox" /> 통신비</label>
-                        <label><input type="checkbox" /> 퇴직금</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <label class="control-label">기타 :</label> <input id="etc" name="etc" class="form-control" type="text" />
+                        <p class="form-control-static">
+                            <span class="label label-success">국민연금</span> <span class="label label-success">건강보험</span>
+                        </p>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">기술키워드(Tag)</label>
+                    <label class="col-sm-2 control-label">기술키워드</label>
                     <div class="col-sm-10">
-                        <input id="tag" name="tag" class="form-control" type="text" />
-                        <span class="help-block">, 으로 구분하세요. 예) Java, JSP, AngularJS</span>
+                        <p class="form-control-static">
+                            <span class="label label-info">Java</span> <span class="label label-info">JSP</span>
+                        </p>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="content2" class="col-sm-2 control-label">업무내용</label>
+                    <label class="col-sm-2 control-label">업무내용</label>
                     <div class="col-sm-10">
-                        <textarea id="content2" name="content2" class="form-control" rows="10"></textarea>
+                        <p class="form-control-static">
+                            웹개발 ...
+                        </p>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="content" class="col-sm-2 control-label">회사소개</label>
+                    <label class="col-sm-2 control-label">회사소개</label>
                     <div class="col-sm-10">
-                        <textarea id="content" name="content" class="form-control" rows="10"></textarea>
+                        <p class="form-control-static">
+                            어려서부터 우리집은 가난했었고.<br/>
+                            남들은 다하는 외식 몇 번 한적이 없었고.<br/>
+                        </p>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="text-center">
-                        <input type="submit" class="btn btn-success btn-mg" value="저장" role="button" />
-                        <a href="hunting_list.html" id="cancelBtn" class="btn btn-default btn-mg" role="button">취소</a>
-                    </div>
-                </div>
+            </div>
 
+            <form id="removeForm" method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <div class="pull-right">
+                    <button type="submit" id="deleteBtn" class="btn btn-default btn-mg" role="button">삭제</button>
+                    <a href="hunting_form.html" id="modifyBtn" class="btn btn-default btn-mg" role="button">수정</a>
+                    <button type="button" class="btn btn-default btn-mg" role="button">책갈피</button>
+                    <a href="hunting_list.html" class="btn btn-default btn-mg" role="button">목록</a>
+                </div>
             </form>
+
         </div>
     </div><!-- /.container -->
 </div>
