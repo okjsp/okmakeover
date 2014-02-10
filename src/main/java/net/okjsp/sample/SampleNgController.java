@@ -89,7 +89,7 @@ public class SampleNgController extends BasicLayoutController {
      * @return
      */
     @Secured("ROLE_USER")
-    @RequestMapping(value = "/{categoryId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{categoryId}.json", method = RequestMethod.POST)
     public @ResponseBody Result createByJson(
             @PathVariable int categoryId,
             @RequestBody Sample sample,

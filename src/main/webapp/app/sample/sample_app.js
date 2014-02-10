@@ -28,7 +28,7 @@
         $routeProvider
             .when('/:categoryId', {
                 controller: 'SampleListCtrl',
-                templateUrl: '/tmpl/sample/sample_list.jsp'
+                templateUrl: '/tmpl/sample/sample_list.html'
             })
             .when('/:categoryId/view/:id', {
                 controller: 'SampleViewCtrl',
@@ -36,11 +36,11 @@
             })
             .when('/:categoryId/modify/:id', {
                 controller: 'SampleModifyCtrl',
-                templateUrl: '/tmpl/sample/sample_view.html'
+                templateUrl: '/tmpl/sample/sample_form.html'
             })
             .when('/:categoryId/create', {
                 controller: 'SampleCreateCtrl',
-                templateUrl: '/tmpl/sample/sample_view.html'
+                templateUrl: '/tmpl/sample/sample_form.html'
             });
 
         $httpProvider.responseInterceptors.push(function ($rootScope, $q) {

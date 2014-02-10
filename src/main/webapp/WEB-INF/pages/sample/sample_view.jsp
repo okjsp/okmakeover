@@ -21,11 +21,9 @@
     <p>${sample.user.nickName} | <small><fmt:formatDate type="both" value="${sample.writeDate}" dateStyle="short" timeStyle="short" /></small></p>
     <p class="lead">${sample.content}</p>
 
-
-
-    <f:form commandName="removeForm" method="delete" action="/sample/${categoryId}/remove/${sample.id}">
+    <f:form commandName="removeForm" method="delete" action="/sample/${categoryId}/${sample.id}">
     <div class="pull-right">
-        <a href="/sample/${categoryId}/modify/${sample.id}" id="modifyBtn" class="btn btn-default btn-mg" role="button">수정</a>
+        <a href="/sample/${categoryId}/${sample.id}/modify" id="modifyBtn" class="btn btn-default btn-mg" role="button">수정</a>
         <button type="submit" id="deleteBtn" class="btn btn-default btn-mg" role="button">삭제</button>
     </div>
     </f:form>

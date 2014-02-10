@@ -1,6 +1,8 @@
 package net.okjsp.sample;
 
 import net.okjsp.common.model.Paging;
+import net.okjsp.common.model.PagingList;
+import net.okjsp.common.model.Result;
 import net.okjsp.layout.BasicLayoutController;
 import net.okjsp.sample.model.Sample;
 import net.okjsp.sample.service.SampleBoardService;
@@ -10,9 +12,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -43,11 +44,10 @@ public class SampleController extends BasicLayoutController {
      * Sample 목록
      * @param categoryId
      * @param paging
-     * @param model
      * @return
      */
-    @RequestMapping(value="/{categoryId}", method = RequestMethod.GET)
-    public String list(@PathVariable int categoryId, Paging paging, Model model) {
+    @RequestMapping(value="/{categoryId}.json", method = RequestMethod.GET)
+    public @ResponseBody PagingList list(@PathVariable int categoryId, Paging paging) {
 
         List<Sample> list = sampleBoardService.getList(categoryId, paging);
 
@@ -56,57 +56,71 @@ public class SampleController extends BasicLayoutController {
         paging.setListCount(list.size());
         paging.setTotalCount(count);
 
-        model.addAttribute("samples", list);
+        PagingList pagingList = new PagingList(paging, list);
+
+        return pagingList;
+    }
+
+    /**
+     * Sample 목록 AS HTML
+     * @param categoryId
+     * @param paging
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/{categoryId}", method = RequestMethod.GET)
+    public String listAsHTML(@PathVariable int categoryId, Paging paging, Model model) {
+
+        PagingList pagingList = this.list(categoryId, paging);
+
+        model.addAttribute("samples", pagingList.getList());
+        model.addAttribute("paging", pagingList.getPaging());
         model.addAttribute("categoryId", categoryId);
-        model.addAttribute("paging", paging);
 
         return "sample/sample_list";
     }
+
+
 
     /**
      * Sample 내용 보기
      * @param categoryId
      * @param id
-     * @param paging
-     * @param model
      * @return
      */
-    @RequestMapping(value="/{categoryId}/{id}", method = RequestMethod.GET)
-    public String view(
+    @RequestMapping(value="/{categoryId}/{id}.json", method = RequestMethod.GET)
+    public @ResponseBody Sample view(
             @PathVariable int categoryId,
-            @PathVariable int id,
-            Paging paging,
-            Model model) {
+            @PathVariable int id) {
 
         //조회수 증가
         sampleBoardService.addViewCount(id);
 
         Sample sampleBoard = sampleBoardService.getOne(id);
 
+        return sampleBoard;
+    }
+
+
+    /**
+     * Sample 내용 보기 AS HTML
+     * @param categoryId
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="/{categoryId}/{id}", method = RequestMethod.GET)
+    public String viewAsHTML(
+            @PathVariable int categoryId,
+            @PathVariable int id,
+            Model model) {
+
+        Sample sampleBoard = this.view(categoryId, id);
+
         model.addAttribute("sample", sampleBoard);
         model.addAttribute("categoryId", categoryId);
 
         return "sample/sample_view";
-    }
-
-    /**
-     * Sample 등록 폼
-     * @param categoryId
-     * @param model
-     * @return
-     */
-    @Secured("ROLE_USER")
-    @RequestMapping(value = "/{categoryId}/create", method = RequestMethod.GET)
-    public String createForm(
-            @PathVariable int categoryId,
-            Model model) {
-
-        Sample sampleBoard = new Sample();
-
-        model.addAttribute("sampleBoardForm", sampleBoard);
-        model.addAttribute("categoryId", categoryId);
-
-        return "sample/sample_form";
     }
 
     /**
@@ -117,43 +131,75 @@ public class SampleController extends BasicLayoutController {
      * @return
      */
     @Secured("ROLE_USER")
-    @RequestMapping(value = "/{categoryId}/create", method = RequestMethod.POST)
-    public String create(
+    @RequestMapping(value = "/{categoryId}.json", method = RequestMethod.PUT)
+    public @ResponseBody Result create(
             @PathVariable int categoryId,
-            Sample sample,
+            @RequestBody Sample sample,
             Authentication authentication) {
+
+        Result result;
 
         User user = (User) authentication.getPrincipal();
 
         sample.setCategoryId(categoryId);
         sample.setWriteId(user.getUserId());
 
-        sampleBoardService.create(sample);
+        boolean isCreated = sampleBoardService.create(sample);
 
-        return "redirect:/sample/"+categoryId;
+        if(isCreated) {
+            result = new Result(isCreated, "등록이 완료되었습니다.");
+        } else {
+            result = new Result(isCreated, "등록중 오류가 발생하였습니다.");
+        }
+
+        return result;
     }
 
     /**
-     * Sample 수정 폼
+     * Sample 등록 폼
      * @param categoryId
-     * @param id
      * @param model
      * @return
      */
     @Secured("ROLE_USER")
-    @RequestMapping(value = "/{categoryId}/modify/{id}", method = RequestMethod.GET)
-    public String modifyForm(
+    @RequestMapping(value = "/{categoryId}/create", method = RequestMethod.GET)
+    public String createFormAsHTML(
             @PathVariable int categoryId,
-            @PathVariable int id,
             Model model) {
 
-        Sample sampleBoard = sampleBoardService.getOne(id);
+        Sample sampleBoard = new Sample();
 
-        model.addAttribute("sampleBoardForm", sampleBoard);
+        model.addAttribute("sampleBoard", sampleBoard);
         model.addAttribute("categoryId", categoryId);
 
-        return "sample/sample_form";
+        return "sample/sample_create";
+    }
 
+    /**
+     * Sample 등록 BY Form Submit
+     * @param categoryId
+     * @param sample
+     * @param authentication
+     * @return
+     */
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}", method = RequestMethod.PUT)
+    public String createByForm(
+            @PathVariable int categoryId,
+            Sample sample,
+            Authentication authentication,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+
+        Result result = this.create(categoryId, sample, authentication);
+
+        if(result.isSuccess()) {
+            redirectAttributes.addFlashAttribute("result", result);
+            return "redirect:/sample/"+categoryId;
+        } else {
+            model.addAttribute("result", result);
+            return "sample/sample_create";
+        }
     }
 
     /**
@@ -163,19 +209,80 @@ public class SampleController extends BasicLayoutController {
      * @return
      */
     @Secured("ROLE_USER")
-    @RequestMapping(value = "/{categoryId}/modify/{id}", method = RequestMethod.POST)
-    public String modify(
+    @RequestMapping(value = "/{categoryId}/{id}.json", method = RequestMethod.POST)
+    public @ResponseBody Result modify(
             @PathVariable int categoryId,
+            @PathVariable int id,
             Sample sample,
             Authentication authentication) {
 
+        Result result;
+
         User user = (User) authentication.getPrincipal();
 
+        sample.setId(id);
+        sample.setCategoryId(categoryId);
         sample.setUpdateId(user.getUserId());
 
-        sampleBoardService.modify(sample);
+        boolean isUpdated = sampleBoardService.modify(sample);
 
-        return "redirect:/sample/"+categoryId;
+        if(isUpdated) {
+            result = new Result(isUpdated, "수정이 완료되었습니다.");
+        } else {
+            result = new Result(isUpdated, "수정중 오류가 발생하였습니다.");
+        }
+
+        return result;
+    }
+
+    /**
+     * Sample 수정 폼 AS HTML
+     * @param categoryId
+     * @param id
+     * @param model
+     * @return
+     */
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}/{id}/modify", method = RequestMethod.GET)
+    public String modifyFormAsHTML(
+            @PathVariable int categoryId,
+            @PathVariable int id,
+            Model model) {
+
+        Sample sampleBoard = sampleBoardService.getOne(id);
+
+        model.addAttribute("sampleBoard", sampleBoard);
+        model.addAttribute("categoryId", categoryId);
+
+        return "sample/sample_modify";
+
+    }
+
+    /**
+     * Sample 수정 BY Form Submit
+     * @param categoryId
+     * @param sample
+     * @return
+     */
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}/{id}", method = RequestMethod.POST)
+    public String modifyByForm(
+            @PathVariable int categoryId,
+            @PathVariable int id,
+            Sample sample,
+            Model model,
+            RedirectAttributes redirectAttributes,
+            Authentication authentication) {
+
+        Result result = this.modify(categoryId, id, sample, authentication);
+
+        if(result.isSuccess()) {
+            redirectAttributes.addFlashAttribute("result", result);
+            return "redirect:/sample/"+categoryId;
+        } else {
+            model.addAttribute("result", result);
+            return "sample/sample_modify";
+        }
     }
 
     /**
@@ -185,13 +292,42 @@ public class SampleController extends BasicLayoutController {
      * @return
      */
     @Secured("ROLE_USER")
-    @RequestMapping(value = "/{categoryId}/remove/{id}", method = RequestMethod.DELETE)
-    public String remove(
+    @RequestMapping(value = "/{categoryId}/{id}.json", method = RequestMethod.DELETE)
+    public @ResponseBody Result remove(
             @PathVariable int categoryId,
             @PathVariable int id,
             Authentication authentication) {
 
-        sampleBoardService.destroy(id);
+        Result result;
+
+        boolean isDeleted = sampleBoardService.destroy(id);
+
+        if(isDeleted) {
+            result = new Result(isDeleted, "삭제가 완료되었습니다.");
+        } else {
+            result = new Result(isDeleted, "삭제중 오류가 발생하였습니다.");
+        }
+
+        return result;
+    }
+
+    /**
+     * Sample 삭제 BY Form Submit
+     * @param categoryId
+     * @param id
+     * @return
+     */
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{categoryId}/{id}", method = RequestMethod.DELETE)
+    public String removeByForm(
+            @PathVariable int categoryId,
+            @PathVariable int id,
+            Model model,
+            RedirectAttributes redirectAttributes,
+            Authentication authentication) {
+
+        Result result = this.remove(categoryId, id, authentication);
+        redirectAttributes.addFlashAttribute("result", result);
 
         return "redirect:/sample/"+categoryId;
     }
