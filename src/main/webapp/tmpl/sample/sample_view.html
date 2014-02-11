@@ -2,8 +2,7 @@
 <p>{{sample.user.nickName}} | <small>{{sample.writeDate | date: 'medium'}}</small></p>
 <p class="lead">{{sample.content}}</p>
 
-
 <div class="pull-right">
-    <a ng-href="/sample_ng/{{categoryId}}/modify/{{sample.id}}" id="modifyBtn" class="btn btn-default btn-mg" role="button">수정</a>
+    <a ng-href="/sample_ng/{{categoryId}}/{{sample.id}}/modify" id="modifyBtn" class="btn btn-default btn-mg" role="button">수정</a>
     <button type="button" ng-click="remove()" id="deleteBtn" class="btn btn-default btn-mg" role="button">삭제</button>
 </div>

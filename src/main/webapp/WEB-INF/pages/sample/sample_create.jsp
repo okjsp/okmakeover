@@ -15,7 +15,7 @@
     <div class="page-header">
         <h3>Sample Board</h3>
     </div>
-    <f:form commandName="sampleBoard" method="PUT" cssClass="form-horizontal" role="form" action="/sample/${categoryId}">
+    <f:form commandName="sampleBoard" method="POST" cssClass="form-horizontal" role="form" action="/sample/${categoryId}">
 
         <%@ include file="_sample_form.jsp" %>
 

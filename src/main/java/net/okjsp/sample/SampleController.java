@@ -62,7 +62,7 @@ public class SampleController extends BasicLayoutController {
     }
 
     /**
-     * Sample 목록 AS HTML
+     * Sample 목록 As HTML
      * @param categoryId
      * @param paging
      * @param model
@@ -103,7 +103,7 @@ public class SampleController extends BasicLayoutController {
 
 
     /**
-     * Sample 내용 보기 AS HTML
+     * Sample 내용 보기 As HTML
      * @param categoryId
      * @param id
      * @param model
@@ -129,9 +129,10 @@ public class SampleController extends BasicLayoutController {
      * @param sample
      * @param authentication
      * @return
+     *
      */
     @Secured("ROLE_USER")
-    @RequestMapping(value = "/{categoryId}.json", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{categoryId}.json", method = RequestMethod.POST)
     public @ResponseBody Result create(
             @PathVariable int categoryId,
             @RequestBody Sample sample,
@@ -176,14 +177,14 @@ public class SampleController extends BasicLayoutController {
     }
 
     /**
-     * Sample 등록 BY Form Submit
+     * Sample 등록 By Form Submit
      * @param categoryId
      * @param sample
      * @param authentication
      * @return
      */
     @Secured("ROLE_USER")
-    @RequestMapping(value = "/{categoryId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{categoryId}", method = RequestMethod.POST)
     public String createByForm(
             @PathVariable int categoryId,
             Sample sample,
@@ -213,7 +214,7 @@ public class SampleController extends BasicLayoutController {
     public @ResponseBody Result modify(
             @PathVariable int categoryId,
             @PathVariable int id,
-            Sample sample,
+            @RequestBody Sample sample,
             Authentication authentication) {
 
         Result result;
@@ -259,7 +260,7 @@ public class SampleController extends BasicLayoutController {
     }
 
     /**
-     * Sample 수정 BY Form Submit
+     * Sample 수정 By Form Submit
      * @param categoryId
      * @param sample
      * @return
@@ -312,7 +313,7 @@ public class SampleController extends BasicLayoutController {
     }
 
     /**
-     * Sample 삭제 BY Form Submit
+     * Sample 삭제 By Form Submit
      * @param categoryId
      * @param id
      * @return

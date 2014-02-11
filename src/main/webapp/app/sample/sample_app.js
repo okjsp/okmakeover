@@ -30,16 +30,16 @@
                 controller: 'SampleListCtrl',
                 templateUrl: '/tmpl/sample/sample_list.html'
             })
-            .when('/:categoryId/view/:id', {
+            .when('/:categoryId/create', {
+                controller: 'SampleCreateCtrl',
+                templateUrl: '/tmpl/sample/sample_form.html'
+            })
+            .when('/:categoryId/:id', {
                 controller: 'SampleViewCtrl',
                 templateUrl: '/tmpl/sample/sample_view.html'
             })
-            .when('/:categoryId/modify/:id', {
+            .when('/:categoryId/:id/modify', {
                 controller: 'SampleModifyCtrl',
-                templateUrl: '/tmpl/sample/sample_form.html'
-            })
-            .when('/:categoryId/create', {
-                controller: 'SampleCreateCtrl',
                 templateUrl: '/tmpl/sample/sample_form.html'
             });
 
@@ -84,7 +84,7 @@
     sampleApp.factory('Sample', function($resource, $routeParams){
 
         // java의 net.okjsp.sample.SampleNgController 확인
-        return $resource('/sample_ng/:categoryId/:id.json',
+        return $resource('/sample/:categoryId/:id.json',
             {
                 categoryId: $routeParams.categoryId,
                 id:'@id'
@@ -122,7 +122,7 @@
 
         $scope.remove = function() {
             if(confirm("게시물을 삭제하시겠습니까?")) {
-                $scope.sample.$remove(function(u, responseHeaders) {
+                $scope.sample.$remove({id: $routeParams.id}, function(u, responseHeaders) {
                     $location.path('/'+$routeParams.categoryId);
                 });
             }
@@ -135,7 +135,7 @@
         $scope.sample = Sample.get({id: $routeParams.id});
 
         $scope.save = function() {
-            $scope.sample.$save(function(u, responseHeaders) {
+            $scope.sample.$save({id: $routeParams.id}, function(u, responseHeaders) {
                 $location.path('/'+$routeParams.categoryId);
             });
         };
@@ -151,7 +151,7 @@
         $scope.sample = new Sample({categoryId: $routeParams.categoryId});
 
         $scope.save = function() {
-            $scope.sample.$save(function(u, responseHeaders) {
+            Sample.create({categoryId: $routeParams.categoryId}, $scope.sample, function(u, responseHeaders) {
                 $location.path('/'+$routeParams.categoryId);
             });
         };
