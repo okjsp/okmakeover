@@ -1,4 +1,4 @@
-package net.okjsp.commboard.model;
+package net.okjsp.community.model;
 
 public class Attachmapping {
 	//게시판 번호

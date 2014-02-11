@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="net.okjsp.commboard.dao.CommboardDao">
-	<resultMap id="commonBoardListMap" type="net.okjsp.commboard.model.Commboard">
+<mapper namespace="net.okjsp.community.dao.CommunityDao">
+	<resultMap id="articleMap" type="net.okjsp.community.model.Article">
 
         <id jdbcType="INTEGER" property="writeNo" column="write_no"/>
-        <result jdbcType="INTEGER" property="boardyId" column="board_id"/>
+        <result jdbcType="INTEGER" property="boardId" column="board_id"/>
         <result jdbcType="INTEGER" property="categoryId" column="category_id"/>
         <result jdbcType="VARCHAR" property="guboonId" column="guboon_id"/>
         <result jdbcType="VARCHAR" property="commonTitle" column="common_title"/>
@@ -25,7 +25,7 @@
     </resultMap>
 
 	<!-- 일반 게시판들의 리스트를 가져온다. -->
-	<select id="selectCommunityBoardList" resultType="net.okjsp.commboard.model.Board">
+	<select id="selectCommunityBoardList" resultType="net.okjsp.community.model.Board">
         select
             board_id, board_name, category_id, category_name, replay_check, recommend_check, brawl_check, comment_check, write_date, update_date 
         from
@@ -35,13 +35,13 @@
     </select>
     
     <!-- 각 게시판의 게시글 목록을 가져온다. -->
-    <select id="selectCommonBoardList" resultMap="commonBoardListMap">
+    <select id="selectAticles" resultMap="articleMap">
         select
         	cb.write_no, cb.board_id, cb.category_id, cb.guboon_id, cb.user_id, cb.common_title, cb.anonymous_check, cb.anonymous_nickname, 
         	cb.content, cb.posting_hit, cb.write_date, cb.update_date,            
             u.user_id, u.nick_name, u.profile_img, u.grade
         from
-            13_t_commonboard cb
+            13_t_article cb
             left outer join 13_t_user u
             on sb.write_id = u.user_id
         where
@@ -54,13 +54,13 @@
     </select>
     
     <!-- 한개의 게시글을 가져온다 -->
-    <select id="selectCommonBoard" resultMap="commonBoardListMap">
+    <select id="selectArticle" resultMap="articleMap">
         select
         	cb.write_no, cb.board_id, cb.category_id, cb.guboon_id, cb.user_id, cb.common_title, cb.anonymous_check, cb.anonymous_nickname, 
         	cb.content, cb.posting_hit, cb.write_date, cb.update_date,            
             u.user_id, u.nick_name, u.profile_img, u.grade
         from
-            13_t_commonboard cb
+            13_t_article cb
             left outer join 13_t_user u
             on sb.write_id = u.user_id
         where
@@ -72,21 +72,21 @@
         select
             count(write_no)
         from
-            13_t_commonboard
+            13_t_article
         where
         	board_id = #{boardId}
             category_id = #{categoryId}
     </select>
     
-    <insert id="insertCommBoard" useGeneratedKeys="true" keyProperty="write_no">
-        insert into 13_t_commonboard
+    <insert id="insertArticle" useGeneratedKeys="true" keyProperty="write_no">
+        insert into 13_t_article
             (board_id, category_id, guboon_id, user_id, common_title, anonymous_check, anonymous_nickname, content, posting_hit, write_date, update_date)
         values
             (#{board_id}, #{category_id}, #{guboon_id}, #{user_id}, #{common_title}, #{anonymous_check}, #{anonymous_nickname}, #{content}, #{posting_hit}, now(), now())
     </insert>
     
-    <update id="updateCommBoard">
-        update 13_t_commonboard
+    <update id="updateArticle">
+        update 13_t_article
         set
             board_id = #{baordID}, category_id = #{categoryId}, title = #{title}, content = #{content},
             update_date = now()
@@ -94,12 +94,12 @@
             write_no = #{writeNo}
     </update>
 
-    <delete id="deleteCommBoard">
-        delete from 13_t_commonboard where write_no = #{writeNo}
+    <delete id="deleteArticle">
+        delete from 13_t_article where write_no = #{writeNo}
     </delete>
 
-    <update id="addPostingHit">
-        update 13_t_commonboard
+    <update id="addArticleHit">
+        update 13_t_article
         set
             posting_hit = posting_hit+1
         where

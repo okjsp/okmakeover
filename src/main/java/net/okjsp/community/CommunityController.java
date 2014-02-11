@@ -1,13 +1,13 @@
-package net.okjsp.commboard;
+package net.okjsp.community;
 
 import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
-import net.okjsp.commboard.model.Board;
-import net.okjsp.commboard.model.Commboard;
-import net.okjsp.commboard.service.CommboardService;
+import net.okjsp.community.model.Article;
+import net.okjsp.community.model.Board;
+import net.okjsp.community.service.CommunityService;
 import net.okjsp.common.model.Paging;
 import net.okjsp.layout.BasicLayoutController;
 import net.okjsp.user.model.User;
@@ -25,24 +25,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping(value = "/community")
-public class CommboardController  extends BasicLayoutController {
+public class CommunityController extends BasicLayoutController {
 	
 	@Autowired
-	CommboardService boardService;
-	
+    CommunityService communityService;
+
 	@RequestMapping(value="")
-	public String CommunityBoardList(Model model) {
-		List<Board> communityBoardList = boardService.getCommunityBoardList();
-		
+	public String boardList(Model model) {
+		List<Board> communityBoardList = communityService.getCommunityBoardList();
+
 		model.addAttribute("boardList", communityBoardList);
-		
-		return "board/board_list";		
+
+		return "community/boards";
 	}
 	
 	
 	//게시판별 게시글 목록 호출
 	@RequestMapping(value="/{boardId}/{categoryId}", method = RequestMethod.GET)
-	public String CommunityPostListById(
+	public String list(
 			@PathVariable int boardId,
 			@PathVariable int categoryId,
 			@RequestParam(value = "pageNum", defaultValue = "1", required = false) int pageNum,
@@ -50,59 +50,59 @@ public class CommboardController  extends BasicLayoutController {
 			Model model) {
 				
 		paging.setPage(pageNum);
-        List<Commboard> list = boardService.getCommBoardList(boardId, categoryId, paging);
+        List<Article> list = communityService.getArticles(boardId, categoryId, paging);
 
-        int count = boardService.getTotalCount(boardId, categoryId);
+        int count = communityService.getTotalCount(boardId, categoryId);
 
         paging.setListCount(list.size());
         paging.setTotalCount(count);
         
 
-        model.addAttribute("commboard", list);
-        model.addAttribute("boardid", boardId);
-        model.addAttribute("categoryid", categoryId);
+        model.addAttribute("posts", list);
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("categoryId", categoryId);
         model.addAttribute("paging", paging);
 
-        return "board/board_list/commboard";
+        return "community/list";
 
 	}
 	
 	//게시글 호출
 	@RequestMapping(value = "/{boardId}/{categoryId}/{writeNo}")
-	public String readCommboard(
+	public String view(
 			@PathVariable int boardId,
 			@PathVariable int categoryId,
 			@PathVariable int writeNo,
 			Model model) {
 		
-		Commboard commboard = boardService.getCommboard(writeNo);
+		Article article = communityService.getArticle(writeNo);
 		
-		model.addAttribute("boardid", boardId);
-        model.addAttribute("categoryid", categoryId);
-        model.addAttribute("commboard", commboard);
+		model.addAttribute("boardId", boardId);
+        model.addAttribute("categoryId", categoryId);
+        model.addAttribute("post", article);
         
-        return "board/writing";
+        return "community/view";
 		
 	}
 	
     //TODO : 게시글 등록 폼 호출
 	@Secured("ROLE_USER")
 	@RequestMapping(value = "/{boardId}/{categoryId}/writeForm")
-	public String openWriteForm(
+	public String createForm(
 			@PathVariable int boardId,
 			@PathVariable int categoryId,
 			Model model) {
 		
-		model.addAttribute("boardid", boardId);
-		model.addAttribute("categoryid", categoryId);
+		model.addAttribute("boardId", boardId);
+		model.addAttribute("categoryId", categoryId);
 		
-		return "board/writeform";
+		return "community/create";
 	}
 	
 	//TODO : 게시글 수정 폼 호출
 	@Secured("ROLE_USER")
 	@RequestMapping(value="/{boardId}/{categoryId}/modifyForm", method = RequestMethod.POST)
-	public String openModifyForm(
+	public String modifyForm(
 			@PathVariable int boardId,
 			@PathVariable int categoryId,
 			@RequestParam(value = "writeNo") int writeNo,
@@ -112,17 +112,17 @@ public class CommboardController  extends BasicLayoutController {
 			) throws IOException {
 		
 		User user = (User) authentication.getPrincipal();
-		Commboard commboard = boardService.getCommboard(writeNo);
+		Article article = communityService.getArticle(writeNo);
 		
-		if (commboard.getUser().getUserId() != user.getUserId()) {
+		if (article.getUser().getUserId() != user.getUserId()) {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "게시물 수정 권한이 없습니다");
 		}
 		
 		model.addAttribute("boardid", boardId);
 		model.addAttribute("categoryid", categoryId);
-		model.addAttribute("commboard", commboard);
+		model.addAttribute("commboard", article);
 		
-		return "board/modifyform";
+		return "community/modify";
 	}
     
 	//게시글 등록
@@ -131,16 +131,16 @@ public class CommboardController  extends BasicLayoutController {
     public String create(
     		@PathVariable int boardId,
             @PathVariable int categoryId,
-            @ModelAttribute Commboard commboard,
+            @ModelAttribute Article article,
             Authentication authentication) {
 
         User user = (User) authentication.getPrincipal();
         
-        commboard.setBoardId(boardId);
-        commboard.setCategoryId(categoryId);
-        commboard.setUser(user);
+        article.setBoardId(boardId);
+        article.setCategoryId(categoryId);
+        article.setUser(user);
 
-        boardService.create(commboard);
+        communityService.create(article);
 
         return "redirect:/community/" + boardId + "/" + categoryId;
     }
@@ -152,15 +152,15 @@ public class CommboardController  extends BasicLayoutController {
     		@PathVariable int boardId,
             @PathVariable int categoryId,
             @PathVariable int writeNo,
-            @ModelAttribute Commboard commboard,
+            @ModelAttribute Article article,
             Authentication authentication) {
 
         User user = (User) authentication.getPrincipal();
         
-        commboard.setWriteNo(writeNo);
-        commboard.setUser(user);
+        article.setWriteNo(writeNo);
+        article.setUser(user);
         
-        boardService.modify(commboard);
+        communityService.modify(article);
 
         return "redirect:/community/" + boardId + "/" + categoryId;
     }
@@ -175,7 +175,7 @@ public class CommboardController  extends BasicLayoutController {
             @PathVariable int writeNo,
             Authentication authentication) {
 
-        boardService.delete(writeNo);
+        communityService.delete(writeNo);
 
         return "redirect:/community/" + boardId + "/" + categoryId;
     }

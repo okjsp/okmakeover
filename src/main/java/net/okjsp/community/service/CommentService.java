@@ -1,8 +1,8 @@
-package net.okjsp.commboard.service;
+package net.okjsp.community.service;
 
 import java.util.List;
 
-import net.okjsp.commboard.model.Comment;
+import net.okjsp.community.model.Comment;
 import net.okjsp.common.model.Paging;
 
 public interface CommentService {

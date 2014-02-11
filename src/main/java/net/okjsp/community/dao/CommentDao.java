@@ -1,6 +1,6 @@
-package net.okjsp.commboard.dao;
+package net.okjsp.community.dao;
 
-import net.okjsp.commboard.model.Comment;
+import net.okjsp.community.model.Comment;
 
 import org.apache.ibatis.annotations.Param;
 
