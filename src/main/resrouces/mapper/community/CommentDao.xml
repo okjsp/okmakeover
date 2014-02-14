@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.okjsp.community.dao.CommentDao">
+
+    <sql id="selectDefault">
+        select
+          cmt.comment_id, cmt.board_id, cmt.write_no, cmt.content, cmt.write_date, cmt.update_date,
+          u.user_id, u.nick_name, u.profile_img, u.grade
+        from
+            13_t_comment cmt
+            left outer join 13_t_user u
+            on cmt.user_id = u.user_id
+        where
+            board_id = #{boardId}
+        and write_no = #{writeNo#}
+    </sql>
+   
+    <select id="selectList" resultType="net.okjsp.community.model.Comment">
+
+        <include refid="selectDefault" />
+
+        order by
+            cmt.comment_id desc
+
+        limit
+            #{offset}, #{sizePerList}
+    </select>
+
+    <select id="selectListForArticle" resultType="net.okjsp.community.model.Comment">
+
+        <include refid="selectDefault" />
+
+        order by
+            cmt.comment_id asc
+    </select>
+
+    <select id="selectTotalCount" resultType="java.lang.Integer">
+        select
+            count(comment_id)
+        from    
+            13_t_comment
+        where
+            board_id = #{boardId}
+        and write_no = #{writeNo}
+    </select>
+
+    <select id="selectOne" resultType="net.okjsp.community.model.Comment">
+
+        <include refid="selectDefault" />
+
+        and comment_id = #{commentId#}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="comment_id">
+        insert into comment
+            (board_no, write_no, comment_id, nick_name, content, write_date, update_date )
+        values
+            (#{boardId}, #{writeNo}, , #{content}, #{nickName}, #{content}, now(), update_date)
+    </insert>
+
+    <update id="update">
+        update 13_t_comment
+        set
+            comment_id = #{comment_id},
+            nick_name = #{nick_name},
+            content = #{content},
+            write_date = #{write_date},
+            update_date =  now() 
+        where
+            board_id = #{boardId}
+        and write_no = #{write_no}
+        and comment_id = #{comment_id}
+    </update>
+
+    <delete id="delete">
+        delete from 13_t_comment
+        where
+            board_id = #{boardId}
+        and write_no = #{write_no}
+        and comment_id = #{comment_id}
+    </delete>
+ 
+
+</mapper>

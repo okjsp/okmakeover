@@ -70,7 +70,7 @@ public class CommentController extends BasicLayoutController {
             Model model) {
 
         Comment comment = new Comment();
-        comment.setBoardNo(boardNo);
+        comment.setBoardId(boardNo);
         comment.setWriteNo(writeNo);
 
         model.addAttribute("comment", comment); 
@@ -87,7 +87,7 @@ public class CommentController extends BasicLayoutController {
 
          commentService.create(comment);
 
-        return "redirect:/comment/list/{" + comment.getBoardNo() +"}/{" + comment.getWriteNo() + "}";
+        return "redirect:/comment/list/{" + comment.getBoardId() +"}/{" + comment.getWriteNo() + "}";
     }
 
  
@@ -100,7 +100,7 @@ public class CommentController extends BasicLayoutController {
             Model model) {
 
         Comment comment = new Comment();
-        comment.setBoardNo(boardNo);
+        comment.setBoardId(boardNo);
         comment.setWriteNo(writeNo);
         comment.setCommentId(commentId);
 
@@ -117,7 +117,7 @@ public class CommentController extends BasicLayoutController {
 
         commentService.modify(comment);
 
-        return "redirect:/comment/list/{" + comment.getBoardNo() +"}/{" + comment.getWriteNo() + "}";
+        return "redirect:/comment/list/{" + comment.getBoardId() +"}/{" + comment.getWriteNo() + "}";
     }
 
  
@@ -127,6 +127,6 @@ public class CommentController extends BasicLayoutController {
 
         commentService.destroy(comment);
 
-        return "redirect:/comment/list/{" + comment.getBoardNo() +"}/{" + comment.getWriteNo() + "}";
+        return "redirect:/comment/list/{" + comment.getBoardId() +"}/{" + comment.getWriteNo() + "}";
            }	
 }

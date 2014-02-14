@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.okjsp.community.dao.BoardDao">
+
+    <sql id="getBoardDefault">
+        select
+            board_id, board_name, category_id, category_name, replay_check, recommend_check, brawl_check, comment_check, write_date, update_date
+        from
+            13_t_board
+    </sql>
+
+    <select id="getBoardList" resultType="net.okjsp.community.model.Board" useCache="true">
+        <include refid="getBoardDefault" />
+    </select>
+
+    <select id="getBoardListById" resultType="net.okjsp.community.model.Board" useCache="true">
+
+        <include refid="getBoardDefault" />
+
+        where
+            board_id = #{boardId}
+    </select>
+</mapper>

@@ -8,6 +8,10 @@ import java.util.List;
 
 public interface CommentDao {
 
+    public List<Comment> selectListForArticle(
+            @Param("boardNo") String boardNo,
+            @Param("writeNo") String writeNo);
+
     public List<Comment> selectList(
             @Param("boardNo") String boardNo,
             @Param("writeNo") String writeNo,

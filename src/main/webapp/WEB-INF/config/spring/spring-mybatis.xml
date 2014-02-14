@@ -47,7 +47,9 @@
         <property name="dataSource" ref="dataSource" />
     </bean>
 
-    <!-- transactionManager -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+<!--    &lt;!&ndash; transactionManager &ndash;&gt;
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="create*" rollback-for="java.lang.Exception"/>
@@ -63,6 +65,6 @@
     <aop:config>
         <aop:pointcut id="executorServiceMethod"  expression="execution(* *..*Service.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="executorServiceMethod" />
-    </aop:config>
+    </aop:config>-->
 
 </beans>

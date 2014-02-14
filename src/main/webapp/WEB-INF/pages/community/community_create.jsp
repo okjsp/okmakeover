@@ -16,16 +16,17 @@
 
 <div class="col-md-9">
     <div class="page-header">
-        <h3>Community - 공통게시판</h3>
+        <h3>Community - ${BOARD_NAMES[categoryId]}</h3>
     </div>
-    <f:form commandName="post" id="postForm" cssClass="form-horizontal" role="form" method="POST">
+    <f:form commandName="article" cssClass="form-horizontal" role="form" method="POST"
+            action="/community/${boardId}/${categoryId}">
 
-       <%@ include file="_form.jsp"%>
+        <%@ include file="_community_form.jsp"%>
 
         <div class="form-group">
             <div class="text-center">
                 <input type="submit" class="btn btn-success btn-mg" value="저장" role="button" />
-                <a href="list.jsp" id="cancelBtn" class="btn btn-default btn-mg" role="button">취소</a>
+                <a href="/community/${boardId}/${categoryId}" id="cancelBtn" class="btn btn-default btn-mg" role="button">취소</a>
             </div>
         </div>
 

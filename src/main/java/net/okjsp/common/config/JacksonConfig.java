@@ -28,7 +28,7 @@ public class JacksonConfig implements BeanPostProcessor {
                     (MappingJackson2HttpMessageConverter) bean;
             ObjectMapper objectMapper = jsonConverter.getObjectMapper();
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-            objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+//            objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
             jsonConverter.setObjectMapper(objectMapper);
         }
         return bean;

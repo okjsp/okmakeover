@@ -151,7 +151,7 @@
         $scope.sample = new Sample({categoryId: $routeParams.categoryId});
 
         $scope.save = function() {
-            Sample.create({categoryId: $routeParams.categoryId}, $scope.sample, function(u, responseHeaders) {
+            $scope.sample.$save({categoryId: $routeParams.categoryId}, function(u, responseHeaders) {
                 $location.path('/'+$routeParams.categoryId);
             });
         };

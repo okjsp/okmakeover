@@ -8,9 +8,9 @@
 <body>
 
     <ul>
-    <c:forEach var="board" items="${boardList}" varStatus="boardCount">    
-   		<li><a href="/community/${board.boardId}/${board.categoryId}">${board.categoryName}</a></li>
-    </c:forEach>
+        <c:forEach var="board" items="${BOARD_NAMES}">
+            <li><a href="/community/3/${board.key}">${board.value}</a></li>
+        </c:forEach>
     </ul>
     
     <content tag="script">

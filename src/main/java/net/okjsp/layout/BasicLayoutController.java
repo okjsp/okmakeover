@@ -1,12 +1,16 @@
 package net.okjsp.layout;
 
+import net.okjsp.community.model.Board;
+import net.okjsp.community.service.BoardService;
 import net.okjsp.layout.model.Navigation;
 import net.okjsp.layout.service.LayoutService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**

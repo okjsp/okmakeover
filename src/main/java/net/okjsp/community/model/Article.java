@@ -1,6 +1,9 @@
 package net.okjsp.community.model;
 
 import net.okjsp.user.model.User;
+import org.hibernate.validator.constraints.NotBlank;
+
+import java.util.List;
 
 public class Article {
 
@@ -10,20 +13,21 @@ public class Article {
 	// 하위 카테고리명
 	private int categoryId;
 	
-	// 삭제구분 플래그(Y/N)
-	private String guboonId;
+	// 사용여부
+	private boolean enabled;
 	
 	// 공통 글번호
 	private int writeNo;
 	
 	// 회원 아이디
-	private String userId;
+	private int userId;
 	
 	// 제목
-	private String commonTitle;
+    @NotBlank
+	private String title;
 	
 	//익명글 체크
-	private String anonymousCheck;
+	private boolean anonymized;
 	
 	//익명글 닉네임
 	private String anonymousNickname;
@@ -42,6 +46,12 @@ public class Article {
 	
 	//작성자
 	private User user;
+
+    private int commentCount;
+
+    private List<Comment> comments;
+
+    //TODO: 첨부파일
 
 	public User getUser() {
 		return user;
@@ -67,12 +77,12 @@ public class Article {
 		this.categoryId = categoryId;
 	}
 
-	public String getGuboonId() {
-		return guboonId;
+	public boolean getEnabled() {
+		return enabled;
 	}
 
-	public void setGuboonId(String guboonId) {
-		this.guboonId = guboonId;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public int getWriteNo() {
@@ -83,20 +93,20 @@ public class Article {
 		this.writeNo = writeNo;
 	}
 
-	public String getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
-	public String getCommonTitle() {
-		return commonTitle;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setCommonTitle(String commonTitle) {
-		this.commonTitle = commonTitle;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getContent() {
@@ -131,12 +141,12 @@ public class Article {
 		this.updateDate = updateDate;
 	}
 
-	public String getAnonymousCheck() {
-		return anonymousCheck;
+	public boolean getAnonymized() {
+		return anonymized;
 	}
 
-	public void setAnonymousCheck(String anonymousCheck) {
-		this.anonymousCheck = anonymousCheck;
+	public void setAnonymized(boolean anonymized) {
+		this.anonymized = anonymized;
 	}
 
 	public String getAnonymousNickname() {
@@ -146,8 +156,44 @@ public class Article {
 	public void setAnonymousNickname(String anonymousNickname) {
 		this.anonymousNickname = anonymousNickname;
 	}
-	
-	
-	
-	
+
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public String getNickname() {
+        if(getAnonymized()) {
+            return getAnonymousNickname();
+        } else {
+            User user = getUser();
+            if(user != null) {
+                return user.getNickName();
+            } else {
+                return "";
+            }
+        }
+    }
+
+    public String getProfileImg() {
+        if(!getAnonymized()) {
+            User user = getUser();
+            if(user != null) {
+                return user.getProfileImg();
+            }
+        }
+        return "";
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }

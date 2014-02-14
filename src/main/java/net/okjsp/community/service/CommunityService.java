@@ -13,7 +13,6 @@ import net.okjsp.common.model.Paging;
  * Description : 공통 게시판을 위한 Service
  */
 public interface CommunityService {
-	public List<Board> getCommunityBoardList();
 
 	public List<Article> getArticles(int boardId, int categoryId,
                                      Paging paging);

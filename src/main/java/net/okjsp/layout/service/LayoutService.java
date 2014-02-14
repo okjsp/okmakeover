@@ -1,5 +1,6 @@
 package net.okjsp.layout.service;
 
+import net.okjsp.community.model.Board;
 import net.okjsp.layout.model.Navigation;
 
 import java.util.List;

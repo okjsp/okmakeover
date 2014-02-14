@@ -1,26 +1,31 @@
 package net.okjsp.community.model;
 
+import net.okjsp.user.model.User;
+
 public class Comment {
 	//게시판 번호
-	private String boardNo;
+	private String boardId;
 	//글 번호
 	private String writeNo;
 	//코멘트 번호
 	private String commentId;
-	//닉네임
-	private String nickName;
 	//본문
 	private String content;
+    //작성자 id
+    private int userId;
 	//올린 시간
 	private String writeDate;
 	//수정 시간
 	private String updateDate;
+    //작성자
+    private User user;
+
 	
-	public String getBoardNo() {
-		return boardNo;
+	public String getBoardId() {
+		return boardId;
 	}
-	public void setBoardNo(String boardNo) {
-		this.boardNo = boardNo;
+	public void setBoardId(String boardId) {
+		this.boardId = boardId;
 	}
 	public String getWriteNo() {
 		return writeNo;
@@ -33,12 +38,6 @@ public class Comment {
 	}
 	public void setCommentId(String commentId) {
 		this.commentId = commentId;
-	}
-	public String getNickName() {
-		return nickName;
-	}
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
 	}
 	public String getContent() {
 		return content;
@@ -58,9 +57,16 @@ public class Comment {
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
-
-
-	
-	 
-	
+    public int getUserId() {
+        return userId;
+    }
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

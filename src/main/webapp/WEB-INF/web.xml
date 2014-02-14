@@ -91,4 +91,18 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
+<!--    <resource-ref>
+        <description>DB Connection</description>
+        <res-ref-name>jdbc/okjspWebDB</res-ref-name>
+        <res-type>org.apache.commons.dbcp.BasicDataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>-->
+
+    <jsp-config>
+        <taglib>
+            <taglib-uri>http://www.okjsp.net/jstl/util</taglib-uri>
+            <taglib-location>/WEB-INF/tld/Util.tld</taglib-location>
+        </taglib>
+    </jsp-config>
+
 </web-app>

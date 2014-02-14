@@ -80,7 +80,7 @@ public class CommentServiceImpl implements CommentService  {
      
         boolean result = false;
 
-        int count = commentDao.delete(comment.getBoardNo(),comment.getWriteNo(),comment.getCommentId());
+        int count = commentDao.delete(comment.getBoardId(),comment.getWriteNo(),comment.getCommentId());
 
         if(count > 0) {
             result = true;

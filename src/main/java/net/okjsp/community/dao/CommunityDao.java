@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommunityDao {
-	public List<Board> selectCommunityBoardList();
 	public List<Article> selectAticles(
             @Param("boardId") int boardId,
             @Param("categoryId") int categoryId,

@@ -1,5 +1,6 @@
 package net.okjsp.user.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -45,8 +46,8 @@ public class User implements UserDetails, CredentialsContainer {
 
     private String profileImg;
 
-    private String letterAgr = "N";
-    private String grade = "1";
+    private String letterAgr;
+    private String grade;
 
     @DateTimeFormat(style = "MM", pattern = "yyyy-MM-dd")
     private Date joinDate;
@@ -65,6 +66,7 @@ public class User implements UserDetails, CredentialsContainer {
 
     private static final String salt = "!okjspPwSalt*";
 
+    @JsonIgnore
     public String getSalt() {
         return salt;
     }
@@ -83,6 +85,7 @@ public class User implements UserDetails, CredentialsContainer {
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -93,21 +96,25 @@ public class User implements UserDetails, CredentialsContainer {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return accountNonExpired;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return accountNonLocked;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return credentialsNonExpired;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return accountNonExpired;
     }
@@ -116,6 +123,7 @@ public class User implements UserDetails, CredentialsContainer {
         this.password = password;
     }
 
+    @JsonIgnore
     public String getPasswordConfirm() {
         return passwordConfirm;
     }

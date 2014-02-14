@@ -1,8 +1,12 @@
 package net.okjsp.community.model;
 
-public class Board {
+import java.io.Serializable;
 
-	// 게시판ID
+public class Board implements Serializable {
+
+    private static final long serialVersionUID = -3404588398820203356L;
+
+    // 게시판ID
 	private int boardId;
 	
 	// 게시판명

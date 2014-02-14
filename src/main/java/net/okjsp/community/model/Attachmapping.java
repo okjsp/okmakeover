@@ -11,6 +11,8 @@ public class Attachmapping {
 	private int attachId;
 	//첨부파일 순서
 	private int attachOrder;
+
+
 	
 	
 	public int getBoardId() {

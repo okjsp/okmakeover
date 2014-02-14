@@ -103,7 +103,7 @@ public class SampleController extends BasicLayoutController {
 
 
     /**
-     * Sample 내용 보기 As HTML
+     * Sample 내용 보기 AS HTML
      * @param categoryId
      * @param id
      * @param model

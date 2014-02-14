@@ -82,7 +82,7 @@
             ,update_date
         ) VALUES (
              #{writeNo}
-            ,#{guboonId}
+            ,#{isDel}
             ,#{parentId}
             ,#{qnaTitle}
             ,#{content}
@@ -95,7 +95,7 @@
     <update id="update">
         /* techQna 등록 */
         UPDATE 13_t_techqna
-           SET guboon_id = #{guboonId}
+           SET guboon_id = #{isDel}
               ,qna_title = #{qnaTitle}
               ,content   = #{content}
               ,posting_hit = #{postingHit}

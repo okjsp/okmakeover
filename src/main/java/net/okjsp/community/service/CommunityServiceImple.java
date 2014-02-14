@@ -9,18 +9,12 @@ import net.okjsp.common.model.Paging;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CommunityServiceImple implements CommunityService {
 	@Autowired
     CommunityDao communityDao;
-
-	@Override
-	public List<Board> getCommunityBoardList() {
-		List<Board> communityBoardList = communityDao.selectCommunityBoardList();
-		
-		return communityBoardList;
-	}
 	
 	@Override
 	public List<Article> getArticles(int boardId, int categoryId,
@@ -44,6 +38,7 @@ public class CommunityServiceImple implements CommunityService {
 	}
 
 	@Override
+    @Transactional
 	public boolean addArticleHit(int writeNo) {
 		int count = communityDao.addArticleHit(writeNo);
 
@@ -54,6 +49,7 @@ public class CommunityServiceImple implements CommunityService {
 	}
 
 	@Override
+    @Transactional
 	public boolean create(Article article) {
 		boolean result = false;
 
@@ -67,6 +63,7 @@ public class CommunityServiceImple implements CommunityService {
 	}
 
 	@Override
+    @Transactional
 	public boolean modify(Article article) {
 		boolean result = false;
 
@@ -80,6 +77,7 @@ public class CommunityServiceImple implements CommunityService {
 	}
 
 	@Override
+    @Transactional
 	public boolean delete(int writeNo) {
 		boolean result = false;
 

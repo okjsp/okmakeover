@@ -5,6 +5,7 @@ import net.okjsp.sample.dao.SampleBoardDao;
 import net.okjsp.sample.model.Sample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class SampleBoardServiceImpl implements SampleBoardService {
     }
 
     @Override
+    @Transactional
     public boolean create(Sample sampleBoard) {
 
         boolean result = false;
@@ -60,6 +62,7 @@ public class SampleBoardServiceImpl implements SampleBoardService {
     }
 
     @Override
+    @Transactional
     public boolean modify(Sample sampleBoard) {
 
         boolean result = false;
@@ -74,6 +77,7 @@ public class SampleBoardServiceImpl implements SampleBoardService {
     }
 
     @Override
+    @Transactional
     public boolean addViewCount(int id) {
 
         int count = sampleBoardDao.addViewCount(id);
@@ -82,6 +86,7 @@ public class SampleBoardServiceImpl implements SampleBoardService {
     }
 
     @Override
+    @Transactional
     public boolean destroy(int id) {
 
         boolean result = false;

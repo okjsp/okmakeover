@@ -45,7 +45,7 @@
 			employment_type, work_period, tag_name, work_intro, self_intro, matching_percent,
 			posting_hit, write_date, update_date)
 		values
-			(#{writeNo}, #{guboonId}, #{jobTitle}, #{name}, #{tel}, #{email}, #{workRegion},
+			(#{writeNo}, #{isDel}, #{jobTitle}, #{name}, #{tel}, #{email}, #{workRegion},
 			#{employmentType}, #{workPeriod}, #{tagName}, #{workIntro}, #{selfIntro}, #{matchingPercent},
 			0, now(), now())
 	</insert>
@@ -53,7 +53,7 @@
 	<update id="update">
         update 13_t_hunting
         set
-            guboon_id = #{guboonId},
+            guboon_id = #{isDel},
         	job_title = #{jobTitle},
         	name = #{name},
         	tel = #{tel},

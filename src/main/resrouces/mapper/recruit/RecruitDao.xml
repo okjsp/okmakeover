@@ -47,7 +47,7 @@
 			welfare, tag_name, company_intro, work_intro, matching_percent,
 			posting_hit, write_date, update_date)
 		values
-			(#{writeNo}, #{guboonId}, #{offerTitle}, #{companyName}, #{name},
+			(#{writeNo}, #{isDel}, #{offerTitle}, #{companyName}, #{name},
 			#{tel}, #{email}, #{workRegion}, #{employmentType}, #{workPeriod},
 			#{welfare}, #{tagName}, #{company_intro}, #{workIntro}, #{matchingPercent},
 			0, now(), now())
@@ -56,7 +56,7 @@
 	<update id="update">
         update 13_t_recruit
         set
-            guboon_id = #{guboonId},
+            guboon_id = #{isDel},
         	job_title = #{offerTitle},
         	company_name = #{companyName},
         	name = #{name},
