@@ -2,41 +2,43 @@ package net.okjsp.community.model;
 
 import net.okjsp.user.model.User;
 
+import java.util.Date;
+
 public class Comment {
 	//게시판 번호
-	private String boardId;
+	private int boardId;
 	//글 번호
-	private String writeNo;
+	private int writeNo;
 	//코멘트 번호
-	private String commentId;
+	private int commentId;
 	//본문
 	private String content;
     //작성자 id
     private int userId;
 	//올린 시간
-	private String writeDate;
+	private Date writeDate;
 	//수정 시간
-	private String updateDate;
+	private Date updateDate;
     //작성자
     private User user;
 
 	
-	public String getBoardId() {
+	public int getBoardId() {
 		return boardId;
 	}
-	public void setBoardId(String boardId) {
+	public void setBoardId(int boardId) {
 		this.boardId = boardId;
 	}
-	public String getWriteNo() {
+	public int getWriteNo() {
 		return writeNo;
 	}
-	public void setWriteNo(String writeNo) {
+	public void setWriteNo(int writeNo) {
 		this.writeNo = writeNo;
 	}
-	public String getCommentId() {
+	public int getCommentId() {
 		return commentId;
 	}
-	public void setCommentId(String commentId) {
+	public void setCommentId(int commentId) {
 		this.commentId = commentId;
 	}
 	public String getContent() {
@@ -45,16 +47,16 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getWriteDate() {
+	public Date getWriteDate() {
 		return writeDate;
 	}
-	public void setWriteDate(String writeDate) {
+	public void setWriteDate(Date writeDate) {
 		this.writeDate = writeDate;
 	}
-	public String getUpdateDate() {
+	public Date getUpdateDate() {
 		return updateDate;
 	}
-	public void setUpdateDate(String updateDate) {
+	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
     public int getUserId() {

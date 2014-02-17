@@ -2,12 +2,14 @@ package net.okjsp.community.model;
 
 import net.okjsp.user.model.User;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
 import java.util.List;
 
 public class Article {
 
-	// 게시판ID
+	// 게시판 ID
 	private int boardId;
 	
 	// 하위 카테고리명
@@ -39,10 +41,10 @@ public class Article {
 	private int postingHit;
 	
 	// 작성일시
-	private String writeDate;
+	private Date writeDate;
 	
 	// 업데이트 일시
-	private String updateDate;
+	private Date updateDate;
 	
 	//작성자
 	private User user;
@@ -125,19 +127,19 @@ public class Article {
 		this.postingHit = postingHit;
 	}
 
-	public String getWriteDate() {
+	public Date getWriteDate() {
 		return writeDate;
 	}
 
-	public void setWriteDate(String writeDate) {
+	public void setWriteDate(Date writeDate) {
 		this.writeDate = writeDate;
 	}
 
-	public String getUpdateDate() {
+	public Date getUpdateDate() {
 		return updateDate;
 	}
 
-	public void setUpdateDate(String updateDate) {
+	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
 

@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import net.okjsp.common.model.PagingList;
 import net.okjsp.community.model.Article;
 import net.okjsp.community.model.Board;
+import net.okjsp.community.model.Comment;
 import net.okjsp.community.service.BoardService;
 import net.okjsp.community.service.CommentService;
 import net.okjsp.community.service.CommunityService;
@@ -25,11 +26,13 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value = "/community")
@@ -119,17 +122,6 @@ public class CommunityController extends BasicLayoutController {
         return "community/community_view";
 		
 	}
-
-    @RequestMapping(value = "/{boardId}/{categoryId}/{writeNo}/comment/create", method = RequestMethod.POST)
-    public String createComment(
-            @PathVariable int boardId,
-            @PathVariable int categoryId,
-            @PathVariable int writeNo,
-            Model model) {
-
-        return "redirect:/community/" + boardId + "/" + categoryId + "/" + writeNo;
-
-    }
 	
     //TODO : 게시글 등록 폼 호출
 	@Secured("ROLE_USER")
@@ -155,7 +147,12 @@ public class CommunityController extends BasicLayoutController {
             @PathVariable int boardId,
             @PathVariable int categoryId,
             @Valid @ModelAttribute Article article,
+            BindingResult result,
             Authentication authentication) throws IOException {
+
+        if(result.hasErrors()){
+            return "community/community_create";
+        }
 
         User user = (User) authentication.getPrincipal();
 
@@ -203,16 +200,27 @@ public class CommunityController extends BasicLayoutController {
             @PathVariable int categoryId,
             @PathVariable int writeNo,
             @ModelAttribute Article article,
-            Authentication authentication) {
+            Authentication authentication,
+            HttpServletResponse response) throws IOException {
 
         User user = (User) authentication.getPrincipal();
 
+        int userId = communityService.getUserIdFromArticle(writeNo);
+
+        if(user.getUserId() == userId) {
             article.setWriteNo(writeNo);
             article.setUser(user);
 
             communityService.modify(article);
 
-        return "redirect:/community/" + boardId + "/" + categoryId;
+            return "redirect:/community/" + boardId + "/" + categoryId;
+
+        } else {
+
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "게시물 수정 권한이 없습니다");
+
+            return "community/community_modify";
+        }
     }
 
     
@@ -223,11 +231,43 @@ public class CommunityController extends BasicLayoutController {
     		@PathVariable int boardId,
             @PathVariable int categoryId,
             @PathVariable int writeNo,
-            Authentication authentication) {
+            Authentication authentication,
+            RedirectAttributes redirectAttributes) {
 
-        communityService.delete(writeNo);
+        User user = (User) authentication.getPrincipal();
+
+        int userId = communityService.getUserIdFromArticle(writeNo);
+        if(user.getUserId() == userId) {
+
+            communityService.delete(writeNo);
+
+        } else {
+            redirectAttributes.addAttribute("message", "게시물 수정 권한이 없습니다");
+        }
 
         return "redirect:/community/" + boardId + "/" + categoryId;
+    }
+
+    @Secured("ROLE_USER")
+    @RequestMapping(value = "/{boardId}/{categoryId}/{writeNo}/comment", method = RequestMethod.POST)
+    public String createComment(
+            @PathVariable int boardId,
+            @PathVariable int categoryId,
+            @PathVariable int writeNo,
+            @ModelAttribute Comment comment,
+            Authentication authentication) {
+
+        User user = (User) authentication.getPrincipal();
+
+
+        int userId = communityService.getUserIdFromArticle(writeNo);
+
+        comment.setUserId(user.getUserId());
+
+        commentService.create(comment);
+
+        return "redirect:/community/" + boardId + "/" + categoryId + "/" + writeNo;
+
     }
 
     @ModelAttribute("BOARD_NAMES")

@@ -19,6 +19,8 @@ public interface CommunityService {
 	
 	public Article getArticle(int writeNo);
 
+    public int getUserIdFromArticle(int writeNo);
+
 	public int getTotalCount(int boardId, int categoryId);
 
 	public boolean addArticleHit(int writeNo);

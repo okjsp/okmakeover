@@ -7,22 +7,22 @@ import net.okjsp.common.model.Paging;
 
 public interface CommentService {
 
-    public List<Comment> getList( 
-    		String boardNo,
-            String writeNo,
+    public List<Comment> getList(
+            int boardNo,
+            int writeNo,
             String searchflg,
             String search,
             String sort,
             Paging paging);
 
     public int getTotalCount(
-    		String boardNo,
-            String writeNo);
+            int boardNo,
+            int writeNo);
 
     public Comment getOne(
-    		String boardNo,
-            String writeNo,
-            String commentId);
+            int boardNo,
+            int writeNo,
+            int commentId);
 
     public boolean create(Comment comment);
     

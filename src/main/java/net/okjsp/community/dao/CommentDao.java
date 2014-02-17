@@ -9,12 +9,12 @@ import java.util.List;
 public interface CommentDao {
 
     public List<Comment> selectListForArticle(
-            @Param("boardNo") String boardNo,
-            @Param("writeNo") String writeNo);
+            @Param("boardNo") int boardNo,
+            @Param("writeNo") int writeNo);
 
     public List<Comment> selectList(
-            @Param("boardNo") String boardNo,
-            @Param("writeNo") String writeNo,
+            @Param("boardNo") int boardNo,
+            @Param("writeNo") int writeNo,
             @Param("searchFlg") String searchflg,
             @Param("search") String search,
             @Param("sort") String sort,
@@ -22,13 +22,13 @@ public interface CommentDao {
             @Param("sizePerList") int sizePerList );
 
     public int selectTotalCount(
-            @Param("boardNo") String boardNo,
-            @Param("writeNo") String writeNo );
+            @Param("boardNo") int boardNo,
+            @Param("writeNo") int writeNo );
 
     public Comment selectOne( 
-    		@Param("boardNo") String boardNo,
-            @Param("writeNo") String writeNo,
-            @Param("commentId") String commentId );
+    		@Param("boardNo") int boardNo,
+            @Param("writeNo") int writeNo,
+            @Param("commentId") int commentId );
     
 
     public int insert(Comment comment);
@@ -36,8 +36,8 @@ public interface CommentDao {
     public int update(Comment comment);
 
     public int delete(
-    		@Param("boardNo") String boardNo,
-            @Param("writeNo") String writeNo,
-            @Param("commentId") String commentId);
+    		@Param("boardNo") int boardNo,
+            @Param("writeNo") int writeNo,
+            @Param("commentId") int commentId);
  
 }

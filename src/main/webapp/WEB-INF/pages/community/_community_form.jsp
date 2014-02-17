@@ -12,6 +12,7 @@
         <f:label path="title" cssClass="col-sm-2 control-label">제목</f:label>
         <div class="col-sm-10">
             <f:input path="title" cssClass="form-control" placeholder="제목을 입력해 주세요." />
+            <f:errors path="title" cssClass="help-block" />
         </div>
     </div>
     <div class="form-group">
