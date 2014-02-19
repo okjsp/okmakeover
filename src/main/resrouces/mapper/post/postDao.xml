@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.okjsp.post.dao.PostDao">
+	
+	<resultMap id="postListMap" type="net.okjsp.post.model.Post">
+        <result jdbcType="INTEGER" property="postId" column="post_id"/>
+        <result jdbcType="VARCHAR" property="userId" column="user_id"/>
+        <result jdbcType="VARCHAR" property="postType" column="post_type"/>
+        <result jdbcType="TIMESTAMP" property="sendDate" column="write_date"/>
+        <result jdbcType="TIMESTAMP" property="checkDate" column="check_date"/>
+    </resultMap>
+    
+    <resultMap id="postDetailMap" extends="postListMap" type="net.okjsp.post.model.Post">
+        <result jdbcType="INTEGER" property="postSeq" column="post_seq"/>
+        <result jdbcType="VARCHAR" property="targetId" column="target_id"/>
+        <result jdbcType="VARCHAR" property="content" column="content"/>
+        <result jdbcType="VARCHAR" property="postStatus" column="post_status"/>
+    </resultMap>
+    
+	<select id="selectPostList" resultMap="postListMap" >
+		select post_id, user_id, sendDate, check_date, post_Type
+		  from t_post
+		  where user_id = #userId#
+		    and post_Type = #postType#
+		order by post_id desc
+        limit #{offset}, #{sizePerList} 
+	</select>
+	
+	<select id="selectPostTotalCount" resultType="int" >
+		select count(1)
+		  from t_post
+		  where user_id = #userId#
+		    and post_Type = #postType#
+	</select>
+	
+	<insert id="insertPost">
+		insert into t_post (post_id, 
+							user_id, 
+							target_id, 
+							content,
+							post_status,
+							post_type,
+							write_date) 
+					values (#postId#,
+							#userId#,
+							#targetId#,
+							#content#,
+							#postStatus#,
+							#postType#,
+							now())
+	</insert>
+	
+	<select id="selectPostDetailList" resultMap="postDetailMap">
+		select post_id, user_id, post_seq, target_id, post_status, content,  sendDate, check_date, postType
+		  from t_post
+		  where post_id = #postId#
+		    and user_id = #userId#
+		order by post_seq asc
+	</select>
+	
+	<delete id="deletePost">
+		delete from t_post 
+		 where  post_id = #postId#
+		   and user_id = #userId#
+		   <if test="postSeq != null and postSeq != ''">
+		   and post_seq = #postSeq#
+		   </if>
+	</delete>
+	
+	<update id="updatePost">
+		update t_post
+		   set  check_date = now(),
+		        postStatus = #postStatus#
+		   where  post_id = #postId#
+		   and user_id = #userId#    
+		   and post_seq = #postSeq#   
+	</update>
+	
+</mapper>
