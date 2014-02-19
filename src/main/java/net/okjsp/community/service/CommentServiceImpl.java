@@ -19,8 +19,8 @@ public class CommentServiceImpl implements CommentService  {
 	    CommentDao commentDao;
 
     public List<Comment> getList( 
-    		String boardNo,
-            String writeNo,
+    		int boardNo,
+            int writeNo,
             String searchflg,
             String search,
             String sort,
@@ -32,17 +32,17 @@ public class CommentServiceImpl implements CommentService  {
     }
 
     public int getTotalCount(
-    		String boardNo,
-            String writeNo){
+            int boardNo,
+            int writeNo){
     	
     	
     	return commentDao.selectTotalCount(boardNo, writeNo);
     }
 
     public Comment getOne(
-    		String boardNo,
-            String writeNo,
-            String commentId) {
+            int boardNo,
+            int writeNo,
+            int commentId) {
     	
     	 
     	

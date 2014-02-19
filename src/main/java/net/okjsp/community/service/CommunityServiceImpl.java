@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CommunityServiceImple implements CommunityService {
+public class CommunityServiceImpl implements CommunityService {
 	@Autowired
     CommunityDao communityDao;
 	
@@ -37,7 +37,12 @@ public class CommunityServiceImple implements CommunityService {
 		return communityDao.selectArticle(writeNo);
 	}
 
-	@Override
+    @Override
+    public int getUserIdFromArticle(int writeNo) {
+        return communityDao.selectUserId(writeNo);
+    }
+
+    @Override
     @Transactional
 	public boolean addArticleHit(int writeNo) {
 		int count = communityDao.addArticleHit(writeNo);

@@ -24,8 +24,8 @@ public class CommentController extends BasicLayoutController {
     @Secured("ROLE_USER")
     @RequestMapping(value="/comment/list/{boardNo}/{writeNo}", method = RequestMethod.GET)
     public String list(
-    		@PathVariable String boardNo,
-    		@PathVariable String writeNo,
+    		@PathVariable int boardNo,
+    		@PathVariable int writeNo,
             String searchflg,
             String search,
             String sort,
@@ -49,9 +49,9 @@ public class CommentController extends BasicLayoutController {
     @Secured("ROLE_USER")
     @RequestMapping(value="/comment/view/{boardNo}/{writeNo}/{commentId}", method = RequestMethod.GET)
     public String view(
-    		@PathVariable String boardNo,
-    		@PathVariable String writeNo,
-    		@PathVariable String commentId, 
+    		@PathVariable int boardNo,
+    		@PathVariable int writeNo,
+    		@PathVariable int commentId,
             Model model) {
 
         Comment comment = commentService.getOne(boardNo, writeNo, commentId);
@@ -65,8 +65,8 @@ public class CommentController extends BasicLayoutController {
     @Secured("ROLE_USER")
     @RequestMapping(value = "/comment/create_form/{boardNo}/{writeNo}", method = RequestMethod.GET)
     public String createForm(
-    		@PathVariable String boardNo,
-    		@PathVariable String writeNo,
+    		@PathVariable int boardNo,
+    		@PathVariable int writeNo,
             Model model) {
 
         Comment comment = new Comment();
@@ -94,9 +94,9 @@ public class CommentController extends BasicLayoutController {
     @Secured("ROLE_USER")
     @RequestMapping(value = "/comment/modify/{boardNo}/{writeNo}/{commentNo}", method = RequestMethod.GET)
     public String modifyForm(
-    		@PathVariable String boardNo,
-    		@PathVariable String writeNo,
-    		@PathVariable String commentId,
+    		@PathVariable int boardNo,
+    		@PathVariable int writeNo,
+    		@PathVariable int commentId,
             Model model) {
 
         Comment comment = new Comment();

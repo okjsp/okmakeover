@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.okjsp.community.dao.CommentDao">
 
+    <resultMap id="commentMap" type="net.okjsp.community.model.Comment">
+
+        <id jdbcType="INTEGER" property="commentId" column="COMMENT_ID"/>
+        <result jdbcType="INTEGER" property="boardId" column="BOARD_ID"/>
+        <result jdbcType="INTEGER" property="writeNo" column="WRITE_NO"/>
+        <result jdbcType="LONGVARCHAR" property="content" column="CONTENT"/>
+        <result jdbcType="INTEGER" property="userId" column="USER_ID"/>
+        <result jdbcType="TIMESTAMP" property="writeDate" column="WRITE_DATE"/>
+
+        <association property="user" javaType="net.okjsp.user.model.User"
+                     resultMap="net.okjsp.user.dao.UserDao.userProfileMap" />
+    </resultMap>
+
     <sql id="selectDefault">
         select
           cmt.comment_id, cmt.board_id, cmt.write_no, cmt.content, cmt.write_date, cmt.update_date,
@@ -12,10 +25,10 @@
             on cmt.user_id = u.user_id
         where
             board_id = #{boardId}
-        and write_no = #{writeNo#}
+        and write_no = #{writeNo}
     </sql>
    
-    <select id="selectList" resultType="net.okjsp.community.model.Comment">
+    <select id="selectList" resultMap="commentMap">
 
         <include refid="selectDefault" />
 
@@ -26,7 +39,7 @@
             #{offset}, #{sizePerList}
     </select>
 
-    <select id="selectListForArticle" resultType="net.okjsp.community.model.Comment">
+    <select id="selectListForArticle" resultMap="commentMap">
 
         <include refid="selectDefault" />
 
@@ -44,40 +57,37 @@
         and write_no = #{writeNo}
     </select>
 
-    <select id="selectOne" resultType="net.okjsp.community.model.Comment">
+    <select id="selectOne" resultMap="commentMap">
 
         <include refid="selectDefault" />
 
-        and comment_id = #{commentId#}
+        and comment_id = #{commentId}
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="comment_id">
-        insert into comment
-            (board_no, write_no, comment_id, nick_name, content, write_date, update_date )
+        insert into 13_t_comment
+            (board_id, write_no, content, user_id, write_date, update_date)
         values
-            (#{boardId}, #{writeNo}, , #{content}, #{nickName}, #{content}, now(), update_date)
+            (#{boardId}, #{writeNo}, #{content}, #{userId}, now(), now())
     </insert>
 
     <update id="update">
         update 13_t_comment
         set
-            comment_id = #{comment_id},
-            nick_name = #{nick_name},
             content = #{content},
-            write_date = #{write_date},
             update_date =  now() 
         where
             board_id = #{boardId}
-        and write_no = #{write_no}
-        and comment_id = #{comment_id}
+        and write_no = #{writeNo}
+        and comment_id = #{commentId}
     </update>
 
     <delete id="delete">
         delete from 13_t_comment
         where
             board_id = #{boardId}
-        and write_no = #{write_no}
-        and comment_id = #{comment_id}
+        and write_no = #{writeNo}
+        and comment_id = #{commentId}
     </delete>
  
 

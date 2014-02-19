@@ -16,17 +16,19 @@ public interface CommunityDao {
             @Param("offset") int offset,
             @Param("sizePerList") int sizePerList);
 	
-	 public int selectTotalCount(
-			 @Param("boardId") int boardId,
-			 @Param("categoryId") int categoryId);
-	 
-	 public Article selectArticle(@Param("writeNo") int writeNo);
+    public int selectTotalCount(
+             @Param("boardId") int boardId,
+             @Param("categoryId") int categoryId);
 
-	 public int insertArticle(Article article);
-	 
-	 public int updateArticle(Article article);
-	 
-	 public int deleteArticle(@Param("writeNo") int writeNo);
-	 
-	 public int addArticleHit(@Param("writeNo") int writeNo);
+    public Article selectArticle(@Param("writeNo") int writeNo);
+
+    public int selectUserId(@Param("writeNo") int writeNo);
+
+    public int insertArticle(Article article);
+
+    public int updateArticle(Article article);
+
+    public int deleteArticle(@Param("writeNo") int writeNo);
+
+    public int addArticleHit(@Param("writeNo") int writeNo);
 }

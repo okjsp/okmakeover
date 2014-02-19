@@ -7,6 +7,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -36,7 +37,7 @@
                 <span class="badge"><span class="glyphicon glyphicon glyphicon-comment"></span> ${article.commentCount}</span>
                 <h4 class="list-group-item-heading"><a href="/community/${boardId}/${categoryId}/${article.writeNo}">${article.title}</a></h4>
                 <p class="list-group-item-text">
-                    <img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">${article.nickname}</a> | ${article.writeDate}
+                    <img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">${article.nickname}</a> | <fmt:formatDate type="both" value="${article.writeDate}" dateStyle="medium" timeStyle="short" />
                 </p>
             </div>
             </c:forEach>
