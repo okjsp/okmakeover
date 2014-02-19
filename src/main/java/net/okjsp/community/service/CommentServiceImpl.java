@@ -17,7 +17,7 @@ public class CommentServiceImpl implements CommentService  {
 	   
 	    @Autowired
 	    CommentDao commentDao;
-
+	    
     public List<Comment> getList( 
     		int boardNo,
             int writeNo,
@@ -29,6 +29,12 @@ public class CommentServiceImpl implements CommentService  {
     	 List<Comment> list = commentDao.selectList(boardNo,writeNo,searchflg, search, sort, paging.getOffset(), paging.getSizePerList());
 
          return list;
+    }
+    
+    public List<Comment> getListForArticle(int boardNo, int writeNo) {
+    	List<Comment> list = commentDao.selectListForArticle(boardNo, writeNo);
+
+        return list;
     }
 
     public int getTotalCount(

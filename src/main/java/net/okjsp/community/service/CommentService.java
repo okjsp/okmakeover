@@ -15,6 +15,10 @@ public interface CommentService {
             String sort,
             Paging paging);
 
+    public List<Comment> getListForArticle(
+            int boardNo,
+            int writeNo);
+    
     public int getTotalCount(
             int boardNo,
             int writeNo);
