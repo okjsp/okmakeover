@@ -13,6 +13,22 @@ import net.okjsp.techqna.model.TechQna;
  *
  */
 public interface TechQnaService {
+	
+	/**
+	 * question total count
+	 * 	
+	 * @return question total count
+	 */
+	Integer selectTechQnaTotalCount();
+	
+	/**
+	 * question total count(by tag)
+	 * 
+	 * @param tagName
+	 * @return question total count
+	 */
+	Integer selectTechQnaByTagTotalCount(String tagName);
+	
 	/**
 	 * Tech QNA 리스트(질문목록)
 	 * 

@@ -5,6 +5,22 @@
 
 <mapper namespace="net.okjsp.techqna.dao.TechQnaDao">
 
+	<select id="selectTechQnaTotalCount" resultType="java.lang.Integer">
+		SELECT COUNT(write_no)
+          FROM 13_t_techqna
+         WHERE parent_id = 0
+	</select>
+	
+	<select id="selectTechQnaByTagTotalCount" resultType="java.lang.Integer">
+		SELECT COUNT(a.write_no)
+         FROM 13_t_techqna a
+           JOIN 13_t_tagmapping b
+              ON a.write_no = b.write_no
+             AND b.board_id = '4'
+             AND b.tag_name = #{tagName}
+        WHERE parent_id = 0
+	</select>
+
     <select id="selectTechQnaList" resultType="net.okjsp.techqna.model.TechQna">
         /* 목록 조회 */
         SELECT write_no
@@ -15,6 +31,7 @@
               ,posting_hit
               ,write_date
               ,update_date
+              ,user_id
          FROM 13_t_techqna
         WHERE parent_id = 0
         /* sort 를 기준으로 분기문을 만들어서 정렬기준을 변경해야 하나 요건이 정의되지 않아 이렇게 마무리 함. */
@@ -24,7 +41,7 @@
 
     <select id="selectTechQnaListByTag" resultType="net.okjsp.techqna.model.TechQna">
         /* 목록 조회 */
-        SELECT write_no
+        SELECT a.write_no
               ,guboon_id
               ,parent_id
               ,qna_title
@@ -32,6 +49,7 @@
               ,posting_hit
               ,write_date
               ,update_date
+              ,user_id
          FROM 13_t_techqna a
            JOIN 13_t_tagmapping b
               ON a.write_no = b.write_no

@@ -15,6 +15,20 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TechQnaDao {
+	
+	/**
+	 * question total count
+	 * 	
+	 * @return question total count
+	 */
+	public Integer selectTechQnaTotalCount();
+	
+	/**
+	 * question total count(by tag)
+	 * 	
+	 * @return question total count
+	 */
+	public Integer selectTechQnaByTagTotalCount(@Param("tagName") String tagName);
 
     /**
      * Question List(메인 리스트에서는 Question만 보인다)

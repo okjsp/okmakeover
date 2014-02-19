@@ -39,7 +39,25 @@ public class TechQnaServiceImpl implements TechQnaService {
     private UserService userService;
     
     private final Integer BOARD_ID = 4;
-
+    
+    /**
+	 * question total count
+	 * 	
+	 * @return question total count
+	 */
+	public Integer selectTechQnaTotalCount() {
+		return techQnaDao.selectTechQnaTotalCount();
+	}
+	
+	/**
+	 * question total count(by tag)
+	 * 
+	 * @param tagName
+	 * @return question total count
+	 */
+	public Integer selectTechQnaByTagTotalCount(String tagName) {
+		return techQnaDao.selectTechQnaByTagTotalCount(tagName);
+	}
 
     /**
      * Tech QNA 리스트(질문목록)
@@ -74,13 +92,8 @@ public class TechQnaServiceImpl implements TechQnaService {
         } else {
             techQnaList = techQnaDao.selectTechQnaListByTag(tagName, sortType, paging.getOffset(), paging.getSizePerList());
         }
-        
-        for(TechQna techQna : techQnaList) {
-            // Tech Q/a 게시판 Board ID : 4
-            techQna.setRecommendationList(recommendationService.getRecommendation(BOARD_ID, techQna.getWriteNo()));
-            techQna.setTagList(tagService.selectTagList(BOARD_ID, techQna.getWriteNo()));
-            techQna.setUser(userService.getOne(techQna.getUserId()));
-        }
+
+        techQnaList = setTechQnaProperties(techQnaList);
 
         return techQnaList;
     }
@@ -101,14 +114,21 @@ public class TechQnaServiceImpl implements TechQnaService {
         */
         List<TechQna> techQnaList = techQnaDao.selectTechQnaDetail(writeNo);
         
-        for(TechQna techQna : techQnaList) {
+        techQnaList = setTechQnaProperties(techQnaList);
+        
+        return techQnaList;
+    }
+    
+    private List<TechQna> setTechQnaProperties(List<TechQna> techQnaList) {
+    	
+    	for(TechQna techQna : techQnaList) {
             // Tech Q/a 게시판 Board ID : 4
             techQna.setRecommendationList(recommendationService.getRecommendation(BOARD_ID, techQna.getWriteNo()));
             techQna.setTagList(tagService.selectTagList(BOARD_ID, techQna.getWriteNo()));
             techQna.setUser(userService.getOne(techQna.getUserId()));
         }
-        
-        return techQnaList;
+    	
+    	return techQnaList;
     }
 
     /**
