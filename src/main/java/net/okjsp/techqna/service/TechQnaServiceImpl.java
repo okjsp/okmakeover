@@ -46,7 +46,7 @@ public class TechQnaServiceImpl implements TechQnaService {
 	 * @return question total count
 	 */
 	public Integer selectTechQnaTotalCount() {
-		return techQnaDao.selectTechQnaTotalCount();
+		return this.selectTechQnaByTagTotalCount("");
 	}
 	
 	/**
@@ -56,7 +56,11 @@ public class TechQnaServiceImpl implements TechQnaService {
 	 * @return question total count
 	 */
 	public Integer selectTechQnaByTagTotalCount(String tagName) {
-		return techQnaDao.selectTechQnaByTagTotalCount(tagName);
+		if ("".equals(tagName)) {
+			return techQnaDao.selectTechQnaTotalCount();
+		} else {
+			return techQnaDao.selectTechQnaByTagTotalCount(tagName);
+		}
 	}
 
     /**
@@ -68,7 +72,7 @@ public class TechQnaServiceImpl implements TechQnaService {
      */
     @Override
     public List<TechQna> selectTechQnaList(Paging paging, String sortType) {
-        return this.selectTechQnaList(paging, sortType, null);
+        return this.selectTechQnaList(paging, sortType, "");
     }
 
     /**
@@ -80,20 +84,16 @@ public class TechQnaServiceImpl implements TechQnaService {
      */
     @Override
     public List<TechQna> selectTechQnaList(Paging paging, String sortType, String tagName) {
-        /*
-            관계가 있는 내부 property 들을 모두 단일 쿼리로 수행시키기 때문에 (qna 1 건당 3회)
-            (paging.getSizePerList() * 3) + 1 의 DB IO가 발생함.
-            mybatis association 으로 분리하는 방법 학습 후 반드시 리펙토링할 것.
-        */
+
         List<TechQna> techQnaList = null;
 
-        if (tagName == null) {
+        if ("".equals(tagName)) {
             techQnaList = techQnaDao.selectTechQnaList(sortType, paging.getOffset(), paging.getSizePerList());
         } else {
             techQnaList = techQnaDao.selectTechQnaListByTag(tagName, sortType, paging.getOffset(), paging.getSizePerList());
         }
 
-        techQnaList = setTechQnaProperties(techQnaList);
+         techQnaList = setTechQnaProperties(techQnaList);
 
         return techQnaList;
     }
@@ -107,14 +107,10 @@ public class TechQnaServiceImpl implements TechQnaService {
      */
     @Override
     public List<TechQna> selectTechQnaDetail(Integer writeNo) {
-        /*
-            관계가 있는 내부 property 들을 모두 단일 쿼리로 수행시키기 때문에 (qna 1 건당 3회)
-            (paging.getSizePerList() * 3) + 1 의 DB IO가 발생함.
-            mybatis association 으로 분리하는 방법 학습 후 반드시 리펙토링할 것.
-        */
+
         List<TechQna> techQnaList = techQnaDao.selectTechQnaDetail(writeNo);
         
-        techQnaList = setTechQnaProperties(techQnaList);
+         techQnaList = setTechQnaProperties(techQnaList);
         
         return techQnaList;
     }
@@ -125,7 +121,8 @@ public class TechQnaServiceImpl implements TechQnaService {
             // Tech Q/a 게시판 Board ID : 4
             techQna.setRecommendationList(recommendationService.getRecommendation(BOARD_ID, techQna.getWriteNo()));
             techQna.setTagList(tagService.selectTagList(BOARD_ID, techQna.getWriteNo()));
-            techQna.setUser(userService.getOne(techQna.getUserId()));
+            
+            //techQna.setUser(userService.getOne(techQna.getUserId()));
         }
     	
     	return techQnaList;

@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import net.okjsp.community.model.Comment;
 import net.okjsp.recommendation.model.Recommendation;
 import net.okjsp.tag.model.Tag;
 import net.okjsp.user.model.User;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * TechQna Model.
@@ -52,15 +54,21 @@ public class TechQna implements Serializable {
     /**
      * 작성날짜
      */
-    private Date wirteDate;
+    @DateTimeFormat(style = "MM", pattern = "yyyy-MM-dd")
+    private Date writeDate;
     /**
      * 수정날짜
      */
+    @DateTimeFormat(style = "MM", pattern = "yyyy-MM-dd")
     private Date updateDate;
     /**
      * 추천/신고/반대 리스트
      */
     private List<Recommendation> recommendationList;
+    /**
+     * comment List
+     */
+    private List<Comment> commentList;
     /**
      * 태그 리스트
      */
@@ -203,8 +211,8 @@ public class TechQna implements Serializable {
      *
      * @return 작성일자
      */
-    public Date getWirteDate() {
-        return wirteDate;
+    public Date getWriteDate() {
+        return writeDate;
     }
 
     /**
@@ -212,8 +220,8 @@ public class TechQna implements Serializable {
      *
      * @param wirteDate 작성일자
      */
-    public void setWirteDate(Date wirteDate) {
-        this.wirteDate = wirteDate;
+    public void setWriteDate(Date writeDate) {
+        this.writeDate = writeDate;
     }
 
     /**
@@ -286,6 +294,24 @@ public class TechQna implements Serializable {
 	}
 	
 	/**
+	 * comment 리스트 getter
+	 * 
+	 * @return 태그 리스트
+	 */
+	public List<Comment> getCommentList() {
+		return commentList;
+	}
+	
+	/**
+	 * comment 리스트 setter
+	 * 
+	 * @param tagList 태그 리스트
+	 */
+	public void setCommentList(List<Comment> commentList) {
+		this.commentList = commentList;
+	}
+	
+	/**
 	 * 사용자 getter
 	 * 
 	 * @return 사용자
@@ -303,8 +329,24 @@ public class TechQna implements Serializable {
 		this.user = user;
 	}
 
-
-
+	public Integer getRecommendCount() {
+		return getRecommendationCount(Recommendation.RECOMMEND);
+	}
+	
+	public Integer getOpposeCount() {
+		return getRecommendationCount(Recommendation.OPPOSE);
+	}
+	
+	public Integer getRecommendationCount(String guboon){
+		// this.recommendationList
+		Integer count = 0;
+		for (Recommendation recommend : recommendationList) {
+			if (recommend.getGuboonId().equals(guboon))
+				count++;
+		}
+		return count;
+	}
+	
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

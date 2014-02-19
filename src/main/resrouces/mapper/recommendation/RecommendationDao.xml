@@ -9,7 +9,7 @@
         <result jdbcType="INTEGER" property="boardId" column="board_id" />
         <result jdbcType="INTEGER" property="writeNo" column="write_no" />
         <result jdbcType="INTEGER" property="commentId" column="comment_id" />
-        <result jdbcType="VARCHAR" property="isDel" column="guboon_id" />
+        <result jdbcType="VARCHAR" property="guboonId" column="guboon_id" />
         <result jdbcType="INTEGER" property="userId" column="user_id" />
         <result jdbcType="INTEGER" property="score" column="score" />
         <result jdbcType="TIMESTAMP" property="recommendationDate" column="recommendation_date" />
@@ -39,7 +39,7 @@
            and write_no = #{writeNo}
            and comment_id = #{commentId}
            and a.user_id = #{userId}
-           and guboon_id = #{isDel}
+           and guboon_id = #{guboonId}
     </select>
 
     <select id="selectRecommendations" resultMap="recommendationMap">
@@ -77,7 +77,7 @@
          where board_id = #{boardId}
            and write_no = #{writeNo}
            and comment_id = #{commentId}
-           and guboon_id = #{isDel}
+           and guboon_id = #{guboonId}
          order by recommendation_date asc
     </select>
 
@@ -104,7 +104,7 @@
          where board_id = #{boardId}
            and write_no = #{writeNo}
            and comment_id = #{commentId}
-           and guboon_id = #{isDel}
+           and guboon_id = #{guboonId}
          order by recommendation_date asc
     </select>
 
@@ -121,7 +121,7 @@
             #{boardId}, 
             #{writeNo}, 
             #{commentId}, 
-            #{isDel},
+            #{guboonId},
             #{userId}, 
             '0', 
             now()
@@ -134,7 +134,7 @@
          where board_id = #{boardId}
            and write_no = #{writeNo}
            and comment_id = #{commentId}
-           and guboon_id = #{isDel}
+           and guboon_id = #{guboonId}
            and user_id = #{userId}
     </delete>
 

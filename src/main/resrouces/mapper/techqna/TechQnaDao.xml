@@ -4,7 +4,23 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="net.okjsp.techqna.dao.TechQnaDao">
-
+	<resultMap id="techQnaMap" type="net.okjsp.techqna.model.TechQna">
+		<id jdbcType="INTEGER" property="writeNo" column="write_no"/>
+		
+        <result jdbcType="VARCHAR" property="guboonId" column="guboon_id"/>
+        <result jdbcType="INTEGER" property="parentId" column="parent_id"/>
+        <result jdbcType="VARCHAR" property="qnaTitle" column="qna_title"/>
+        <result property="content" column="content"/>
+        <result jdbcType="VARCHAR" property="postingHit" column="posting_hit"/>
+        <result jdbcType="TIMESTAMP" property="writeDate" column="write_date"/>
+        <result jdbcType="TIMESTAMP" property="updateDate" column="update_date"/>
+        <result jdbcType="INTEGER" property="userId" column="user_id" />
+		
+		<association property="user" javaType="net.okjsp.user.model.User"
+                     resultMap="net.okjsp.user.dao.UserDao.userProfileMap" />
+        
+	</resultMap>
+	
 	<select id="selectTechQnaTotalCount" resultType="java.lang.Integer">
 		SELECT COUNT(write_no)
           FROM 13_t_techqna
@@ -21,25 +37,24 @@
         WHERE parent_id = 0
 	</select>
 
-    <select id="selectTechQnaList" resultType="net.okjsp.techqna.model.TechQna">
-        /* 목록 조회 */
-        SELECT write_no
-              ,guboon_id
-              ,parent_id
-              ,qna_title
-              ,content
-              ,posting_hit
-              ,write_date
-              ,update_date
-              ,user_id
-         FROM 13_t_techqna
+    <select id="selectTechQnaList" resultMap="techQnaMap">
+        SELECT t.write_no
+              ,t.guboon_id
+              ,t.parent_id
+              ,t.qna_title
+              ,t.content
+              ,t.posting_hit
+              ,t.write_date
+              ,t.update_date
+              ,t.user_id
+              ,u.NICK_NAME
+         FROM 13_t_techqna t join 13_t_user u on t.USER_ID = u.USER_ID
         WHERE parent_id = 0
-        /* sort 를 기준으로 분기문을 만들어서 정렬기준을 변경해야 하나 요건이 정의되지 않아 이렇게 마무리 함. */
-        ORDER BY ${sort} desc
+        /* ORDER BY ${sort} desc */
         LIMIT #{offset}, #{sizePerList}
     </select>
 
-    <select id="selectTechQnaListByTag" resultType="net.okjsp.techqna.model.TechQna">
+    <select id="selectTechQnaListByTag" resultMap="techQnaMap">
         /* 목록 조회 */
         SELECT a.write_no
               ,guboon_id
@@ -57,7 +72,7 @@
              AND b.tag_name = #{tagName}
         WHERE parent_id = 0
         /* sort 를 기준으로 분기문을 만들어서 정렬기준을 변경해야 하나 요건이 정의되지 않아 이렇게 마무리 함. */
-        ORDER BY ${sort} desc
+        /* ORDER BY ${sort} desc */
         LIMIT #{offset}, #{sizePerList}
     </select>
 

@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getOne(int userId) {
-        return null;
+        return userDao.selectOne(userId);
     }
 
     @Override

@@ -5,13 +5,15 @@ Time: 오후 4:48
 Description :
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!doctype html>
 <html lang="ko">
 <head>
     <meta name="decorator" content="basic" />
 </head>
 <body>
-
     <div class="col-md-9">
         <div class="page-header">
             <h3>Tech Q&A</h3>
@@ -29,12 +31,14 @@ Description :
         </div>
 
         <div class="list-group">
-            <div class="list-group-item clearfix">
+      		<c:forEach items="${questions}" var="question">
+      		<c:set var="user" value="${question.user}"></c:set>
+      		<div class="list-group-item clearfix">
                 <span class="badge"><span class="glyphicon glyphicon glyphicon-comment"></span> 14</span>
                 <div class="qna-point col-md-2">
                     <div>
                         <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span>34</span>
+                        <span>${question.recommendCount}</span>
                     </div>
                     <div>
                         <span class="glyphicon glyphicon glyphicon glyphicon-ok"></span>
@@ -42,143 +46,14 @@ Description :
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <h4 class="list-group-item-heading"><a href="view.jsp">테스트 게시물 제목</a></h4>
-                    <p class="list-group-item-text"><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | 14. 1. 23 오후 8:17</p>
-                    <span class="label label-info">Javascript</span> <span class="label label-info">HTML5</span>
+                    <h4 class="list-group-item-heading"><a href="view.jsp">${question.qnaTitle}</a></h4>
+                    <p class="list-group-item-text"><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">${user.nickName}</a> | <fmt:formatDate type="both" value="${question.writeDate}" dateStyle="short" timeStyle="short" /></p>
+                    <c:forEach items="${question.tagList}" var="tag">
+                    <span class="label label-info">${tag.tagName}</span>
+                    </c:forEach>
                 </div>
             </div>
-            <div class="list-group-item  clearfix">
-                <span class="badge"><span class="glyphicon glyphicon glyphicon-comment"></span> 14</span>
-                <div class="qna-point col-md-2">
-                    <div>
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span>34</span>
-                    </div>
-                    <div>
-                        <span class="glyphicon glyphicon glyphicon glyphicon-ok"></span>
-                        <span>해결</span>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <h4 class="list-group-item-heading"><a href="view.jsp">테스트 게시물 제목</a></h4>
-                    <p class="list-group-item-text"><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | 14. 1. 23 오후 8:17</p>
-                    <span class="label label-info">Java</span> <span class="label label-info">Spring</span>
-                </div>
-            </div>
-            <div class="list-group-item  clearfix">
-                <div class="qna-point col-md-2">
-                    <div>
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span>34</span>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <h4 class="list-group-item-heading"><a href="view.jsp">테스트 게시물 제목</a></h4>
-                    <p class="list-group-item-text"><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | 14. 1. 23 오후 8:17</p>
-                    <span class="label label-info">Java</span> <span class="label label-info">Spring</span>
-                </div>
-            </div>
-            <div class="list-group-item  clearfix">
-                <div class="qna-point col-md-2">
-                    <div>
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span>195</span>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <h4 class="list-group-item-heading"><a href="view.jsp">테스트 게시물 제목</a></h4>
-                    <p class="list-group-item-text"><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | 14. 1. 23 오후 8:17</p>
-                    <span class="label label-info">Java</span> <span class="label label-info">Spring</span>
-                </div>
-            </div>
-            <div class="list-group-item  clearfix">
-                <span class="badge"><span class="glyphicon glyphicon glyphicon-comment"></span> 14</span>
-                <div class="qna-point col-md-2">
-                    <div>
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span>1341</span>
-                    </div>
-                    <div>
-                        <span class="glyphicon glyphicon glyphicon glyphicon-ok"></span>
-                        <span>해결</span>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <h4 class="list-group-item-heading"><a href="view.jsp">테스트 게시물 제목</a></h4>
-                    <p class="list-group-item-text"><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | 14. 1. 23 오후 8:17</p>
-                    <span class="label label-info">Java</span> <span class="label label-info">Spring</span>
-                </div>
-            </div>
-            <div class="list-group-item  clearfix">
-                <span class="badge"><span class="glyphicon glyphicon glyphicon-comment"></span> 14</span>
-                <div class="qna-point col-md-2">
-                    <div>
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span>32</span>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <h4 class="list-group-item-heading"><a href="view.jsp">테스트 게시물 제목</a></h4>
-                    <p class="list-group-item-text"><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | 14. 1. 23 오후 8:17</p>
-                    <span class="label label-info">Java</span> <span class="label label-info">Spring</span>
-                </div>
-            </div>
-            <div class="list-group-item  clearfix">
-                <span class="badge"><span class="glyphicon glyphicon glyphicon-comment"></span> 100</span>
-                <div class="qna-point col-md-2">
-                    <div>
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span>678</span>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <h4 class="list-group-item-heading"><a href="view.jsp">테스트 게시물 제목</a></h4>
-                    <p class="list-group-item-text"><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | 14. 1. 23 오후 8:17</p>
-                    <span class="label label-info">Java</span> <span class="label label-info">Spring</span>
-                </div>
-            </div>
-            <div class="list-group-item  clearfix">
-                <span class="badge"><span class="glyphicon glyphicon glyphicon-comment"></span> 14</span>
-                <div class="qna-point col-md-2">
-                    <div>
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span>32</span>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <h4 class="list-group-item-heading"><a href="view.jsp">테스트 게시물 제목</a></h4>
-                    <p class="list-group-item-text"><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | 14. 1. 23 오후 8:17</p>
-                    <span class="label label-info">Java</span> <span class="label label-info">Spring</span>
-                </div>
-            </div>
-            <div class="list-group-item  clearfix">
-                <span class="badge"><span class="glyphicon glyphicon glyphicon-comment"></span> 14</span>
-                <div class="qna-point col-md-2">
-                    <div>
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span>34</span>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <h4 class="list-group-item-heading"><a href="view.jsp">테스트 게시물 제목</a></h4>
-                    <p class="list-group-item-text"><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | 14. 1. 23 오후 8:17</p>
-                    <span class="label label-info">Java</span> <span class="label label-info">Spring</span>
-                </div>
-            </div>
-            <div class="list-group-item  clearfix">
-                <span class="badge"><span class="glyphicon glyphicon glyphicon-comment"></span> 14</span>
-                <div class="qna-point col-md-2">
-                    <div>
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span>34</span>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <h4 class="list-group-item-heading"><a href="view.jsp">테스트 게시물 제목</a></h4>
-                    <p class="list-group-item-text"><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">langerhans</a> | 14. 1. 23 오후 8:17</p>
-                    <span class="label label-info">Java</span> <span class="label label-info">Spring</span>
-                </div>
-            </div>
+      		</c:forEach>  
         </div>
 
         <div class="pull-left">
