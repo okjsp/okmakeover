@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import net.okjsp.community.model.Comment;
-import net.okjsp.recommendation.model.Recommendation;
+import net.okjsp.recommendation.model.BoardRecommend;
 import net.okjsp.tag.model.Tag;
 import net.okjsp.user.model.User;
 
@@ -22,15 +22,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class TechQna implements Serializable {
     private static final long serialVersionUID = 1L;
 
-
     /**
      * 게시물 번호
      */
     private Integer writeNo;
+
     /**
-     * 삭제 구분(Y/N)
+     * 게시판 ID
      */
-    private String guboonId;
+    private Integer boardId;
+
+    /**
+     * 카테고리 ID
+     */
+    private Integer categoryId;
+
     /**
      * 부모 게시물 ID
      */
@@ -52,6 +58,10 @@ public class TechQna implements Serializable {
      */
     private Integer postingHit;
     /**
+     * 사용여부
+     */
+    private boolean enabled;
+    /**
      * 작성날짜
      */
     @DateTimeFormat(style = "MM", pattern = "yyyy-MM-dd")
@@ -64,7 +74,7 @@ public class TechQna implements Serializable {
     /**
      * 추천/신고/반대 리스트
      */
-    private List<Recommendation> recommendationList;
+    private List<BoardRecommend> boardRecommendList;
     /**
      * comment List
      */
@@ -98,13 +108,29 @@ public class TechQna implements Serializable {
         this.writeNo = writeNo;
     }
 
+    public Integer getBoardId() {
+        return boardId;
+    }
+
+    public void setBoardId(Integer boardId) {
+        this.boardId = boardId;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
     /**
      * Q/A 구분 Getter.
      *
      * @return 삭제 구분(Y/N)
      */
-    public String getGuboonId() {
-        return guboonId;
+    public boolean getEnabled() {
+        return enabled;
     }
 
     /**
@@ -112,8 +138,8 @@ public class TechQna implements Serializable {
      *
      * @param 삭제 구분(Y/N)
      */
-    public void setGuboonId(String guboonId) {
-        this.guboonId = guboonId;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     /**
@@ -247,17 +273,17 @@ public class TechQna implements Serializable {
      * 
      * @return 추천 리스트
      */
-    public List<Recommendation> getRecommendationList() {
-		return recommendationList;
+    public List<BoardRecommend> getBoardRecommendList() {
+		return boardRecommendList;
 	}
     
     /**
      * 추천 리스트 setter
      * 
-     * @param recommendationList 추천 리스트
+     * @param boardRecommendList 추천 리스트
      */
-	public void setRecommendationList(List<Recommendation> recommendationList) {
-		this.recommendationList = recommendationList;
+	public void setBoardRecommendList(List<BoardRecommend> boardRecommendList) {
+		this.boardRecommendList = boardRecommendList;
 	}
 	
 	/**
@@ -330,18 +356,18 @@ public class TechQna implements Serializable {
 	}
 
 	public Integer getRecommendCount() {
-		return getRecommendationCount(Recommendation.RECOMMEND);
+		return getBoardRecommendCount(BoardRecommend.Type.RECOMMEND);
 	}
 	
 	public Integer getOpposeCount() {
-		return getRecommendationCount(Recommendation.OPPOSE);
+		return getBoardRecommendCount(BoardRecommend.Type.OPPOSE);
 	}
 	
-	public Integer getRecommendationCount(String guboon){
-		// this.recommendationList
+	public Integer getBoardRecommendCount(BoardRecommend.Type type){
+		// this.boardRecommendList
 		Integer count = 0;
-		for (Recommendation recommend : recommendationList) {
-			if (recommend.getGuboonId().equals(guboon))
+		for (BoardRecommend recommend : boardRecommendList) {
+			if (recommend.getTypeId().equals(type))
 				count++;
 		}
 		return count;
@@ -351,5 +377,4 @@ public class TechQna implements Serializable {
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
-
 }

@@ -2,23 +2,23 @@ package net.okjsp.recommendation.service;
 
 import java.util.List;
 
-import net.okjsp.recommendation.dao.RecommendationDao;
-import net.okjsp.recommendation.model.Recommendation;
+import net.okjsp.recommendation.dao.BoardRecommendDao;
+import net.okjsp.recommendation.model.BoardRecommend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * RecommendationService 구현체
+ * BoardRecommendService 구현체
  * 
  * @author yjc0703
  *
  */
 @Service
-public class RecommendationServiceImpl implements RecommendationService {
+public class BoardRecommendServiceImpl implements BoardRecommendService {
 
     @Autowired
-    RecommendationDao recommendationDao;
+    BoardRecommendDao boardRecommendDao;
 
 
     /**
@@ -30,7 +30,7 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @param type 구분값 (추천/반대/신고)
      */
     @Override
-    public void addRecommendation(int userId, int boardId, int writeNo, String type) {
+    public void addRecommendation(int userId, int boardId, int writeNo, BoardRecommend.Type type) {
         // 게시물인 경우에는 댓글 아이디가 "0"으로 들어간다.
         this.addRecommendation(userId, boardId, writeNo, 0, type);
     }
@@ -45,30 +45,30 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @param type 구분값 (추천/반대/신고)
      */
     @Override
-    public void addRecommendation(int userId, int boardId, int writeNo, int commentId, String type) {
-        Recommendation recommendation = new Recommendation();
-        recommendation.setBoardId(boardId);
-        recommendation.setWriteNo(writeNo);
-        recommendation.setCommentId(commentId);
-        recommendation.setUserId(userId);
-        recommendation.setGuboonId(type);
+    public void addRecommendation(int userId, int boardId, int writeNo, int commentId, BoardRecommend.Type type) {
+        BoardRecommend boardRecommend = new BoardRecommend();
+        boardRecommend.setBoardId(boardId);
+        boardRecommend.setWriteNo(writeNo);
+        boardRecommend.setCommentId(commentId);
+        boardRecommend.setUserId(userId);
+        boardRecommend.setTypeId(type);
         
-        this.addRecommendation(recommendation);
+        this.addRecommendation(boardRecommend);
     }
 
     /**
      * 추천/반대/신고 프로세스.
      *
-     * @param recommendation 추천/반대/신고
+     * @param boardRecommend 추천/반대/신고
      */
     @Override
-    public void addRecommendation(Recommendation recommendation) {
+    public void addRecommendation(BoardRecommend boardRecommend) {
         // 중복 체크
-        if (recommendationDao.selectOne(recommendation).size() > 0) {
-            throw new RuntimeException("이미 " + recommendation.getGuboonName() + "되었습니다.");
+        if (boardRecommendDao.selectOne(boardRecommend).size() > 0) {
+            throw new RuntimeException("이미 " + boardRecommend.getGuboonName() + "되었습니다.");
         }
 
-        recommendationDao.insert(recommendation);
+        boardRecommendDao.insert(boardRecommend);
     }
 
     /**
@@ -79,7 +79,7 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @return 추천/반대/신고 : 게시물 리스트
      */
     @Override
-    public List<Recommendation> getRecommendation(int boardId, int writeNo) {
+    public List<BoardRecommend> getRecommendation(int boardId, int writeNo) {
         return getRecommendation(boardId, writeNo, 0);
     }
 
@@ -92,8 +92,8 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @return 추천/반대/신고 : 댓글 리스트
      */
     @Override
-    public List<Recommendation> getRecommendation(int boardId, int writeNo, int commentId) {
-        List<Recommendation> list = recommendationDao.selectRecommendations(boardId, writeNo, commentId);
+    public List<BoardRecommend> getRecommendation(int boardId, int writeNo, int commentId) {
+        List<BoardRecommend> list = boardRecommendDao.selectRecommendations(boardId, writeNo, commentId);
         
         return list;
     }
@@ -107,7 +107,7 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @return 구분 값 리스트
      */
     @Override
-    public List<Recommendation> getRecommendationByGuboon(int boardId, int writeNo, String type) {
+    public List<BoardRecommend> getRecommendationByGuboon(int boardId, int writeNo, String type) {
         return getRecommendationByGuboon(boardId, writeNo, 0, type);
     }
 
@@ -121,8 +121,8 @@ public class RecommendationServiceImpl implements RecommendationService {
      * @return 구분 값 리스트
      */
     @Override
-    public List<Recommendation> getRecommendationByGuboon(int boardId, int writeNo, int commentId, String type) {
-        List<Recommendation> list = recommendationDao.selectRecommendationsByGuboon(boardId, writeNo, commentId, type);
+    public List<BoardRecommend> getRecommendationByGuboon(int boardId, int writeNo, int commentId, String type) {
+        List<BoardRecommend> list = boardRecommendDao.selectRecommendationsByGuboon(boardId, writeNo, commentId, type);
         
         return list;
     }

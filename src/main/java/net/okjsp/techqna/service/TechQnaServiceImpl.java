@@ -3,7 +3,7 @@ package net.okjsp.techqna.service;
 import java.util.List;
 
 import net.okjsp.common.model.Paging;
-import net.okjsp.recommendation.service.RecommendationService;
+import net.okjsp.recommendation.service.BoardRecommendService;
 import net.okjsp.tag.service.TagService;
 import net.okjsp.techqna.dao.RevisionDao;
 import net.okjsp.techqna.dao.TechQnaDao;
@@ -30,7 +30,7 @@ public class TechQnaServiceImpl implements TechQnaService {
     private RevisionDao revisionDao;
 
     @Autowired
-    private RecommendationService recommendationService;
+    private BoardRecommendService boardRecommendService;
 
     @Autowired
     private TagService tagService;
@@ -119,7 +119,7 @@ public class TechQnaServiceImpl implements TechQnaService {
     	
     	for(TechQna techQna : techQnaList) {
             // Tech Q/a 게시판 Board ID : 4
-            techQna.setRecommendationList(recommendationService.getRecommendation(BOARD_ID, techQna.getWriteNo()));
+            techQna.setBoardRecommendList(boardRecommendService.getRecommendation(BOARD_ID, techQna.getWriteNo()));
             techQna.setTagList(tagService.selectTagList(BOARD_ID, techQna.getWriteNo()));
             
             //techQna.setUser(userService.getOne(techQna.getUserId()));

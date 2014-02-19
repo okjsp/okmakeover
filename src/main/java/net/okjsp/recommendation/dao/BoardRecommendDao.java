@@ -1,6 +1,6 @@
 package net.okjsp.recommendation.dao;
 
-import net.okjsp.recommendation.model.Recommendation;
+import net.okjsp.recommendation.model.BoardRecommend;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -13,14 +13,14 @@ import java.util.List;
  * @author yjc0703
  */
 @Repository
-public interface RecommendationDao {
+public interface BoardRecommendDao {
 
     /**
      * 게시글(또는 댓글)에 대한 추천 / 반대 / 신고 (단일항목. 중복체크 용도)
-     * @param recommendation 추천
+     * @param boardRecommend 추천
      * @return
      */
-    List<Recommendation> selectOne(Recommendation recommendation);
+    List<BoardRecommend> selectOne(BoardRecommend boardRecommend);
 
     /**
      * 게시글에 대한 추천/반대/신고 리스트
@@ -30,7 +30,7 @@ public interface RecommendationDao {
      * @param commentId 댓글 id
      * @return
      */
-    public List<Recommendation> selectRecommendations(@Param("boardId") int boardId,
+    public List<BoardRecommend> selectRecommendations(@Param("boardId") int boardId,
                                                       @Param("writeNo") int writeNo,
                                                       @Param("commentId") int commentId);
 
@@ -43,7 +43,7 @@ public interface RecommendationDao {
      * @param guboonId 구분 id (1 : 추천, 2 : 반대, 3 : 신고)
      * @return
      */
-    public List<Recommendation> selectRecommendationsByGuboon(@Param("boardId") int boardId,
+    public List<BoardRecommend> selectRecommendationsByGuboon(@Param("boardId") int boardId,
                                                               @Param("writeNo") int writeNo,
                                                               @Param("commentId") int commentId,
                                                               @Param("guboonId") String guboonId);
@@ -55,7 +55,7 @@ public interface RecommendationDao {
      * @param userId 사용자 id
      * @return
      */
-    public List<Recommendation> selectRecommendationsByUser(@Param("userId") int userId);
+    public List<BoardRecommend> selectRecommendationsByUser(@Param("userId") int userId);
 
     /**
      * 게시물에 대한 구분 별 count
@@ -74,10 +74,10 @@ public interface RecommendationDao {
     /**
      * 추천, 반대, 신고 등록
      *
-     * @param recommendation 추천/반대/신고
+     * @param boardRecommend 추천/반대/신고
      * @return
      */
-    public Integer insert(Recommendation recommendation);
+    public Integer insert(BoardRecommend boardRecommend);
 
     /**
      * 추천, 반대, 신고 삭제

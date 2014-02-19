@@ -13,21 +13,24 @@ import org.apache.commons.lang.builder.ToStringStyle;
  *
  * @author jaeger
  */
-public class Recommendation implements Serializable {
+public class BoardRecommend implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 추천
-     */
-    public static final String RECOMMEND = "1";
-    /**
-     * 반대
-     */
-    public static final String OPPOSE = "2";
-    /**
-     * 신고
-     */
-    public static final String ACCUSE = "3";
+    public static enum Type {
+        RECOMMEND("추천"),
+        OPPOSE("반대"),
+        ACCUSE("신고");
+
+        private String text;
+
+        Type(String text) {
+            this.text = text;
+        }
+
+        public String getText() {
+            return this.text;
+        }
+    }
 
     /**
      * 게시판 ID
@@ -44,7 +47,7 @@ public class Recommendation implements Serializable {
     /**
      * 추천 구분 (추천/반대/신고)
      */
-    private String guboonId;
+    private Type typeId;
     /**
      * 추천인 ID
      */
@@ -56,7 +59,7 @@ public class Recommendation implements Serializable {
     /**
      * 추천 날짜
      */
-    private Date recommendationDate;
+    private Date recommendDate;
     
     /**
      * 추천인
@@ -123,17 +126,17 @@ public class Recommendation implements Serializable {
      *
      * @return 추천 구분
      */
-    public String getGuboonId() {
-        return guboonId;
+    public Type getTypeId() {
+        return typeId;
     }
 
     /**
      * 추천 구분 Setter.
      *
-     * @param guboonId 추천 구분
+     * @param typeId 추천 구분
      */
-    public void setGuboonId(String guboonId) {
-        this.guboonId = guboonId;
+    public void setTypeId(Type typeId) {
+        this.typeId = typeId;
     }
 
     /**
@@ -179,17 +182,17 @@ public class Recommendation implements Serializable {
      *
      * @return 추천 날짜
      */
-    public Date getRecommendationDate() {
-        return recommendationDate;
+    public Date getRecommendDate() {
+        return recommendDate;
     }
 
     /**
      * 추천 날짜 Setter.
      *
-     * @param recommendationDate 추천 날짜
+     * @param recommendDate 추천 날짜
      */
-    public void setRecommendationDate(Date recommendationDate) {
-        this.recommendationDate = recommendationDate;
+    public void setRecommendDate(Date recommendDate) {
+        this.recommendDate = recommendDate;
     }
     
     /**
@@ -211,27 +214,11 @@ public class Recommendation implements Serializable {
 	}
     
     /**
-     * guboonId 에 따른 guboon 명(추천/반대/신고)    
+     * typeId 에 따른 guboon 명(추천/반대/신고)
      * @return
      */
     public String getGuboonName() {
-    	String guboonName = "";
-    	
-    	switch(this.guboonId) {
-    	case "1":
-    		guboonName = "추천";
-    		break;
-    	case "2":
-    		guboonName = "반대";
-    		break;
-    	case "3":
-    		guboonName = "신고";
-    		break;
-    	default:
-    		throw new RuntimeException("정의되지 않은 구분 값입니다.");
-    	}
-    	
-    	return guboonName;
+    	return this.typeId.getText();
     }
 
 	@Override

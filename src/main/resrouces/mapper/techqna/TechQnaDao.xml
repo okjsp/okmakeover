@@ -7,7 +7,7 @@
 	<resultMap id="techQnaMap" type="net.okjsp.techqna.model.TechQna">
 		<id jdbcType="INTEGER" property="writeNo" column="write_no"/>
 		
-        <result jdbcType="VARCHAR" property="guboonId" column="guboon_id"/>
+        <result jdbcType="VARCHAR" property="enabled" column="enabled"/>
         <result jdbcType="INTEGER" property="parentId" column="parent_id"/>
         <result jdbcType="VARCHAR" property="qnaTitle" column="qna_title"/>
         <result property="content" column="content"/>
@@ -39,7 +39,7 @@
 
     <select id="selectTechQnaList" resultMap="techQnaMap">
         SELECT t.write_no
-              ,t.guboon_id
+              ,t.enabled
               ,t.parent_id
               ,t.qna_title
               ,t.content
@@ -57,7 +57,7 @@
     <select id="selectTechQnaListByTag" resultMap="techQnaMap">
         /* 목록 조회 */
         SELECT a.write_no
-              ,guboon_id
+              ,enabled
               ,parent_id
               ,qna_title
               ,content
@@ -79,7 +79,7 @@
     <select id="selectTechQnaDetail" resultType="net.okjsp.techqna.model.TechQna">
         /* 상세 조회 */
         SELECT write_no
-              ,guboon_id
+              ,enabled
               ,parent_id
               ,qna_title
               ,content
@@ -90,7 +90,7 @@
         WHERE write_no = #{writeNo}
         UNION ALL
         SELECT write_no
-              ,guboon_id
+              ,enabled
               ,parent_id
               ,qna_title
               ,content
@@ -106,7 +106,7 @@
         /* techQna 등록 */
         INSERT INTO 13_t_techqna (
              write_no
-            ,guboon_id
+            ,enabled
             ,parent_id
             ,qna_title
             ,content
@@ -128,7 +128,7 @@
     <update id="update">
         /* techQna 등록 */
         UPDATE 13_t_techqna
-           SET guboon_id = #{isDel}
+           SET enabled = #{isDel}
               ,qna_title = #{qnaTitle}
               ,content   = #{content}
               ,posting_hit = #{postingHit}
