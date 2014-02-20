@@ -70,6 +70,9 @@ public class UserServiceImpl implements UserService {
         String encPassword = shaPasswordEncoder.encodePassword(user.getPassword(), saltSource.getSalt(user));
         user.setPassword(encPassword);
 
+        user.setLetterAgr("Y");
+        user.setGrade("1");
+
         int count = userDao.insert(user);
 
         return count > 0;

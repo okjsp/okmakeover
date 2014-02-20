@@ -30,7 +30,7 @@ public class User implements UserDetails, CredentialsContainer {
     @NotBlank @Email
     private String email;
 
-    @NotBlank @Pattern(regexp = "^(?=.*\\d)(?=.*[A-Z]).{6,20}$")
+//    @NotBlank @Pattern(regexp = "^(?=.*\\d)(?=.*[A-Za-z]).{6,20}$")
     private String password;
 
     private String passwordConfirm;

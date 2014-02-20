@@ -61,6 +61,10 @@ public class UserController extends BasicLayoutController {
             RedirectAttributes ra) {
 
         if(bindingResult.hasErrors()){
+
+            user.setPassword("");
+            user.setPasswordConfirm("");
+
             return "user/sign_up";
         }
 
