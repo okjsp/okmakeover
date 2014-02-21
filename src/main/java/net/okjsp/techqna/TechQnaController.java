@@ -151,7 +151,7 @@ public class TechQnaController {
 		
 		TechQna techQna = techQnaService.selectOneTechQnaQuestion(boardId, categoryId, writeNo);
 		
-		model.addAttribute("writeNo", writeNo);
+		model.addAttribute("techQna", techQna);
 		
 		return "techqna/techqna_modify";
 	}
