@@ -177,10 +177,10 @@
               ,update_date
               ,user_id
          FROM 13_t_techqna
-        WHERE parent_id = #{writeNo}
+        WHERE parent_id = #{parentId}
               and board_id = #{boardId}
               and category_id = #{categoryId}
-              and write_no = #{answerNo}
+              and write_no = #{writeNo}
 	</select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="writeNo">

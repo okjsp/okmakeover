@@ -84,7 +84,7 @@ public interface TechQnaService {
 	 * @param WriteNo 게시글번호(Question 기준)
 	 * @return Tech QNA 리스트
 	 */
-	TechQna selectOneTechQnaAnswer(int boardId, int categoryId, Integer writeNo, Integer answerNo);
+	TechQna selectOneTechQnaAnswer(int boardId, int categoryId, Integer writeNo, Integer parentId);
 	
 	
 	/**

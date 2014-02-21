@@ -39,7 +39,7 @@ Description :
 				<div class="pull-right">
 					<c:if test="${item.userId == secUserId}">
 						<button type="submit" id="deleteBtn" class="btn btn-default btn-mg" role="button">삭제</button>
-						<a href="/techqna/${boardId}/${categoryId}/${item.writeNo}/modify" id="modifyBtn" class="btn btn-default btn-mg" role="button">수정</a>
+						<a href="/techqna/${boardId}/${categoryId}/${writeNo}/answer/${item.writeNo}/modify" id="modifyBtn" class="btn btn-default btn-mg" role="button">수정</a>
 					</c:if>
 					<button type="button" class="btn btn-default btn-mg" role="button">책갈피</button>
 					<a href="/techqna/${boardId}/${categoryId}" class="btn btn-default btn-mg" role="button">목록</a>

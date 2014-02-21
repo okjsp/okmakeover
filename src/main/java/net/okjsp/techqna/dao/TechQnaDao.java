@@ -107,7 +107,7 @@ public interface TechQnaDao {
     public TechQna selectOneTechQnaAnswer(@Param("boardId") int boardId,
                                              @Param("categoryId") int categoryId, 
                                              @Param("writeNo") Integer writeNo,
-                                             @Param("answerNo") Integer answerNo);
+                                             @Param("parentId") Integer parentId);
     
     
     /**

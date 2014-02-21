@@ -85,21 +85,21 @@ public class TechQnaController {
 		return "/techqna/techqna_list";
 	}
 	
-	@RequestMapping(value="/{WriteNo}", method=RequestMethod.GET)
-	public String view(@PathVariable int boardId, @PathVariable int categoryId, @PathVariable int WriteNo, Model model) {
+	@RequestMapping(value="/{writeNo}", method=RequestMethod.GET)
+	public String view(@PathVariable int boardId, @PathVariable int categoryId, @PathVariable int writeNo, Model model) {
 		
-		TechQna question = techQnaService.selectOneTechQnaQuestion(boardId, categoryId, WriteNo);
+		TechQna question = techQnaService.selectOneTechQnaQuestion(boardId, categoryId, writeNo);
 		
 		if (question == null) {
 			return "redirect:/techqna/"+boardId+"/"+categoryId;
 		}
 		
-		techQnaService.incTechQnaHit(WriteNo);
-		List<TechQna> answers = techQnaService.selectTechQnaAnswers(boardId, categoryId, WriteNo);
-		
-		model.addAttribute("boardId", boardId);
+		techQnaService.incTechQnaHit(writeNo);
+		List<TechQna> answers = techQnaService.selectTechQnaAnswers(boardId, categoryId, writeNo);
+
 		model.addAttribute("question", question);
 		model.addAttribute("answers", answers);
+		model.addAttribute("answer", new TechQna());
 		
 		return "techqna/techqna_view";
 	}
@@ -151,9 +151,6 @@ public class TechQnaController {
 		
 		TechQna techQna = techQnaService.selectOneTechQnaQuestion(boardId, categoryId, writeNo);
 		
-		model.addAttribute("techQna", techQna);
-		model.addAttribute("boardId", boardId);
-		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("writeNo", writeNo);
 		
 		return "techqna/techqna_modify";
@@ -175,6 +172,75 @@ public class TechQnaController {
 		techQnaService.updateTechQna(techQna);
 		
 		return "redirect:/techqna/" + boardId + "/" + categoryId + "/" + writeNo;
+	}
+	
+	@Secured("ROLE_USER")
+	@RequestMapping(value="/{writeNo}/answer", method=RequestMethod.POST)
+	public String createAnswer(@PathVariable int boardId, 
+			                   @PathVariable int categoryId, 
+			                   @PathVariable int writeNo,
+			                   @Valid @ModelAttribute TechQna techQna,
+					           BindingResult result,
+					           Authentication authentication) {
+		
+		if (result.hasErrors()) {
+			return "techqna/" + boardId + "/" + categoryId + "/" + writeNo;
+		}
+		
+		User user = (User) authentication.getPrincipal();
+		
+		techQna.setWriteNo(null);
+		techQna.setQnaTitle(String.valueOf(writeNo));
+		techQna.setBoardId(boardId);
+		techQna.setCategoryId(categoryId);
+		techQna.setUserId(user.getUserId());
+		techQna.setParentId(writeNo);
+		
+		// TODO : tagList값이 NULL에 대한 처리 추가 필요
+		techQnaService.createTechQna(techQna);
+		
+		return "redirect:/techqna/" + boardId + "/" + categoryId + "/" + writeNo;
+	}
+	
+	@Secured("ROLE_USER")
+	@RequestMapping(value="/{parentId}/answer/{writeNo}/modify", method = RequestMethod.GET)
+	public String answerModifyForm(@PathVariable int boardId, 
+			                 @PathVariable int categoryId,
+			                 @PathVariable int writeNo,
+			                 @PathVariable int parentId,
+			                 Model model) {
+		
+		TechQna techQna = techQnaService.selectOneTechQnaAnswer(boardId, categoryId, writeNo, parentId);
+		
+		model.addAttribute("techQna", techQna);
+		
+		return "techqna/techqna_answer_modify";
+	}
+	
+	@Secured("ROLE_USER")
+	@RequestMapping(value="/{parentId}/answer/{writeNo}", method=RequestMethod.POST)
+	public String answerModify(@PathVariable int boardId, 
+				               @PathVariable int categoryId,
+				               @PathVariable int writeNo,
+				               @PathVariable int parentId,
+			                   @Valid @ModelAttribute TechQna techQna,
+					           BindingResult result,
+					           Authentication authentication) {
+		
+		if (result.hasErrors()) {
+			return "techqna/" + boardId + "/" + categoryId + "/" + parentId;
+		}
+		
+		// TODO : 수정 권한에 대한 확인 필요
+		
+		User user = (User) authentication.getPrincipal();
+		
+		techQna.setUserId(user.getUserId());
+		
+		// TODO : tagList값이 NULL에 대한 처리 추가 필요
+		techQnaService.updateTechQna(techQna);
+		
+		return "redirect:/techqna/" + boardId + "/" + categoryId + "/" + parentId;
 	}
 	
 	@Secured("ROLE_USER")

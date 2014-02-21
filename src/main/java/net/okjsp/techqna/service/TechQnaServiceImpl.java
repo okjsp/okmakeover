@@ -158,9 +158,9 @@ public class TechQnaServiceImpl implements TechQnaService {
      * @return Tech QNA 리스트
      */
     @Override
-    public TechQna selectOneTechQnaAnswer(int boardId, int categoryId, Integer writeNo, Integer answerNo) {
+    public TechQna selectOneTechQnaAnswer(int boardId, int categoryId, Integer writeNo, Integer parentId) {
 
-    	TechQna techQna = techQnaDao.selectOneTechQnaAnswer(boardId, categoryId, writeNo, answerNo);
+    	TechQna techQna = techQnaDao.selectOneTechQnaAnswer(boardId, categoryId, writeNo, parentId);
         
     	setTechQnaProperties(techQna);
         
