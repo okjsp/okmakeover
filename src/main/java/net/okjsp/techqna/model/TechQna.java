@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.okjsp.community.model.Comment;
 import net.okjsp.recommendation.model.BoardRecommend;
+import net.okjsp.recommendation.model.BoardRecommendOperator;
 import net.okjsp.tag.model.Tag;
 import net.okjsp.user.model.User;
 
@@ -40,7 +41,7 @@ public class TechQna implements Serializable {
     /**
      * 부모 게시물 ID
      */
-    private Integer parentId;
+    private Integer parentId = 0;
     /**
      * 제목
      */
@@ -72,9 +73,10 @@ public class TechQna implements Serializable {
     @DateTimeFormat(style = "MM", pattern = "yyyy-MM-dd")
     private Date updateDate;
     /**
-     * 추천/신고/반대 리스트
+     * 추천/신고/반대 연산자
      */
-    private List<BoardRecommend> boardRecommendList;
+    private BoardRecommendOperator boardRecommendOperator;
+    
     /**
      * comment List
      */
@@ -267,23 +269,23 @@ public class TechQna implements Serializable {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
-    
+   
     /**
      * 추천 리스트 getter
      * 
-     * @return 추천 리스트
+     * @return 추천 조작자
      */
-    public List<BoardRecommend> getBoardRecommendList() {
-		return boardRecommendList;
+    public BoardRecommendOperator getBoardRecommendOperator() {
+		return boardRecommendOperator;
 	}
-    
+
     /**
      * 추천 리스트 setter
      * 
-     * @param boardRecommendList 추천 리스트
+     * @param boardRecommendList 조작자
      */
-	public void setBoardRecommendList(List<BoardRecommend> boardRecommendList) {
-		this.boardRecommendList = boardRecommendList;
+	public void setBoardRecommendOperator(BoardRecommendOperator boardRecommendOperator) {
+		this.boardRecommendOperator = boardRecommendOperator;
 	}
 	
 	/**
@@ -355,24 +357,6 @@ public class TechQna implements Serializable {
 		this.user = user;
 	}
 
-	public Integer getRecommendCount() {
-		return getBoardRecommendCount(BoardRecommend.Type.RECOMMEND);
-	}
-	
-	public Integer getOpposeCount() {
-		return getBoardRecommendCount(BoardRecommend.Type.OPPOSE);
-	}
-	
-	public Integer getBoardRecommendCount(BoardRecommend.Type type){
-		// this.boardRecommendList
-		Integer count = 0;
-		for (BoardRecommend recommend : boardRecommendList) {
-			if (recommend.getTypeId().equals(type))
-				count++;
-		}
-		return count;
-	}
-	
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);

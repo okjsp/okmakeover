@@ -3,6 +3,7 @@ package net.okjsp.techqna.service;
 import java.util.List;
 
 import net.okjsp.common.model.Paging;
+import net.okjsp.recommendation.model.BoardRecommendOperator;
 import net.okjsp.recommendation.service.BoardRecommendService;
 import net.okjsp.tag.service.TagService;
 import net.okjsp.techqna.dao.RevisionDao;
@@ -38,15 +39,15 @@ public class TechQnaServiceImpl implements TechQnaService {
     @Autowired
     private UserService userService;
     
-    private final Integer BOARD_ID = 4;
+    // private final Integer BOARD_ID = 4;
     
     /**
 	 * question total count
 	 * 	
 	 * @return question total count
 	 */
-	public Integer selectTechQnaTotalCount() {
-		return this.selectTechQnaByTagTotalCount("");
+	public Integer selectTechQnaTotalCount(int boardId, int categoryId) {
+		return this.selectTechQnaByTagTotalCount(boardId, categoryId, "");
 	}
 	
 	/**
@@ -55,11 +56,11 @@ public class TechQnaServiceImpl implements TechQnaService {
 	 * @param tagName
 	 * @return question total count
 	 */
-	public Integer selectTechQnaByTagTotalCount(String tagName) {
+	public Integer selectTechQnaByTagTotalCount(int boardId, int categoryId, String tagName) {
 		if ("".equals(tagName)) {
-			return techQnaDao.selectTechQnaTotalCount();
+			return techQnaDao.selectTechQnaTotalCount(boardId, categoryId);
 		} else {
-			return techQnaDao.selectTechQnaByTagTotalCount(tagName);
+			return techQnaDao.selectTechQnaByTagTotalCount(boardId, categoryId, tagName);
 		}
 	}
 
@@ -71,8 +72,8 @@ public class TechQnaServiceImpl implements TechQnaService {
      * @return Tach QNA 리스트
      */
     @Override
-    public List<TechQna> selectTechQnaList(Paging paging, String sortType) {
-        return this.selectTechQnaList(paging, sortType, "");
+    public List<TechQna> selectTechQnaList(int boardId, int categoryId, Paging paging, String sortType) {
+        return this.selectTechQnaList(boardId, categoryId, paging, sortType, "");
     }
 
     /**
@@ -83,17 +84,17 @@ public class TechQnaServiceImpl implements TechQnaService {
      * @return Tech Q/A 리스트
      */
     @Override
-    public List<TechQna> selectTechQnaList(Paging paging, String sortType, String tagName) {
+    public List<TechQna> selectTechQnaList(int boardId, int categoryId, Paging paging, String sortType, String tagName) {
 
         List<TechQna> techQnaList = null;
 
         if ("".equals(tagName)) {
-            techQnaList = techQnaDao.selectTechQnaList(sortType, paging.getOffset(), paging.getSizePerList());
+            techQnaList = techQnaDao.selectTechQnaList(boardId, categoryId, sortType, paging.getOffset(), paging.getSizePerList());
         } else {
-            techQnaList = techQnaDao.selectTechQnaListByTag(tagName, sortType, paging.getOffset(), paging.getSizePerList());
+            techQnaList = techQnaDao.selectTechQnaListByTag(boardId, categoryId, tagName, sortType, paging.getOffset(), paging.getSizePerList());
         }
 
-         techQnaList = setTechQnaProperties(techQnaList);
+        techQnaList = setTechQnaListProperties(techQnaList);
 
         return techQnaList;
     }
@@ -106,26 +107,84 @@ public class TechQnaServiceImpl implements TechQnaService {
      * @return Tech QNA 리스트(1 Question + N Answers.. LinkedList로 순서 섞이지 않게)
      */
     @Override
-    public List<TechQna> selectTechQnaDetail(Integer writeNo) {
+    public List<TechQna> selectTechQnaDetail(int boardId, int categoryId, Integer writeNo) {
 
-        List<TechQna> techQnaList = techQnaDao.selectTechQnaDetail(writeNo);
+        List<TechQna> techQnaList = techQnaDao.selectTechQnaDetail(boardId, categoryId, writeNo);
         
-         techQnaList = setTechQnaProperties(techQnaList);
+         techQnaList = setTechQnaListProperties(techQnaList);
         
         return techQnaList;
     }
     
-    private List<TechQna> setTechQnaProperties(List<TechQna> techQnaList) {
+    /**
+     * Tech QNA Detail
+     * 질문 클릭 후 내용보기 화면에서 사용
+     *     
+     * @param WriteNo 게시글번호(Question 기준)
+     * @return Tech QNA
+     */
+    @Override
+    public TechQna selectOneTechQnaQuestion(int boardId, int categoryId, Integer writeNo) {
+
+    	TechQna techQna = techQnaDao.selectOneTechQnaQuestion(boardId, categoryId, writeNo);
+        
+        if (techQna != null) setTechQnaProperties(techQna);
+        
+        return techQna;
+    }
+    
+    /**
+     * Tech QNA Detail
+     * 질문 클릭 후 내용보기 화면에서 사용
+     *     
+     * @param WriteNo 게시글번호(Question 기준)
+     * @return Tech QNA 리스트
+     */
+    @Override
+    public List<TechQna> selectTechQnaAnswers(int boardId, int categoryId, Integer writeNo) {
+
+        List<TechQna> techQnaList = techQnaDao.selectTechQnaAnswers(boardId, categoryId, writeNo);
+        
+        techQnaList = setTechQnaListProperties(techQnaList);
+        
+        return techQnaList;
+    }
+
+    /**
+     * Tech QNA Detail
+     * 질문 수정에 사용
+     *     
+     * @param WriteNo 게시글번호(Question 기준)
+     * @return Tech QNA 리스트
+     */
+    @Override
+    public TechQna selectOneTechQnaAnswer(int boardId, int categoryId, Integer writeNo, Integer answerNo) {
+
+    	TechQna techQna = techQnaDao.selectOneTechQnaAnswer(boardId, categoryId, writeNo, answerNo);
+        
+    	setTechQnaProperties(techQna);
+        
+        return techQna;
+    }
+    
+    private List<TechQna> setTechQnaListProperties(List<TechQna> techQnaList) {
     	
     	for(TechQna techQna : techQnaList) {
-            // Tech Q/a 게시판 Board ID : 4
-            techQna.setBoardRecommendList(boardRecommendService.getRecommendation(BOARD_ID, techQna.getWriteNo()));
-            techQna.setTagList(tagService.selectTagList(BOARD_ID, techQna.getWriteNo()));
-            
-            //techQna.setUser(userService.getOne(techQna.getUserId()));
+    		setTechQnaProperties(techQna);
         }
     	
     	return techQnaList;
+    }
+    
+    private void setTechQnaProperties(TechQna techQna) {
+    	// Tech Q/a 게시판 Board ID : 4
+		int boardId = techQna.getBoardId();
+		BoardRecommendOperator boardRecommendOperator = new BoardRecommendOperator();
+		boardRecommendOperator.setBoardRecommendList(boardRecommendService.getRecommendation(boardId, techQna.getWriteNo()));
+		techQna.setBoardRecommendOperator(boardRecommendOperator);
+        techQna.setTagList(tagService.selectTagList(boardId, techQna.getWriteNo()));
+        // techQna.setCommentList(commentList);
+        //techQna.setUser(userService.getOne(techQna.getUserId()));
     }
 
     /**
@@ -147,7 +206,7 @@ public class TechQnaServiceImpl implements TechQnaService {
         revision.setTagName(techQna.getTagList().toString());
         
         revisionDao.insert(revision);
-        tagService.createTag(BOARD_ID, techQna.getWriteNo(), techQna.getTagList());
+        tagService.createTag(techQna.getBoardId(), techQna.getWriteNo(), techQna.getTagList());
     }
     
     /**
@@ -162,10 +221,12 @@ public class TechQnaServiceImpl implements TechQnaService {
         revision.setRevisionTitle(techQna.getQnaTitle());
         revision.setContent(techQna.getContent());
         revision.setTagName(techQna.getTagList().toString());
-        revision.setSummary("신규 등록");    // parameter는 어디서 받지? qna? revision? 아니면 별도 String?
+        revision.setRevisionSeq(revisionDao.selectMaxRevisionSeq(techQna.getWriteNo()));
+        revision.setSummary("변경 등록");    // parameter는 어디서 받지? qna? revision? 아니면 별도 String?
         
         revisionDao.insert(revision);
         techQnaDao.update(techQna);
+        tagService.createTag(techQna.getBoardId(), techQna.getWriteNo(), techQna.getTagList());
     }
 
     /**
@@ -179,5 +240,14 @@ public class TechQnaServiceImpl implements TechQnaService {
         List<Revision> revisionList = revisionDao.selectRevisionList(writeNo);
         return revisionList;
     }
+    
+    /**
+	 * Tech QNA 조회수 증가
+	 * 
+	 * @param WriteNo 글 번호
+	 */
+	public void incTechQnaHit(int WriteNo) {
+		techQnaDao.incPostingHit(WriteNo);
+	}
 
 }

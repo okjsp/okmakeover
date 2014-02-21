@@ -7,7 +7,9 @@
 	<resultMap id="techQnaMap" type="net.okjsp.techqna.model.TechQna">
 		<id jdbcType="INTEGER" property="writeNo" column="write_no"/>
 		
-        <result jdbcType="VARCHAR" property="enabled" column="enabled"/>
+		<result jdbcType="VARCHAR" property="boardId" column="board_id"/>
+		<result jdbcType="VARCHAR" property="categoryId" column="category_id"/>
+		<result jdbcType="VARCHAR" property="enabled" column="enabled"/>
         <result jdbcType="INTEGER" property="parentId" column="parent_id"/>
         <result jdbcType="VARCHAR" property="qnaTitle" column="qna_title"/>
         <result property="content" column="content"/>
@@ -25,6 +27,8 @@
 		SELECT COUNT(write_no)
           FROM 13_t_techqna
          WHERE parent_id = 0
+            and board_id = #{boardId}
+            and category_id = #{categoryId}
 	</select>
 	
 	<select id="selectTechQnaByTagTotalCount" resultType="java.lang.Integer">
@@ -35,10 +39,14 @@
              AND b.board_id = '4'
              AND b.tag_name = #{tagName}
         WHERE parent_id = 0
+              and board_id = #{boardId}
+              and category_id = #{categoryId}
 	</select>
 
     <select id="selectTechQnaList" resultMap="techQnaMap">
         SELECT t.write_no
+              ,t.board_id
+              ,t.category_id
               ,t.enabled
               ,t.parent_id
               ,t.qna_title
@@ -50,6 +58,8 @@
               ,u.NICK_NAME
          FROM 13_t_techqna t join 13_t_user u on t.USER_ID = u.USER_ID
         WHERE parent_id = 0
+              and board_id = #{boardId}
+              and category_id = #{categoryId}
         /* ORDER BY ${sort} desc */
         LIMIT #{offset}, #{sizePerList}
     </select>
@@ -57,6 +67,8 @@
     <select id="selectTechQnaListByTag" resultMap="techQnaMap">
         /* 목록 조회 */
         SELECT a.write_no
+              ,board_id
+              ,category_id
               ,enabled
               ,parent_id
               ,qna_title
@@ -71,14 +83,18 @@
              AND b.board_id = '4'
              AND b.tag_name = #{tagName}
         WHERE parent_id = 0
+              and board_id = #{boardId}
+              and category_id = #{categoryId}
         /* sort 를 기준으로 분기문을 만들어서 정렬기준을 변경해야 하나 요건이 정의되지 않아 이렇게 마무리 함. */
         /* ORDER BY ${sort} desc */
         LIMIT #{offset}, #{sizePerList}
     </select>
 
-    <select id="selectTechQnaDetail" resultType="net.okjsp.techqna.model.TechQna">
+    <select id="selectTechQnaDetail" resultMap="techQnaMap">
         /* 상세 조회 */
         SELECT write_no
+              ,board_id
+              ,category_id
               ,enabled
               ,parent_id
               ,qna_title
@@ -86,10 +102,15 @@
               ,posting_hit
               ,write_date
               ,update_date
+              ,user_id
          FROM 13_t_techqna
         WHERE write_no = #{writeNo}
+              and board_id = #{boardId}
+              and category_id = #{categoryId}
         UNION ALL
         SELECT write_no
+              ,board_id
+              ,category_id
               ,enabled
               ,parent_id
               ,qna_title
@@ -97,17 +118,80 @@
               ,posting_hit
               ,write_date
               ,update_date
+              ,user_id
          FROM 13_t_techqna
         WHERE parent_id = #{writeNo} 
+              and board_id = #{boardId}
+              and category_id = #{categoryId}
         ORDER BY write_no ASC
     </select>
+    
+    <select id="selectOneTechQnaQuestion" resultMap="techQnaMap">
+		SELECT write_no
+              ,board_id
+              ,category_id
+              ,enabled
+              ,parent_id
+              ,qna_title
+              ,content
+              ,posting_hit
+              ,write_date
+              ,update_date
+              ,user_id
+         FROM 13_t_techqna
+        WHERE write_no = #{writeNo}
+              and board_id = #{boardId}
+              and category_id = #{categoryId}
+              and parent_id = 0
+	</select>
+	
+    <select id="selectTechQnaAnswers" resultMap="techQnaMap">
+		SELECT write_no
+              ,board_id
+              ,category_id
+              ,enabled
+              ,parent_id
+              ,qna_title
+              ,content
+              ,posting_hit
+              ,write_date
+              ,update_date
+              ,user_id
+         FROM 13_t_techqna
+        WHERE parent_id = #{writeNo} 
+              and board_id = #{boardId}
+              and category_id = #{categoryId}
+        ORDER BY write_no ASC
+	</select>
+	
+	<select id="selectOneTechQnaAnswer" resultMap="techQnaMap">
+		SELECT write_no
+              ,board_id
+              ,category_id
+              ,enabled
+              ,parent_id
+              ,qna_title
+              ,content
+              ,posting_hit
+              ,write_date
+              ,update_date
+              ,user_id
+         FROM 13_t_techqna
+        WHERE parent_id = #{writeNo}
+              and board_id = #{boardId}
+              and category_id = #{categoryId}
+              and write_no = #{answerNo}
+	</select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="writeNo">
         /* techQna 등록 */
         INSERT INTO 13_t_techqna (
              write_no
+            ,board_id
+            ,category_id
             ,enabled
             ,parent_id
+            ,user_id
             ,qna_title
             ,content
             ,posting_hit
@@ -115,8 +199,11 @@
             ,update_date
         ) VALUES (
              #{writeNo}
-            ,#{isDel}
+            ,#{boardId}
+            ,#{categoryId}
+            ,#{enabled}
             ,#{parentId}
+            ,#{userId}            
             ,#{qnaTitle}
             ,#{content}
             ,0
@@ -128,12 +215,20 @@
     <update id="update">
         /* techQna 등록 */
         UPDATE 13_t_techqna
-           SET enabled = #{isDel}
+           SET enabled = #{enabled}
               ,qna_title = #{qnaTitle}
               ,content   = #{content}
               ,posting_hit = #{postingHit}
               ,update_date = now()
          WHERE write_no = #{writeNo}
+               and board_id = #{boardId}
+               and category_id = #{categoryId}
+    </update>
+    	
+    <update id="incPostingHit">
+    	UPDATE 13_t_techqna
+    	   SET posting_hit = posting_hit + 1 
+    	WHERE write_no = #{writeNo}
     </update>
 
 </mapper>

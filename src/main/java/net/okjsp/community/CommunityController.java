@@ -259,7 +259,6 @@ public class CommunityController extends BasicLayoutController {
 
         User user = (User) authentication.getPrincipal();
 
-
         int userId = communityService.getUserIdFromArticle(writeNo);
 
         comment.setUserId(user.getUserId());

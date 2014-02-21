@@ -126,5 +126,4 @@ public class BoardRecommendServiceImpl implements BoardRecommendService {
         
         return list;
     }
-
 }

@@ -31,7 +31,7 @@ public class BoardRecommend implements Serializable {
             return this.text;
         }
     }
-
+    
     /**
      * 게시판 ID
      */
