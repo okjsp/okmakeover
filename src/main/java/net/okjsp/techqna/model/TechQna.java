@@ -76,7 +76,6 @@ public class TechQna implements Serializable {
      * 추천/신고/반대 연산자
      */
     private BoardRecommendOperator boardRecommendOperator;
-    
     /**
      * comment List
      */
@@ -89,9 +88,7 @@ public class TechQna implements Serializable {
 	 * 사용자
 	 */
 	private User user;
-
-
-
+	
     /**
      * 게시물 번호 Getter.
      *
@@ -344,6 +341,8 @@ public class TechQna implements Serializable {
 	 * 
 	 * @return 사용자
 	 */
+	
+	
 	public User getUser() {
 		return user;
 	}

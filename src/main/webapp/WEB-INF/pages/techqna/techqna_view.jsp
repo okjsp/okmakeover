@@ -29,7 +29,7 @@ Description :
 			<f:form commandName="answer" id="answserForm" cssClass="form-horizontal" role="form" method="POST"
 					action="/techqna/${boardId}/${categoryId}/${writeNo}/answer">
 				
-				<input type="hidden" name="tagList"/>
+				<f:hidden path="tagList" />
 				
 				<div class="form-group">
 					<f:label path="content" class="col-sm-2 control-label">답변</f:label>

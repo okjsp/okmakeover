@@ -3,6 +3,7 @@ package net.okjsp.techqna.service;
 import java.util.List;
 
 import net.okjsp.common.model.Paging;
+import net.okjsp.community.service.CommentService;
 import net.okjsp.recommendation.model.BoardRecommendOperator;
 import net.okjsp.recommendation.service.BoardRecommendService;
 import net.okjsp.tag.service.TagService;
@@ -14,6 +15,7 @@ import net.okjsp.user.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -38,7 +40,7 @@ public class TechQnaServiceImpl implements TechQnaService {
 
     @Autowired
     private UserService userService;
-    
+ 
     // private final Integer BOARD_ID = 4;
     
     /**
@@ -94,7 +96,7 @@ public class TechQnaServiceImpl implements TechQnaService {
             techQnaList = techQnaDao.selectTechQnaListByTag(boardId, categoryId, tagName, sortType, paging.getOffset(), paging.getSizePerList());
         }
 
-        techQnaList = setTechQnaListProperties(techQnaList);
+        setPropertiesToTechQnaList(techQnaList);
 
         return techQnaList;
     }
@@ -111,7 +113,7 @@ public class TechQnaServiceImpl implements TechQnaService {
 
         List<TechQna> techQnaList = techQnaDao.selectTechQnaDetail(boardId, categoryId, writeNo);
         
-         techQnaList = setTechQnaListProperties(techQnaList);
+        setPropertiesToTechQnaList(techQnaList);
         
         return techQnaList;
     }
@@ -128,7 +130,7 @@ public class TechQnaServiceImpl implements TechQnaService {
 
     	TechQna techQna = techQnaDao.selectOneTechQnaQuestion(boardId, categoryId, writeNo);
         
-        if (techQna != null) setTechQnaProperties(techQna);
+        setPropertiesToTechQna(techQna);
         
         return techQna;
     }
@@ -145,7 +147,7 @@ public class TechQnaServiceImpl implements TechQnaService {
 
         List<TechQna> techQnaList = techQnaDao.selectTechQnaAnswers(boardId, categoryId, writeNo);
         
-        techQnaList = setTechQnaListProperties(techQnaList);
+        setPropertiesToTechQnaList(techQnaList);
         
         return techQnaList;
     }
@@ -162,29 +164,30 @@ public class TechQnaServiceImpl implements TechQnaService {
 
     	TechQna techQna = techQnaDao.selectOneTechQnaAnswer(boardId, categoryId, writeNo, parentId);
         
-    	setTechQnaProperties(techQna);
+    	setPropertiesToTechQna(techQna);
         
         return techQna;
     }
-    
-    private List<TechQna> setTechQnaListProperties(List<TechQna> techQnaList) {
-    	
+
+    private void setPropertiesToTechQnaList(List<TechQna> techQnaList) {
     	for(TechQna techQna : techQnaList) {
-    		setTechQnaProperties(techQna);
+    		setPropertiesToTechQna(techQna);
         }
-    	
-    	return techQnaList;
     }
     
-    private void setTechQnaProperties(TechQna techQna) {
-    	// Tech Q/a 게시판 Board ID : 4
-		int boardId = techQna.getBoardId();
+    private void setPropertiesToTechQna(TechQna techQna) {
+    	if (techQna != null) {
+    		// Tech Q/a 게시판 Board ID : 4
+			techQna.setBoardRecommendOperator(getRecommentOperator(techQna));
+		    techQna.setTagList(tagService.selectTagList(techQna.getBoardId(), techQna.getWriteNo()));
+    	}
+    }
+    
+    private BoardRecommendOperator getRecommentOperator(TechQna techQna) {
 		BoardRecommendOperator boardRecommendOperator = new BoardRecommendOperator();
-		boardRecommendOperator.setBoardRecommendList(boardRecommendService.getRecommendation(boardId, techQna.getWriteNo()));
-		techQna.setBoardRecommendOperator(boardRecommendOperator);
-        techQna.setTagList(tagService.selectTagList(boardId, techQna.getWriteNo()));
-        // techQna.setCommentList(commentList);
-        //techQna.setUser(userService.getOne(techQna.getUserId()));
+		boardRecommendOperator.setBoardRecommendList(boardRecommendService.getRecommendation(techQna.getBoardId(), techQna.getWriteNo()));    
+		
+		return boardRecommendOperator;
     }
 
     /**
@@ -193,20 +196,12 @@ public class TechQnaServiceImpl implements TechQnaService {
      * @param techQna
      */
     @Override
+    @Transactional
     public void createTechQna(TechQna techQna) {
+    	insertRevisionAndTag(techQna, "신규 등록");
     	
-    	techQnaDao.insert(techQna);
-    	
-        Revision revision = new Revision();
-        revision.setWriteNo(techQna.getWriteNo());
-        revision.setRevisionTitle(techQna.getQnaTitle());
-        revision.setContent(techQna.getContent());
-        revision.setSummary("신규 등록");
-        revision.setRevisionSeq(revisionDao.selectMaxRevisionSeq(techQna.getWriteNo()));
-        revision.setTagName(techQna.getTagList().toString());
-        
-        revisionDao.insert(revision);
-        tagService.createTag(techQna.getBoardId(), techQna.getWriteNo(), techQna.getTagList());
+    	techQnaDao.insert(techQna);       
+       
     }
     
     /**
@@ -215,17 +210,30 @@ public class TechQnaServiceImpl implements TechQnaService {
      * @param techQna
      */
     @Override
+    @Transactional
     public void updateTechQna(TechQna techQna) {
+        insertRevisionAndTag(techQna, "변경 등록");
+        
+        techQnaDao.update(techQna);
+        
+    }
+    
+    // TODO : Summary 데이터 받을 위치 선전(TechQna에 Summary 추가 [방안1])
+    private Revision createRevision(TechQna techQna, String summary) {
         Revision revision = new Revision();
+        revision.setRevisionSeq(revisionDao.selectMaxRevisionSeq(techQna.getWriteNo()));
         revision.setWriteNo(techQna.getWriteNo());
         revision.setRevisionTitle(techQna.getQnaTitle());
         revision.setContent(techQna.getContent());
         revision.setTagName(techQna.getTagList().toString());
-        revision.setRevisionSeq(revisionDao.selectMaxRevisionSeq(techQna.getWriteNo()));
-        revision.setSummary("변경 등록");    // parameter는 어디서 받지? qna? revision? 아니면 별도 String?
+        revision.setSummary(summary);
         
-        revisionDao.insert(revision);
-        techQnaDao.update(techQna);
+        return revision;
+    }
+    
+    // TODO : 함수 의미 전달이 좀 이상한듯 보임. 적당한 함수명을 생각하여 변경해야 함.
+    private void insertRevisionAndTag(TechQna techQna, String summary) {
+        revisionDao.insert(createRevision(techQna, summary));
         tagService.createTag(techQna.getBoardId(), techQna.getWriteNo(), techQna.getTagList());
     }
 

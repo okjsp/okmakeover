@@ -36,7 +36,7 @@ Description :
       		<c:set var="recommendOper" value="${question.boardRecommendOperator}"></c:set>
 			
       		<div class="list-group-item clearfix">
-                <span class="badge"><span class="glyphicon glyphicon glyphicon-comment"></span> 14</span>
+                <span class="badge"><span class="glyphicon glyphicon glyphicon-comment"></span>${fn:length(question.commentList)}</span>
                 <div class="qna-point col-md-2">
                     <div>
                         <c:if test="${recommendOper.isRecommend()}">

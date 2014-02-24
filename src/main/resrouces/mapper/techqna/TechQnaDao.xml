@@ -20,7 +20,10 @@
 		
 		<association property="user" javaType="net.okjsp.user.model.User"
                      resultMap="net.okjsp.user.dao.UserDao.userProfileMap" />
-        
+                     
+        <collection property="commentList" javaType="java.util.List"
+                    column="{boardId=board_id, writeNo=write_no}"
+                    select="net.okjsp.community.dao.CommentDao.selectListForArticle" />
 	</resultMap>
 	
 	<select id="selectTechQnaTotalCount" resultType="java.lang.Integer">
