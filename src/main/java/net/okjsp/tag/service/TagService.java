@@ -4,6 +4,7 @@ import net.okjsp.tag.model.Tag;
 import net.okjsp.tag.model.TagMapping;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -32,7 +33,7 @@ public interface TagService {
      * @return 태그 등록 성공 여부
      */
     public boolean createTag(Integer boardId, Integer writeNo, List<Tag> tagList);
-
+    
     /**
      * 게시물에 해당하는 태그 목록(매핑) 조회.
      *

@@ -76,6 +76,7 @@ public class TechQna implements Serializable {
      * 추천/신고/반대 연산자
      */
     private BoardRecommendOperator boardRecommendOperator;
+    
     /**
      * comment List
      */

@@ -95,7 +95,7 @@
           from 13_t_board_recommand
          where board_id = #{boardId}
            and write_no = #{writeNo}
-           and guboon_id = #{enabled}
+           and TYPE_ID = #{typeId}
          order by recommend_date asc
     </select>
 
@@ -110,7 +110,7 @@
         ) values (
             #{boardId}, 
             #{writeNo}, 
-            #{enabled},
+            #{typeId},
             #{userId}, 
             '0', 
             now()

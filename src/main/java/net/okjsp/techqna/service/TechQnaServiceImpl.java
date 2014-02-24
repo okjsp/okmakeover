@@ -212,7 +212,6 @@ public class TechQnaServiceImpl implements TechQnaService {
     @Transactional
     public void updateTechQna(TechQna techQna) {
         insertRevisionAndTag(techQna, "변경 등록");
-        
     	techQnaDao.update(techQna);        
     }
     

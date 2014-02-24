@@ -1,6 +1,7 @@
 package net.okjsp.tag.service;
 
 import java.util.List;
+import java.util.Set;
 
 import net.okjsp.tag.dao.TagDao;
 import net.okjsp.tag.dao.TagMappingDao;
@@ -29,7 +30,6 @@ public class TagServiceImpl implements TagService {
     @Autowired
     public TagMappingDao tagMappingDao;
 
-
     /**
      * 태그 등록.
      *
@@ -38,6 +38,7 @@ public class TagServiceImpl implements TagService {
      * @param tagList 태그 리스트
      * @return 태그 등록 성공 여부
      */
+    // TODO : TagList 중복 문제 발생.
     @Override
     public boolean createTag(Integer boardId, Integer writeNo, String[] tagList) {
         // 태그 등록 수
@@ -47,7 +48,7 @@ public class TagServiceImpl implements TagService {
 
         // 태그 매핑 테이블에 태그 전부 삭제
         tagMappingDao.delete(boardId, writeNo);
-
+        
         for (String tagString : tagList) {
             // 태그 정보 세팅
             Tag tag = new Tag();
@@ -98,10 +99,14 @@ public class TagServiceImpl implements TagService {
      */
     @Override
     public boolean createTag(Integer boardId, Integer writeNo, List<Tag> tagList) {
-    	String[] array = new String[tagList.size()];
+    	return this.createTag(boardId, writeNo, tagList.toArray(new Tag[tagList.size()]));
+    }
+    
+    private boolean createTag(Integer boardId, Integer writeNo, Tag[] tags) {
+    	String[] array = new String[tags.length];
     	
-    	for(int i = 0; i < tagList.size(); i++) {
-    		array[i] = tagList.get(i).getTagName();
+    	for(int i = 0; i < tags.length; i++) {
+    		array[i] = tags[i].getTagName();
     	}
     	return this.createTag(boardId, writeNo, array);
     }

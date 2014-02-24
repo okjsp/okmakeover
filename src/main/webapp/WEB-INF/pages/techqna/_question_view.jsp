@@ -13,7 +13,7 @@ Description :
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 	<c:set var="user" value="${item.user}"></c:set>
-	<c:set var="recommendOper" value="${question.boardRecommendOperator}"></c:set>
+	<c:set var="recommendOper" value="${item.boardRecommendOperator}"></c:set>
 	<h2>${item.qnaTitle}</h2>
 	<p><img src="/assets/images/@temp_profile.jpg" class="profile-img"/> <a href="#">${user.nickName}</a> | <small><fmt:formatDate type="both" value="${item.writeDate}" dateStyle="short" timeStyle="short" /></small></p>       
 	<div class="lead">
@@ -31,9 +31,14 @@ Description :
 	
 	<sec:authorize ifAnyGranted="ROLE_USER">
 	    <div class="btn-group pull-left">
+<%--    
 		    <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span></button>
 		    <button type="button" class="btn btn-default disabled">${recommendOper.getRecommendOpposeCount()}</button>
 		    <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+--%>
+			<a href="/techqna/${boardId}/${categoryId}/${item.writeNo}/good" class="btn btn-success"><span class="glyphicon glyphicon-thumbs-up"></span></a>
+		    <button type="button" class="btn btn-default disabled">${recommendOper.getRecommendOpposeCount()}</button>
+		    <a href="/techqna/${boardId}/${categoryId}/${item.writeNo}/bad" class="btn btn-warning"><span class="glyphicon glyphicon-thumbs-down"></span></a>	    
 		</div>
 		<div class="pull-right">
 			<a href="/techqna/${boardId}/${categoryId}/${item.writeNo}/modify" id="modifyBtn" class="btn btn-default btn-mg" role="button">수정</a>
@@ -46,11 +51,11 @@ Description :
 		    <a href="/techqna/${boardId}/${categoryId}" class="btn btn-default btn-mg" role="button">목록</a>
 		</div>
 	</sec:authorize>
+
 	<div class="comments">
-	
 		<c:set var="comments" value="${item.commentList}"></c:set>
 		<%@ include file="_comment_list_view.jsp"%>
-		
+		<sec:authorize ifAnyGranted="ROLE_USER">
 		<f:form commandName="comment" cssClass="form-horizontal" role="form" method="POST"
 					action="/techqna/${boardId}/${categoryId}/${writeNo}/comment">					
   			<div class="panel panel-default">
@@ -64,4 +69,5 @@ Description :
 		        </div>
 		    </div>
 		</f:form>
-	</div>
+		</sec:authorize>
+	</div>	

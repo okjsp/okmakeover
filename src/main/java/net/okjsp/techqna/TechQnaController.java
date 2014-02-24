@@ -14,6 +14,8 @@ import net.okjsp.community.model.Comment;
 import net.okjsp.community.service.BoardService;
 import net.okjsp.community.service.CommentService;
 import net.okjsp.community.service.CommunityService;
+import net.okjsp.recommendation.model.BoardRecommend;
+import net.okjsp.recommendation.service.BoardRecommendService;
 import net.okjsp.techqna.model.TechQna;
 import net.okjsp.techqna.service.TechQnaService;
 import net.okjsp.user.model.User;
@@ -37,7 +39,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author yjc0703
  *
  */
-// TODO: DB에 있는 boardId/categoryId 외에 있는 자료가 올때 하는 처리 필요.
+// TODO : DB에 있는 boardId/categoryId 외에 있는 자료가 올때 하는 처리 필요.
+// TODO : 몇몇 함수는 비슷한 모양을 가지고 있음. 간략히 할 수 있어 보이므로 추후 변경을 하자.(hasErors redirect가 있는 함수)
 @Controller
 @RequestMapping(value = "/techqna/{boardId}/{categoryId}")
 public class TechQnaController {
@@ -53,6 +56,9 @@ public class TechQnaController {
 	
 	@Autowired
     BoardService boardService;
+	
+	@Autowired
+	BoardRecommendService boardRecommendService;
 	
 	private static Map<Integer,String> boardNames;
 	
@@ -254,12 +260,88 @@ public class TechQnaController {
 			}
 			
 	        User user = (User) authentication.getPrincipal();
-
 	        comment.setUserId(user.getUserId());
-	      
+	        
 	        commentService.create(comment);
 
 	        return "redirect:/techqna/" + comment.getBoardId() + "/" + categoryId + "/" + parentId;
+	}
+	
+	@Secured("ROLE_USER")
+	@RequestMapping(value="/{writeNo}/good")
+	public String questionGood(@Valid @ModelAttribute BoardRecommend boardRecommend,
+			                   @PathVariable int categoryId,
+			                   BindingResult result,
+			                   Authentication authentication) {
+		
+		User user = (User) authentication.getPrincipal();
+		boardRecommend.setTypeId(BoardRecommend.Type.RECOMMEND);
+		boardRecommend.setUserId(user.getUserId());
+		String returnUrl = boardRecommend.getBoardId() + "/" + categoryId + "/" + boardRecommend.getWriteNo();
+		
+		return setRecommendOpposite(result.hasErrors(), boardRecommend, returnUrl);
+	}
+	
+	@Secured("ROLE_USER")
+	@RequestMapping(value="/{writeNo}/bad")
+	public String questionBad(@Valid @ModelAttribute BoardRecommend boardRecommend,
+			                   @PathVariable int categoryId,
+			                   BindingResult result,
+			                   Authentication authentication) {
+		
+		User user = (User) authentication.getPrincipal();
+		boardRecommend.setTypeId(BoardRecommend.Type.OPPOSE);
+		boardRecommend.setUserId(user.getUserId());
+		String returnUrl = boardRecommend.getBoardId() + "/" + categoryId + "/" + boardRecommend.getWriteNo();
+		
+		return setRecommendOpposite(result.hasErrors(), boardRecommend, returnUrl);
+	}
+	
+	@Secured("ROLE_USER")
+	@RequestMapping(value="/{parentId}/answer/{writeNo}/good")
+	public String answerGood(@PathVariable int categoryId,
+				             @PathVariable int parentId,
+						     @Valid @ModelAttribute BoardRecommend boardRecommend,
+			                 BindingResult result,
+			                 Authentication authentication) {
+		
+		User user = (User) authentication.getPrincipal();
+		boardRecommend.setTypeId(BoardRecommend.Type.RECOMMEND);
+		boardRecommend.setUserId(user.getUserId());
+		String returnUrl = boardRecommend.getBoardId() + "/" + categoryId + "/" + parentId;
+		
+		return setRecommendOpposite(result.hasErrors(), boardRecommend, returnUrl);
+	}
+	
+	@Secured("ROLE_USER")
+	@RequestMapping(value="/{parentId}/answer/{writeNo}/bad")
+	public String answerBad(@PathVariable int categoryId,
+			                @PathVariable int parentId,
+						    @Valid @ModelAttribute BoardRecommend boardRecommend,
+			                BindingResult result,
+			                Authentication authentication) {
+
+		User user = (User) authentication.getPrincipal();
+		boardRecommend.setTypeId(BoardRecommend.Type.OPPOSE);
+		boardRecommend.setUserId(user.getUserId());
+		String returnUrl = boardRecommend.getBoardId() + "/" + categoryId + "/" + parentId;
+		
+		return setRecommendOpposite(result.hasErrors(), boardRecommend, returnUrl);
+		
+	}
+	
+	// TODO : 추천/반대 관련 함수들 간략히 할 수 있으면 간략히 하자.
+	// TODO : 함수명을 기능에 맞추어 변경해야 함.
+	private String setRecommendOpposite(boolean hasErrors, 
+										BoardRecommend boardRecommend,
+			                            String returnUrl) {
+		if (hasErrors) {
+			return "techqna/" + returnUrl;
+		}
+
+		boardRecommendService.addRecommendation(boardRecommend);
+
+		return "redirect:/techqna/" + returnUrl;
 	}
 	
 	@ModelAttribute("BOARD_NAMES")
