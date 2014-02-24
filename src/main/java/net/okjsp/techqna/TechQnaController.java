@@ -107,11 +107,14 @@ public class TechQnaController {
 		return "techqna/techqna_view";
 	}
 	
+	// TODO : BoardId, CategoryId를 자동으로 넣는 방법있으면 적용.
 	@Secured("ROLE_USER")
 	@RequestMapping(value="/create", method=RequestMethod.GET)
-	public String createForm(Model model) {
+	public String createForm(@PathVariable int boardId, @PathVariable int categoryId, Model model) {
 		
         model.addAttribute("techQna", new TechQna());
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("categoryId", categoryId);
 		
 		return "techqna/techqna_create";
 	}
@@ -149,45 +152,37 @@ public class TechQnaController {
 	
 	@Secured("ROLE_USER")
 	@RequestMapping(value="/{writeNo}", method = RequestMethod.POST)
-	public String modify(@PathVariable int boardId, 
-			             @PathVariable int categoryId,
-			             @PathVariable int writeNo,
-			             @Valid @ModelAttribute TechQna techQna,
+	public String modify(@Valid @ModelAttribute TechQna techQna,
 			             BindingResult result) {
 		
 		if (result.hasErrors()) {
-			return "techqna/" + boardId + "/" + categoryId + "/" + writeNo;
+			return "techqna/" + techQna.getBoardId() + "/" + techQna.getCategoryId() + "/" + techQna.getWriteNo();
 		}
 		
 		techQnaService.updateTechQna(techQna);
 		
-		return "redirect:/techqna/" + boardId + "/" + categoryId + "/" + writeNo;
+		return "redirect:/techqna/" + techQna.getBoardId() + "/" + techQna.getCategoryId() + "/" + techQna.getWriteNo();
 	}
 	
 	@Secured("ROLE_USER")
-	@RequestMapping(value="/{writeNo}/answer", method=RequestMethod.POST)
-	public String createAnswer(@PathVariable int boardId, 
-			                   @PathVariable int categoryId, 
-			                   @PathVariable int writeNo,
-			                   @Valid @ModelAttribute TechQna techQna,
+	@RequestMapping(value="/{parentId}/answer", method=RequestMethod.POST)
+	public String createAnswer(@Valid @ModelAttribute TechQna techQna,
 					           BindingResult result,
 					           Authentication authentication) {
 		
 		if (result.hasErrors()) {
-			return "techqna/" + boardId + "/" + categoryId + "/" + writeNo;
+			return "techqna/" + techQna.getBoardId() + "/" + techQna.getCategoryId() + "/" + techQna.getParentId();
 		}
 		
 		User user = (User) authentication.getPrincipal();
-		
-		techQna.setWriteNo(null);
-		techQna.setQnaTitle(String.valueOf(writeNo));
+
+		techQna.setQnaTitle(String.valueOf(techQna.getParentId()));
 		techQna.setUserId(user.getUserId());
-		techQna.setParentId(writeNo);
-		
+
 		// TODO : tagList값이 NULL에 대한 처리 추가 필요
 		techQnaService.createTechQna(techQna);
 		
-		return "redirect:/techqna/" + boardId + "/" + categoryId + "/" + writeNo;
+		return "redirect:/techqna/" + techQna.getBoardId() + "/" + techQna.getCategoryId() + "/" + techQna.getParentId();
 	}
 	
 	@Secured("ROLE_USER")
@@ -205,20 +200,15 @@ public class TechQnaController {
 	
 	@Secured("ROLE_USER")
 	@RequestMapping(value="/{parentId}/answer/{writeNo}", method=RequestMethod.POST)
-	public String answerModify(@PathVariable int boardId, 
-				               @PathVariable int categoryId,
-				               @PathVariable int writeNo,
-				               @PathVariable int parentId,
-			                   @Valid @ModelAttribute TechQna techQna,
+	public String answerModify(@Valid @ModelAttribute TechQna techQna,
 					           BindingResult result,
 					           Authentication authentication) {
 		
 		if (result.hasErrors()) {
-			return "techqna/" + boardId + "/" + categoryId + "/" + parentId;
+			return "techqna/" + techQna.getBoardId() + "/" + techQna.getCategoryId() + "/" + techQna.getParentId();
 		}
 		
 		// TODO : 수정 권한에 대한 확인 필요
-		
 		User user = (User) authentication.getPrincipal();
 		
 		techQna.setUserId(user.getUserId());
@@ -226,58 +216,50 @@ public class TechQnaController {
 		// TODO : tagList값이 NULL에 대한 처리 추가 필요
 		techQnaService.updateTechQna(techQna);
 		
-		return "redirect:/techqna/" + boardId + "/" + categoryId + "/" + parentId;
+		return "redirect:/techqna/" + techQna.getBoardId() + "/" + techQna.getCategoryId() + "/" + techQna.getParentId();
 	}
 	
 	@Secured("ROLE_USER")
 	@RequestMapping(value="/{writeNo}/comment", method = RequestMethod.POST)
 	public String comment(
-            @PathVariable int boardId,
             @PathVariable int categoryId,
-            @PathVariable int writeNo,
             @Valid @ModelAttribute Comment comment,
             BindingResult result,
             Authentication authentication) {
 		
 			if (result.hasErrors()) {
-				return "techqna/" + boardId + "/" + categoryId + "/" + writeNo;
+				return "techqna/" + comment.getBoardId() + "/" + categoryId + "/" + comment.getWriteNo();
 			}
 			
 	        User user = (User) authentication.getPrincipal();
-
-	        // int userId = communityService.getUserIdFromArticle(writeNo);
 
 	        comment.setUserId(user.getUserId());
 
 	        commentService.create(comment);
 
-	        return "redirect:/techqna/" + boardId + "/" + categoryId + "/" + writeNo;
+	        return "redirect:/techqna/" + comment.getBoardId() + "/" + categoryId + "/" + comment.getWriteNo();
 	}
 	
 	@Secured("ROLE_USER")
 	@RequestMapping(value="/{parentId}/answer/{writeNo}/comment", method = RequestMethod.POST)
 	public String answerComment(
-            @PathVariable int boardId,
             @PathVariable int categoryId,
-            @PathVariable int writeNo,
             @PathVariable int parentId,
             @Valid @ModelAttribute Comment comment,
             BindingResult result,
             Authentication authentication) {
 		
 			if (result.hasErrors()) {
-				return "techqna/" + boardId + "/" + categoryId + "/" + parentId;
+				return "techqna/" + comment.getBoardId() + "/" + categoryId + "/" + parentId;
 			}
 			
 	        User user = (User) authentication.getPrincipal();
 
-	        // int userId = communityService.getUserIdFromArticle(writeNo);
-
 	        comment.setUserId(user.getUserId());
-
+	      
 	        commentService.create(comment);
 
-	        return "redirect:/techqna/" + boardId + "/" + categoryId + "/" + parentId;
+	        return "redirect:/techqna/" + comment.getBoardId() + "/" + categoryId + "/" + parentId;
 	}
 	
 	@ModelAttribute("BOARD_NAMES")

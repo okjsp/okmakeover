@@ -198,10 +198,9 @@ public class TechQnaServiceImpl implements TechQnaService {
     @Override
     @Transactional
     public void createTechQna(TechQna techQna) {
-    	insertRevisionAndTag(techQna, "신규 등록");
+    	techQnaDao.insert(techQna);    
     	
-    	techQnaDao.insert(techQna);       
-       
+    	insertRevisionAndTag(techQna, "신규 등록");
     }
     
     /**
@@ -214,8 +213,7 @@ public class TechQnaServiceImpl implements TechQnaService {
     public void updateTechQna(TechQna techQna) {
         insertRevisionAndTag(techQna, "변경 등록");
         
-        techQnaDao.update(techQna);
-        
+    	techQnaDao.update(techQna);        
     }
     
     // TODO : Summary 데이터 받을 위치 선전(TechQna에 Summary 추가 [방안1])
