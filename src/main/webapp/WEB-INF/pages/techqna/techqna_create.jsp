@@ -14,25 +14,27 @@ Description :
 </head>
 <body>
 
-    <div class="col-md-9">
-        <div class="page-header">
-            <h3>Tech Q&A</h3>
+<div class="col-md-9">
+    <div class="page-header">
+        <h3>Tech Q&A - ${BOARD_NAMES[categoryId]}</h3>
+    </div>
+
+    <f:form commandName="techQna" cssClass="form-horizontal" role="form" method="post"
+            action="/techqna/${boardId}/${categoryId}/">
+
+        <%@ include file="_question_form.jsp"%>
+
+        <input type="hidden" name="summary" value="최초작성" maxlength="100">
+
+        <div class="form-group">
+            <div class="text-center">
+                <input type="submit" class="btn btn-success btn-mg" value="저장" role="button" />
+                <a href="/techqna/${boardId}/${categoryId}" id="cancelBtn" class="btn btn-default btn-mg" role="button">취소</a>
+            </div>
         </div>
 
-        <f:form commandName="techQna" cssClass="form-horizontal" role="form" method="post" 
-                action="/techqna/${boardId}/${categoryId}/">
-                
-			<%@ include file="_question_form.jsp"%>
-			
-			<div class="form-group">
-			    <div class="text-center">
-			        <input type="submit" class="btn btn-success btn-mg" value="저장" role="button" />
-			        <a href="/techqna/${boardId}/${categoryId}" id="cancelBtn" class="btn btn-default btn-mg" role="button">취소</a>
-			    </div>
-			</div>
-
-        </f:form>
-    </div>
+    </f:form>
+</div>
 
 </body>
 </html>

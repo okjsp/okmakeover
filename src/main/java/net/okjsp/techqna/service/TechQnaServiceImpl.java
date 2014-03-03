@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * TechQna Service 구현체.
- * 
+ *
  * @author yjc0703
  */
 @Service
@@ -40,35 +40,35 @@ public class TechQnaServiceImpl implements TechQnaService {
 
     @Autowired
     private UserService userService;
- 
+
     // private final Integer BOARD_ID = 4;
-    
+
     /**
-	 * question total count
-	 * 	
-	 * @return question total count
-	 */
-	public Integer selectTechQnaTotalCount(int boardId, int categoryId) {
-		return this.selectTechQnaByTagTotalCount(boardId, categoryId, "");
-	}
-	
-	/**
-	 * question total count(by tag)
-	 * 
-	 * @param tagName
-	 * @return question total count
-	 */
-	public Integer selectTechQnaByTagTotalCount(int boardId, int categoryId, String tagName) {
-		if ("".equals(tagName)) {
-			return techQnaDao.selectTechQnaTotalCount(boardId, categoryId);
-		} else {
-			return techQnaDao.selectTechQnaByTagTotalCount(boardId, categoryId, tagName);
-		}
-	}
+     * question total count
+     *
+     * @return question total count
+     */
+    public Integer selectTechQnaTotalCount(int boardId, int categoryId) {
+        return this.selectTechQnaByTagTotalCount(boardId, categoryId, "");
+    }
+
+    /**
+     * question total count(by tag)
+     *
+     * @param tagName
+     * @return question total count
+     */
+    public Integer selectTechQnaByTagTotalCount(int boardId, int categoryId, String tagName) {
+        if ("".equals(tagName)) {
+            return techQnaDao.selectTechQnaTotalCount(boardId, categoryId);
+        } else {
+            return techQnaDao.selectTechQnaByTagTotalCount(boardId, categoryId, tagName);
+        }
+    }
 
     /**
      * Tech QNA 리스트(질문목록)
-     * 
+     *
      * @param paging 페이징
      * @param sortType 정렬기준(최근순, 답변많은순 등등...)
      * @return Tach QNA 리스트
@@ -80,7 +80,7 @@ public class TechQnaServiceImpl implements TechQnaService {
 
     /**
      * Tech QNA 리스트(질문목록)
-     * 
+     *
      * @param paging 페이징
      * @param sortType 정렬기준(최근순, 답변많은순 등등...)
      * @return Tech Q/A 리스트
@@ -104,7 +104,7 @@ public class TechQnaServiceImpl implements TechQnaService {
     /**
      * Tech QNA Detail
      * 질문 클릭 후 내용보기 화면에서 사용
-     *     
+     *
      * @param WriteNo 게시글번호(Question 기준)
      * @return Tech QNA 리스트(1 Question + N Answers.. LinkedList로 순서 섞이지 않게)
      */
@@ -112,33 +112,33 @@ public class TechQnaServiceImpl implements TechQnaService {
     public List<TechQna> selectTechQnaDetail(int boardId, int categoryId, Integer writeNo) {
 
         List<TechQna> techQnaList = techQnaDao.selectTechQnaDetail(boardId, categoryId, writeNo);
-        
+
         setPropertiesToTechQnaList(techQnaList);
-        
+
         return techQnaList;
     }
-    
+
     /**
      * Tech QNA Detail
      * 질문 클릭 후 내용보기 화면에서 사용
-     *     
+     *
      * @param WriteNo 게시글번호(Question 기준)
      * @return Tech QNA
      */
     @Override
     public TechQna selectOneTechQnaQuestion(int boardId, int categoryId, Integer writeNo) {
 
-    	TechQna techQna = techQnaDao.selectOneTechQnaQuestion(boardId, categoryId, writeNo);
-        
+        TechQna techQna = techQnaDao.selectOneTechQnaQuestion(boardId, categoryId, writeNo);
+
         setPropertiesToTechQna(techQna);
-        
+
         return techQna;
     }
-    
+
     /**
      * Tech QNA Detail
      * 질문 클릭 후 내용보기 화면에서 사용
-     *     
+     *
      * @param WriteNo 게시글번호(Question 기준)
      * @return Tech QNA 리스트
      */
@@ -146,75 +146,76 @@ public class TechQnaServiceImpl implements TechQnaService {
     public List<TechQna> selectTechQnaAnswers(int boardId, int categoryId, Integer writeNo) {
 
         List<TechQna> techQnaList = techQnaDao.selectTechQnaAnswers(boardId, categoryId, writeNo);
-        
+
         setPropertiesToTechQnaList(techQnaList);
-        
+
         return techQnaList;
     }
 
     /**
      * Tech QNA Detail
      * 질문 수정에 사용
-     *     
+     *
      * @param WriteNo 게시글번호(Question 기준)
      * @return Tech QNA 리스트
      */
     @Override
     public TechQna selectOneTechQnaAnswer(int boardId, int categoryId, Integer writeNo, Integer parentId) {
 
-    	TechQna techQna = techQnaDao.selectOneTechQnaAnswer(boardId, categoryId, writeNo, parentId);
-        
-    	setPropertiesToTechQna(techQna);
-        
+        TechQna techQna = techQnaDao.selectOneTechQnaAnswer(boardId, categoryId, writeNo, parentId);
+
+        setPropertiesToTechQna(techQna);
+
         return techQna;
     }
 
     private void setPropertiesToTechQnaList(List<TechQna> techQnaList) {
-    	for(TechQna techQna : techQnaList) {
-    		setPropertiesToTechQna(techQna);
+        for(TechQna techQna : techQnaList) {
+            setPropertiesToTechQna(techQna);
         }
     }
-    
+
     private void setPropertiesToTechQna(TechQna techQna) {
-    	if (techQna != null) {
-    		// Tech Q/a 게시판 Board ID : 4
-			techQna.setBoardRecommendOperator(getRecommentOperator(techQna));
-		    techQna.setTagList(tagService.selectTagList(techQna.getBoardId(), techQna.getWriteNo()));
-    	}
+        if (techQna != null) {
+            // Tech Q/a 게시판 Board ID : 4
+            techQna.setBoardRecommendOperator(getRecommentOperator(techQna));
+            techQna.setTagList(tagService.selectTagList(techQna.getBoardId(), techQna.getWriteNo()));
+            // techQna.setUser(userService.getOne(techQna.getUserId()));
+        }
     }
-    
+
     private BoardRecommendOperator getRecommentOperator(TechQna techQna) {
-		BoardRecommendOperator boardRecommendOperator = new BoardRecommendOperator();
-		boardRecommendOperator.setBoardRecommendList(boardRecommendService.getRecommendation(techQna.getBoardId(), techQna.getWriteNo()));    
-		
-		return boardRecommendOperator;
+        BoardRecommendOperator boardRecommendOperator = new BoardRecommendOperator();
+        boardRecommendOperator.setBoardRecommendList(boardRecommendService.getRecommendation(techQna.getBoardId(), techQna.getWriteNo()));
+
+        return boardRecommendOperator;
     }
 
     /**
      * Tech QNA 생성
-     * 
+     *
      * @param techQna
      */
     @Override
     @Transactional
-    public void createTechQna(TechQna techQna) {
-    	techQnaDao.insert(techQna);    
-    	
-    	insertRevisionAndTag(techQna, "신규 등록");
+    public void createTechQna(TechQna techQna, String summary) {
+        techQnaDao.insert(techQna);
+
+        insertRevisionAndTag(techQna, summary);
     }
-    
+
     /**
      * Tech QNA 수정
-     * 
+     *
      * @param techQna
      */
     @Override
     @Transactional
-    public void updateTechQna(TechQna techQna) {
-        insertRevisionAndTag(techQna, "변경 등록");
-    	techQnaDao.update(techQna);        
+    public void updateTechQna(TechQna techQna, String summary) {
+        insertRevisionAndTag(techQna, summary);
+        techQnaDao.update(techQna);
     }
-    
+
     // TODO : Summary 데이터 받을 위치 선전(TechQna에 Summary 추가 [방안1])
     private Revision createRevision(TechQna techQna, String summary) {
         Revision revision = new Revision();
@@ -224,10 +225,10 @@ public class TechQnaServiceImpl implements TechQnaService {
         revision.setContent(techQna.getContent());
         revision.setTagName(techQna.getTagList().toString());
         revision.setSummary(summary);
-        
+
         return revision;
     }
-    
+
     // TODO : 함수 의미 전달이 좀 이상한듯 보임. 적당한 함수명을 생각하여 변경해야 함.
     private void insertRevisionAndTag(TechQna techQna, String summary) {
         revisionDao.insert(createRevision(techQna, summary));
@@ -237,7 +238,7 @@ public class TechQnaServiceImpl implements TechQnaService {
     /**
      * Tech QNA Revision List
      * 변경이력 조회 화면에서 사용
-     * 
+     *
      * @param writeNo 글 번호
      */
     @Override
@@ -245,14 +246,14 @@ public class TechQnaServiceImpl implements TechQnaService {
         List<Revision> revisionList = revisionDao.selectRevisionList(writeNo);
         return revisionList;
     }
-    
+
     /**
-	 * Tech QNA 조회수 증가
-	 * 
-	 * @param WriteNo 글 번호
-	 */
-	public void incTechQnaHit(int WriteNo) {
-		techQnaDao.incPostingHit(WriteNo);
-	}
+     * Tech QNA 조회수 증가
+     *
+     * @param WriteNo 글 번호
+     */
+    public void incTechQnaHit(int WriteNo) {
+        techQnaDao.incPostingHit(WriteNo);
+    }
 
 }
