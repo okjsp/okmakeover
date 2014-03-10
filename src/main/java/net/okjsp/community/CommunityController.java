@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -63,7 +64,7 @@ public class CommunityController extends BasicLayoutController {
      * @return
      */
 	@RequestMapping(value="/{boardId}/{categoryId}.json", method = RequestMethod.GET)
-	public PagingList list(
+	public @ResponseBody PagingList list(
 			@PathVariable int boardId,
 			@PathVariable int categoryId,
             Paging paging) {
@@ -100,10 +101,25 @@ public class CommunityController extends BasicLayoutController {
         return "community/community_list";
 
     }
+    
+    //게시글 호출 json Type
+    @RequestMapping(value = "/{boardId}/{categoryId}/{writeNo}.json", method = RequestMethod.GET)
+    public @ResponseBody Article view (
+    		@PathVariable int boardId,
+			@PathVariable int categoryId,
+			@PathVariable int writeNo) {
+    	
+    	communityService.addArticleHit(writeNo);
+    	
+    	Article article = communityService.getArticle(writeNo);
+    	
+    	return article;
+    	
+    }
 	
 	//게시글 호출
 	@RequestMapping(value = "/{boardId}/{categoryId}/{writeNo}", method = RequestMethod.GET)
-	public String view(
+	public String viewAsHTML(
 			@PathVariable int boardId,
 			@PathVariable int categoryId,
 			@PathVariable int writeNo,
