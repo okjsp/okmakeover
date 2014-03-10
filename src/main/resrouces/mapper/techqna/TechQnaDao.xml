@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC
-    "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="net.okjsp.techqna.dao.TechQnaDao">
-	<resultMap id="techQnaMap" type="net.okjsp.techqna.model.TechQna">
-		<id jdbcType="INTEGER" property="writeNo" column="write_no"/>
-		
-		<result jdbcType="VARCHAR" property="boardId" column="board_id"/>
-		<result jdbcType="VARCHAR" property="categoryId" column="category_id"/>
-		<result jdbcType="VARCHAR" property="enabled" column="enabled"/>
+    <resultMap id="techQnaMap" type="net.okjsp.techqna.model.TechQna">
+        <id jdbcType="INTEGER" property="writeNo" column="write_no"/>
+
+        <result jdbcType="VARCHAR" property="boardId" column="board_id"/>
+        <result jdbcType="VARCHAR" property="categoryId" column="category_id"/>
+        <result jdbcType="VARCHAR" property="enabled" column="enabled"/>
         <result jdbcType="INTEGER" property="parentId" column="parent_id"/>
         <result jdbcType="VARCHAR" property="qnaTitle" column="qna_title"/>
         <result property="content" column="content"/>
@@ -17,24 +17,24 @@
         <result jdbcType="TIMESTAMP" property="writeDate" column="write_date"/>
         <result jdbcType="TIMESTAMP" property="updateDate" column="update_date"/>
         <result jdbcType="INTEGER" property="userId" column="user_id" />
-		
-		<association property="user" javaType="net.okjsp.user.model.User"
+
+        <association property="user" javaType="net.okjsp.user.model.User"
                      resultMap="net.okjsp.user.dao.UserDao.userProfileMap" />
-                     
+
         <collection property="commentList" javaType="java.util.List"
                     column="{boardId=board_id, writeNo=write_no}"
                     select="net.okjsp.community.dao.CommentDao.selectListForArticle" />
-	</resultMap>
-	
-	<select id="selectTechQnaTotalCount" resultType="java.lang.Integer">
+    </resultMap>
+
+    <select id="selectTechQnaTotalCount" resultType="java.lang.Integer">
 		SELECT COUNT(write_no)
           FROM 13_t_techqna
          WHERE parent_id = 0
             and board_id = #{boardId}
             and category_id = #{categoryId}
 	</select>
-	
-	<select id="selectTechQnaByTagTotalCount" resultType="java.lang.Integer">
+
+    <select id="selectTechQnaByTagTotalCount" resultType="java.lang.Integer">
 		SELECT COUNT(a.write_no)
          FROM 13_t_techqna a
            JOIN 13_t_tagmapping b
@@ -47,19 +47,18 @@
 	</select>
 
     <select id="selectTechQnaList" resultMap="techQnaMap">
-        SELECT t.write_no
-              ,t.board_id
-              ,t.category_id
-              ,t.enabled
-              ,t.parent_id
-              ,t.qna_title
-              ,t.content
-              ,t.posting_hit
-              ,t.write_date
-              ,t.update_date
-              ,t.user_id
-              ,u.NICK_NAME
-         FROM 13_t_techqna t join 13_t_user u on t.USER_ID = u.USER_ID
+        SELECT write_no
+              ,board_id
+              ,category_id
+              ,enabled
+              ,parent_id
+              ,qna_title
+              ,content
+              ,posting_hit
+              ,write_date
+              ,update_date
+              ,user_id
+         FROM 13_t_techqna
         WHERE parent_id = 0
               and board_id = #{boardId}
               and category_id = #{categoryId}
@@ -128,7 +127,7 @@
               and category_id = #{categoryId}
         ORDER BY write_no ASC
     </select>
-    
+
     <select id="selectOneTechQnaQuestion" resultMap="techQnaMap">
 		SELECT write_no
               ,board_id
@@ -147,7 +146,7 @@
               and category_id = #{categoryId}
               and parent_id = 0
 	</select>
-	
+
     <select id="selectTechQnaAnswers" resultMap="techQnaMap">
 		SELECT write_no
               ,board_id
@@ -166,8 +165,8 @@
               and category_id = #{categoryId}
         ORDER BY write_no ASC
 	</select>
-	
-	<select id="selectOneTechQnaAnswer" resultMap="techQnaMap">
+
+    <select id="selectOneTechQnaAnswer" resultMap="techQnaMap">
 		SELECT write_no
               ,board_id
               ,category_id
@@ -214,7 +213,7 @@
             ,now()
         )
     </insert>
-    
+
     <update id="update">
         /* techQna 등록 */
         UPDATE 13_t_techqna
@@ -227,7 +226,7 @@
                and board_id = #{boardId}
                and category_id = #{categoryId}
     </update>
-    	
+
     <update id="incPostingHit">
     	UPDATE 13_t_techqna
     	   SET posting_hit = posting_hit + 1 
