@@ -19,16 +19,16 @@ public class Board implements Serializable {
 	private String categoryName;
 	
 	// 답변기능 사용여부
-	private String replayCheck;
+	private Boolean replayCheck;
 	
 	// 추천기능 사용여부
-	private String recommendCheck;
+	private Boolean recommendCheck;
 	
 	// 싸움방지기능 사용여부
-	private String brawlCheck;
+	private Boolean brawlCheck;
 	
 	// 댓글기능 사용여부
-	private String commentCheck;
+	private Boolean commentCheck;
 	
 	// 작성일시
 	private String writeDate;
@@ -68,35 +68,37 @@ public class Board implements Serializable {
 		this.categoryName = categoryName;
 	}
 
-	public String getReplayCheck() {
+	
+
+	public Boolean getReplayCheck() {
 		return replayCheck;
 	}
 
-	public void setReplayCheck(String replayCheck) {
+	public void setReplayCheck(Boolean replayCheck) {
 		this.replayCheck = replayCheck;
 	}
 
-	public String getRecommendCheck() {
+	public Boolean getRecommendCheck() {
 		return recommendCheck;
 	}
 
-	public void setRecommendCheck(String recommendCheck) {
+	public void setRecommendCheck(Boolean recommendCheck) {
 		this.recommendCheck = recommendCheck;
 	}
 
-	public String getBrawlCheck() {
+	public Boolean getBrawlCheck() {
 		return brawlCheck;
 	}
 
-	public void setBrawlCheck(String brawlCheck) {
+	public void setBrawlCheck(Boolean brawlCheck) {
 		this.brawlCheck = brawlCheck;
 	}
 
-	public String getCommentCheck() {
+	public Boolean getCommentCheck() {
 		return commentCheck;
 	}
 
-	public void setCommentCheck(String commentCheck) {
+	public void setCommentCheck(Boolean commentCheck) {
 		this.commentCheck = commentCheck;
 	}
 
